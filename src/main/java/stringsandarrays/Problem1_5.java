@@ -1,16 +1,16 @@
 package stringsandarrays;
 
-import utils.P;
+import utils.Z;
 
 public class Problem1_5 {
 
 	public static void main(String[] args) {
-		P.print(new Problem1_5().strCompression("aabcccccaaa"));
+		Z.print(new Problem1_5().strCompression("aabcccccaaa"));
 	}
 
 	/**
 	 * U must assure the edge case in a for loop!
-	 * 
+	 *
 	 * @param s
 	 * @return
 	 */
