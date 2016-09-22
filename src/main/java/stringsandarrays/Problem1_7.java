@@ -13,14 +13,19 @@ public class Problem1_7 {
     for (int[] arr : matrix) {
       System.out.println(Arrays.toString(arr));
     }
-    new Problem1_7().setZerosInMatrix(matrix);
+    new Problem1_7().setZerosInMatrix1(matrix);
     System.out.println();
     for (int[] arr : matrix) {
       System.out.println(Arrays.toString(arr));
     }
   }
 
-  public void setZerosInMatrix(int[][] matrix) {
+  /**
+   * This one is slightly better than the one given by the book.
+   * 
+   * @param matrix
+   */
+  public void setZerosInMatrix0(int[][] matrix) {
     Set<Integer> colSet = new HashSet<>();
     int i = 0;
     while (i < matrix.length) {
@@ -42,11 +47,37 @@ public class Problem1_7 {
     }
   }
 
-  public void setColAndRow(int[][] matrix, int row, int col) {
+  private void setColAndRow(int[][] matrix, int row, int col) {
     for (int i = 0; i < matrix.length; i++)
       matrix[i][col] = 0;
     for (int j = 0; j < matrix[0].length; j++)
       matrix[row][j] = 0;
   }
+
+  /**
+   * This one goes over the matrix twice. but it's fairly neat and clean.
+   * 
+   * @param matrix
+   */
+  public void setZerosInMatrix1(int[][] matrix) {
+    boolean[] row = new boolean[matrix.length];
+    boolean[] col = new boolean[matrix[0].length];
+    for (int i = 0; i < matrix.length; i++) {
+      for (int j = 0; j < matrix[0].length; j++) {
+        if (matrix[i][j] == 0) {
+          row[i] = true;
+          col[j] = true;
+        }
+      }
+    }
+
+    for (int i = 0; i < matrix.length; i++) {
+      for (int j = 0; j < matrix[0].length; j++) {
+        if (row[i] || col[j]) matrix[i][j] = 0;
+      }
+    }
+  }
+
+
 
 }
