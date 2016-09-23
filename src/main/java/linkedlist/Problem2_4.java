@@ -6,74 +6,40 @@ import utils.Z;
 public class Problem2_4 {
 
   public static void main(String[] args) {
-    ListNode head1 = new TestData().node4;
-    ListNode head2 = new TestData().node5;
-    Z.printLinkedList(head1);
+    Z.printLinkedList(new TestData().head);
     Z.println();
-    Z.print("0 -> ");
-    Z.printLinkedList(head2);
-    Z.println();
-    ListNode newHead = new Problem2_4().addTwoLinkedListInReverseOrder(head1, head2);
-    Z.printLinkedList(newHead);
+    Z.printLinkedList(new Problem2_4().linkedListPartition(new TestData().head, 5));
   }
 
   /**
-   * Use recursion to add since the first digit.
-   * 
+   * In place O(n)<br>
+   * Key point is to take care of the junction and the secondHead outside the loop
+   *
    * @param head
+   * @param val
    * @return
    */
-  public ListNode addTwoLinkedList(ListNode head1, ListNode head2, int carry) {
-    if (head1 == null && head2 == null && carry == 0) return null;
-    ListNode newNode = new ListNode();
-    int value = carry;
-    if (head1 != null) value += head1.val;
-    if (head2 != null) value += head2.val;
-    newNode.val = value % 10;
-    if (head1 != null || head2 != null) {
-      newNode.next = addTwoLinkedList(head1 == null ? null : head1.next,
-          head2 == null ? null : head2.next, value / 10);
+  public ListNode linkedListPartition(ListNode head, int val) {
+    if (head == null) return null;
+    ListNode toRet = null;
+    ListNode junction = null;
+    ListNode firstHead = new ListNode(-1);
+    ListNode secondHead = new ListNode(-2);
+    while (head != null) {
+      if (head.val < val) {
+        firstHead.next = head;
+        firstHead = firstHead.next;
+        if (toRet == null) toRet = firstHead;
+      } else {
+        secondHead.next = head;
+        secondHead = secondHead.next;
+        if (junction == null) junction = secondHead;
+      }
+      head = head.next;
     }
-    return newNode;
-  }
-
-  /**
-   * Use recursion to add since the last digit.
-   * 
-   * @param head1
-   * @param head2
-   * @param carry
-   * @return
-   */
-  public ListNode addTwoLinkedListInReverseOrder(ListNode head1, ListNode head2) {
-    ListNode toRet = helperFunction(head1, head2);
-    if (toRet.val >= 10) {
-      ListNode newHead = new ListNode(1);
-      toRet.val = toRet.val % 10;
-      newHead.next = toRet;
-      return newHead;
-    }
+    secondHead.next = null;
+    firstHead.next = junction;
     return toRet;
   }
-
-  private ListNode helperFunction(ListNode head1, ListNode head2) {
-    if (head1 == null && head2 == null) return null;
-    ListNode head = new ListNode();
-    if (head1 != null || head2 != null) {
-      ListNode next = helperFunction(//
-          head1 == null ? null : head1.next, //
-          head2 == null ? null : head2.next);
-      if (next != null) {
-        int value = next.val / 10;
-        next.val = next.val % 10;
-        if (head1 != null) value += head1.val;
-        if (head2 != null) value += head2.val;
-        head.val = value;
-      }
-      head.next = next;
-    }
-    return head;
-  }
-
 
 }

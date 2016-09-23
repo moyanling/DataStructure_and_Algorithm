@@ -3,43 +3,29 @@ package linkedlist;
 import utils.TestData;
 import utils.Z;
 
+/**
+ * Since it's decribed like "In the middle of a singly linked list", so the given should not be the
+ * last one. Then some edge case can be omitted.
+ *
+ * @author Jihan Chen
+ *
+ */
 public class Problem2_3 {
 
   public static void main(String[] args) {
-    Z.printLinkedList(new TestData().head);
+    ListNode head = new TestData().head;
+    ListNode node = new TestData().node5;
+    Z.printLinkedList(head);
     Z.println();
-    Z.printLinkedList(new Problem2_3().linkedListPartition(new TestData().head, 5));
+    Z.printLinkedList(node);
+    Z.println();
+    new Problem2_3().removeSpecifiedNode(node);
+    Z.printLinkedList(head);
   }
 
-  /**
-   * In place O(n)<br>
-   * Key point is to take care of the junction and the secondHead outside the loop
-   * 
-   * @param head
-   * @param val
-   * @return
-   */
-  public ListNode linkedListPartition(ListNode head, int val) {
-    if (head == null) return null;
-    ListNode toRet = null;
-    ListNode junction = null;
-    ListNode firstHead = new ListNode(-1);
-    ListNode secondHead = new ListNode(-2);
-    while (head != null) {
-      if (head.val < val) {
-        firstHead.next = head;
-        firstHead = firstHead.next;
-        if (toRet == null) toRet = firstHead;
-      } else {
-        secondHead.next = head;
-        secondHead = secondHead.next;
-        if (junction == null) junction = secondHead;
-      }
-      head = head.next;
-    }
-    secondHead.next = null;
-    firstHead.next = junction;
-    return toRet;
+  public void removeSpecifiedNode(ListNode node) {
+    node.val = node.next.val;
+    node.next = node.next.next;
   }
 
 }
