@@ -18,7 +18,7 @@ public class Problem3_3 {
 		setOfStacks.push(3);
 		setOfStacks.push(1);
 		for (int i = 0; i < 6; i++) {
-			Z.println(setOfStacks.pop());
+			Z.print(setOfStacks.pop());
 		}
 	}
 

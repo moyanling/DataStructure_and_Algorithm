@@ -7,7 +7,7 @@ public class Problem2_4 {
 
   public static void main(String[] args) {
     Z.printLinkedList(new TestData().head);
-    Z.println();
+    Z.print();
     Z.printLinkedList(new Problem2_4().linkedListPartition(new TestData().head, 5));
   }
 

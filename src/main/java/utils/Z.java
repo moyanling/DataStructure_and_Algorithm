@@ -4,15 +4,15 @@ import linkedlist.ListNode;
 
 public class Z {
 
-  public static void println(Object obj) {
+  public static void printnb(Object obj) {
     System.out.println(obj);
   }
 
   public static void print(Object obj) {
-    System.out.print(obj);
+    System.out.println(obj);
   }
 
-  public static void println() {
+  public static void print() {
     System.out.println();
   }
 

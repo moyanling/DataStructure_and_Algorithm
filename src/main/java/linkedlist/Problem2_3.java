@@ -17,9 +17,9 @@ public class Problem2_3 {
 		ListNode head = td.head;
 		ListNode node = td.node5;
 		Z.printLinkedList(head);
-		Z.println();
+		Z.print();
 		Z.printLinkedList(node);
-		Z.println();
+		Z.print();
 		new Problem2_3().removeSpecifiedNode(node);
 		Z.printLinkedList(head);
 	}

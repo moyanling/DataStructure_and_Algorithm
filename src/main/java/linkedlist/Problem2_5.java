@@ -9,9 +9,9 @@ public class Problem2_5 {
     ListNode head1 = new TestData().node4;
     ListNode head2 = new TestData().node5;
     Z.printLinkedList(head1);
-    Z.println();
+    Z.print();
     Z.printLinkedList(head2);
-    Z.println();
+    Z.print();
     ListNode newHead = new Problem2_5().addTwoLinkedListInReverseOrder(head1, head2);
     Z.printLinkedList(newHead);
   }

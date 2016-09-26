@@ -7,13 +7,13 @@ public class Problem2_2 {
 
   public static void main(String[] args) {
     Z.printLinkedList(new TestData().head);
-    Z.println();
+    Z.print();
     Z.printLinkedList(new Problem2_2().findKthLast1(new TestData().head, 5));
   }
 
   /**
    * Recursion.
-   * 
+   *
    * @param head
    * @param k
    * @return
@@ -37,7 +37,7 @@ public class Problem2_2 {
 
   /**
    * Iteration
-   * 
+   *
    * @param head
    * @param k
    * @return

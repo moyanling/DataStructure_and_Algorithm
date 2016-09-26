@@ -14,14 +14,14 @@ public class Problem3_2 {
 		stackImpl0.push(2);
 		stackImpl0.push(0);
 		while (stackImpl0.hasMoreElements()) {
-			Z.println("Min value is : " + stackImpl0.getMin() + "\t" + "Pop : " + stackImpl0.pop());
+			Z.print("Min value is : " + stackImpl0.getMin() + "\t" + "Pop : " + stackImpl0.pop());
 		}
 	}
 
 	/**
 	 * This is a generic version of Stack.<br>
 	 * During the interview, this should be a bonus point.<br>
-	 * 
+	 *
 	 * @author Jihan Chen
 	 *
 	 * @param <T>

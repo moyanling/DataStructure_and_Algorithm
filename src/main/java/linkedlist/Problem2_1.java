@@ -10,7 +10,7 @@ public class Problem2_1 {
 
   public static void main(String[] args) {
     Z.printLinkedList(new TestData().head);
-    Z.println();
+    Z.print();
     Z.printLinkedList(new Problem2_1().removeDuplicate1(new TestData().head));
   }
 
@@ -22,7 +22,7 @@ public class Problem2_1 {
    * Another is to sort a this linked list then visit one by one. This is O(n(log(n)+1)).<br>
    * But the sorting one is rather trouble if swap value is not allowed.<br>
    * And maybe we are not allowed to change the structure of linked list.
-   * 
+   *
    * @param head
    * @return
    */
@@ -40,7 +40,7 @@ public class Problem2_1 {
 
   /**
    * Here is the way to do this using combination.
-   * 
+   *
    * @param head
    * @return
    */
