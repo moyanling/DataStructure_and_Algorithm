@@ -22,7 +22,8 @@ public enum SortingAlgorithms {
 
   /**
    * Insertion sort.<Br>
-   * The sequence to the left of index i is sorted and invariant.
+   * Every time find the smallest element and insert it to sorted sequence.<br>
+   * So the sequence to the left of index i is sorted and invariant.<br>
    *
    */
   INSERTION_SORT() {
@@ -50,12 +51,26 @@ public enum SortingAlgorithms {
 
   },
 
+  BUBBEL_SORT() {
+
+    @Override
+    public <T extends Comparable<T>> void sort(T[] arr) {
+      for (int i = 0; i < arr.length - 1; i++) {
+        for (int j = 0; j < arr.length - 1; j++) {
+          if (arr[j].compareTo(arr[j + 1]) > 0) swap(arr, j, j + 1);
+        }
+      }
+    }
+
+  },
+
   /**
-   * Bubble sort.<br>
-   * The sequence to the left of index i is sorted and invariant.
+   * Selection sort.<br>
+   * Each time select the smallest element and swap with the element at i.<br>
+   * So the sequence to the left of index i is sorted and invariant.<br>
    *
    */
-  BUBBLE_SORT() {
+  SELECTION_SORT() {
 
     @Override
     public <T extends Comparable<T>> void sort(T[] arr) {
@@ -110,7 +125,7 @@ public enum SortingAlgorithms {
        */
       List<T> left = new ArrayList<>();
       List<T> right = new ArrayList<>();
-      // starts from p (inclusive) to q + 1 (exclusive).
+      // starts from p (inclusive) to q (exclusive).
       for (int index = p; index < q; index++) {
         left.add(arr[index]);
       }
@@ -181,7 +196,13 @@ public enum SortingAlgorithms {
 
     @Test
     public void testBubbleSort() {
-      SortingAlgorithms.BUBBLE_SORT.sort(arr);
+      SortingAlgorithms.BUBBEL_SORT.sort(arr);
+      Assert.assertArrayEquals(sortedArr, arr);
+    }
+
+    @Test
+    public void testSelectionSort() {
+      SortingAlgorithms.SELECTION_SORT.sort(arr);
       Assert.assertArrayEquals(sortedArr, arr);
     }
 
@@ -190,6 +211,8 @@ public enum SortingAlgorithms {
       SortingAlgorithms.MERGE_SORT.sort(arr);
       Assert.assertArrayEquals(sortedArr, arr);
     }
+
+
 
   }
 

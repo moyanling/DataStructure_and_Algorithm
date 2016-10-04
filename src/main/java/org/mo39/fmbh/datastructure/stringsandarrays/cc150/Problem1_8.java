@@ -1,4 +1,4 @@
-package org.mo39.fmbh.datastructure.stringsandarrays;
+package org.mo39.fmbh.datastructure.stringsandarrays.cc150;
 
 
 public class Problem1_8 {

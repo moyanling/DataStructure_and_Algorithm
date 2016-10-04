@@ -1,4 +1,4 @@
-package org.mo39.fmbh.datastructure.stacksandqueues;
+package org.mo39.fmbh.datastructure.stacksandqueues.cc150;
 
 import java.util.ArrayList;
 import java.util.List;

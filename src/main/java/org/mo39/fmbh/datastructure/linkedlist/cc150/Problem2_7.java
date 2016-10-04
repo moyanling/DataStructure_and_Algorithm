@@ -1,6 +1,7 @@
-package org.mo39.fmbh.datastructure.linkedlist;
+package org.mo39.fmbh.datastructure.linkedlist.cc150;
 
 import org.mo39.fmbh.common.TestData;
+import org.mo39.fmbh.datastructure.linkedlist.ListNode;
 
 public class Problem2_7 {
 

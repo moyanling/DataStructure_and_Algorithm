@@ -1,17 +1,18 @@
-package org.mo39.fmbh.datastructure.linkedlist;
+package org.mo39.fmbh.datastructure.linkedlist.cc150;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import org.mo39.fmbh.common.TestData;
 import org.mo39.fmbh.common.Z;
+import org.mo39.fmbh.datastructure.linkedlist.ListNode;
 
-public class CC150_Problem2_1 {
+public class Problem2_1 {
 
 	public static void main(String[] args) {
 		Z.printLinkedList(new TestData().head);
 		Z.print();
-		Z.printLinkedList(new CC150_Problem2_1().removeDuplicate1(new TestData().head));
+		Z.printLinkedList(new Problem2_1().removeDuplicate1(new TestData().head));
 	}
 
 	/**
