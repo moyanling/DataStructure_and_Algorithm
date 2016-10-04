@@ -21,10 +21,18 @@ import org.mo39.fmbh.common.Z;
 public enum SortingAlgorithms {
 
   /**
-   * Insertion sort.<Br>
+   * Insertion sort. (Stable)<br>
    * Every time find the smallest element and insert it to sorted sequence.<br>
-   * So the sequence to the left of index i is sorted and invariant.<br>
-   *
+   * <p>
+   * Initial state: i = 1. One element is sorted.<br>
+   * Loop invariant: The sequence to the left of index i (exclusive) is sorted and invariant.<br>
+   * End state: i = arr.length and all elements to its left are sorted. So arr is sorted.
+   * <p>
+   * Then best case is when the array is already sorted. The time complexity is <b>O(n)</b>.<br>
+   * The worst case is when the array is reverse sorted. The time complexity is <b>O(n^2)</b>.<br>
+   * <p>
+   * If binary search is used when insert the key to already sorted sequence (loop invariant), then
+   * it's improved slightly and so called Binary Insertion Sort.
    */
   INSERTION_SORT() {
 
@@ -51,23 +59,51 @@ public enum SortingAlgorithms {
 
   },
 
+  /**
+   * Bubble sort. (Stable)<br>
+   * Every time compare two adjacent elements and swap them if one is smaller than the other.<br>
+   * <p>
+   * Initial state: i = 0. No element is sorted.<br>
+   * Loop invariant: i elements are sorted at the end of arr. The largest element is bubbled to the
+   * end each time.<br>
+   * End state: i = arr.length. All elements are sorted.
+   * <p>
+   * Then best case is when the array is already sorted. The time complexity is <b>O(n)</b>.<br>
+   * The worst case is when the array is reverse sorted. The time complexity is <b>O(n^2)</b>.<br>
+   * <p>
+   * Such adaptive property only applys when it exits immediately after no swap happens in one loop.
+   * <br>
+   * If flag <code>isSwapped</code> is not provided, bubble sort would not have such property.
+   * 
+   */
   BUBBEL_SORT() {
 
     @Override
     public <T extends Comparable<T>> void sort(T[] arr) {
       for (int i = 0; i < arr.length - 1; i++) {
+        boolean isSwapped = false;
         for (int j = 0; j < arr.length - 1; j++) {
-          if (arr[j].compareTo(arr[j + 1]) > 0) swap(arr, j, j + 1);
+          if (arr[j].compareTo(arr[j + 1]) > 0) {
+            swap(arr, j, j + 1);
+            isSwapped = true;
+          }
         }
+        if (!isSwapped) return;
       }
     }
 
   },
 
   /**
-   * Selection sort.<br>
+   * Selection sort. (Not stable)<br>
    * Each time select the smallest element and swap with the element at i.<br>
-   * So the sequence to the left of index i is sorted and invariant.<br>
+   * <p>
+   * Initial state: i = 0. No element is sorted.<br>
+   * Loop invariant: each time after swap, the sequence to the left of index i (inclusive) is
+   * sorted.<br>
+   * End state: i = arr.length and all elements to its left are sorted. So arr is sorted.
+   * <p>
+   * Best case and worst case are always <b>O(n^2)</b>.<br>
    *
    */
   SELECTION_SORT() {
@@ -89,31 +125,46 @@ public enum SortingAlgorithms {
 
   },
 
+  /**
+   * Merge sort. (Stable)<br>
+   * Split and merge left part and right part recursively.<br>
+   * <p>
+   * Initial state: before first merge, k = 0 and left and right have 1 element respectively.<br>
+   * Loop invariant: each merge get the smallest T from left and right. The merged part is always
+   * sorted and thus arr from k to r (inclusive) is sorted.<br>
+   * End state: k ends at r + 1 and r finally is arr.length - 1. So index from k = 0 to k = r =
+   * arr.length - 1 of arr is sorted.<br>
+   * <p>
+   * The most intuitive way to understand time complexity is the height of a tree. Each recursion
+   * the arr is split into two sub array and thus it's a tree structure. The process to split takes
+   * O(1) because it's just calculating the split point q. In the merge process, it reverse the
+   * split process and will take <b>nlog(n)</b> loop to complete the merge because it's the height
+   * of a tree. For the process of merging two sub array into one, it takes O(n) so it's ignored.
+   * 
+   */
   MERGE_SORT() {
 
     @Override
     public <T extends Comparable<T>> void sort(T[] arr) {
       checkArgument(arr != null && !Arrays.asList(arr).contains(null));
-      mergeSort(arr, 0, arr.length);
+      mergeSort(arr, 0, arr.length - 1);
     }
 
     /**
      * Merge and sort left part of arr and right part of arr.<br>
      * The pivot q is decided by (p + r) / 2.<br>
-     * The left part starts from p (inclusive) to q (exclusive).<br>
-     * The right part starts from q (inclusive) to r (exclusive).<br>
-     * After comparing exclusive end posi and inclusive end posi, the exclusive one is adopted since
-     * it's more elegant.
+     * The left part starts from p (inclusive) to q (inclusive).<br>
+     * The right part starts from q + 1 (inclusive) to r (inclusive).
      *
      * @param arr
      * @param p
      * @param r
      */
     private <T extends Comparable<T>> void mergeSort(T[] arr, int p, int r) {
-      if (r - p < 2) return;
+      if (r == p) return;
       int q = (p + r) / 2;
       mergeSort(arr, p, q);
-      mergeSort(arr, q, r);
+      mergeSort(arr, q + 1, r);
       merge(arr, p, q, r);
     }
 
@@ -125,16 +176,22 @@ public enum SortingAlgorithms {
        */
       List<T> left = new ArrayList<>();
       List<T> right = new ArrayList<>();
-      // starts from p (inclusive) to q (exclusive).
-      for (int index = p; index < q; index++) {
+      // starts from p (inclusive) to q (inclusive).
+      for (int index = p; index <= q; index++) {
         left.add(arr[index]);
       }
-      // starts from q (inclusive) to r (exclusive).
-      for (int index = q; index < r; index++) {
+      // starts from q (inclusive) to r (inclusive).
+      for (int index = q + 1; index <= r; index++) {
         right.add(arr[index]);
       }
       int i = 0, j = 0;
-      for (int k = p; k < r; k++) {
+      for (int k = p; k <= r; k++) {
+        /*
+         * Instead of add it one by one, this can be slightly better if do it by copy all the rest
+         * elements to arr then ends with a break. But since here it's using an ArrayList, so
+         * System.arraycopy can not be used and it will have to go through a loop, which is not
+         * elegant and thus not implemented.
+         */
         if (i >= left.size()) {
           arr[k] = right.get(j++);
           continue;
