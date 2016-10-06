@@ -1,4 +1,4 @@
-package org.mo39.fmbh.alogrithm.sort;
+package org.mo39.fmbh.algorithm;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -41,8 +41,7 @@ public enum SortingAlgorithms {
   INSERTION_SORT() {
 
     @Override
-    public <T extends Comparable<T>> void sort(T[] arr) {
-      checkArgument(arr != null && !Arrays.asList(arr).contains(null));
+    public <T extends Comparable<T>> void sortArr(T[] arr) {
       // When i is 0, the initial state satisfies the loop invariant. So i
       // starts from 1.
       for (int i = 1; i < arr.length; i++) {
@@ -87,7 +86,7 @@ public enum SortingAlgorithms {
   BUBBEL_SORT() {
 
     @Override
-    public <T extends Comparable<T>> void sort(T[] arr) {
+    public <T extends Comparable<T>> void sortArr(T[] arr) {
       for (int i = 0; i < arr.length - 1; i++) {
         boolean isSwapped = false;
         for (int j = 0; j < arr.length - 1; j++) {
@@ -119,8 +118,7 @@ public enum SortingAlgorithms {
   SELECTION_SORT() {
 
     @Override
-    public <T extends Comparable<T>> void sort(T[] arr) {
-      checkArgument(arr != null && !Arrays.asList(arr).contains(null));
+    public <T extends Comparable<T>> void sortArr(T[] arr) {
       // Initial state starts before 0. No element satisfies the loop
       // invariant.
       for (int i = 0; i < arr.length; i++) {
@@ -159,8 +157,7 @@ public enum SortingAlgorithms {
   MERGE_SORT() {
 
     @Override
-    public <T extends Comparable<T>> void sort(T[] arr) {
-      checkArgument(arr != null && !Arrays.asList(arr).contains(null));
+    public <T extends Comparable<T>> void sortArr(T[] arr) {
       mergeSort(arr, 0, arr.length - 1);
     }
 
@@ -219,6 +216,41 @@ public enum SortingAlgorithms {
       }
     }
 
+  },
+
+  QUICK_SORT() {
+
+    @Override
+    public <T extends Comparable<T>> void sortArr(T[] arr) {
+      quickSort(arr, 0, arr.length - 1);
+    }
+
+    private <T extends Comparable<T>> void quickSort(T[] arr, int p, int r) {
+      if (p >= r) return;
+      int q = partition(arr, p, r);
+      quickSort(arr, p, q - 1);
+      quickSort(arr, q + 1, r);
+    }
+
+    /**
+     * from index p (inclusive) to r - 1 (inclusive) so that all the elements are smaller than
+     * <code>arr[r]</code>.
+     * 
+     * @param arr
+     * @param p
+     * @param r
+     * @return
+     */
+    private <T extends Comparable<T>> int partition(T[] arr, int p, int r) {
+      T pivot = arr[r];
+      int i = p - 1;
+      for (int j = p; j < r; j++) {
+        if (arr[j].compareTo(pivot) <= 0) swap(arr, ++i, j);
+      }
+      swap(arr, ++i, r);
+      return i;
+    }
+
   };
 
   /**
@@ -228,10 +260,15 @@ public enum SortingAlgorithms {
    * @param i
    * @param j
    */
-  private static <T extends Comparable<T>> void swap(T[] arr, int i, int j) {
+  private static <T> void swap(T[] arr, int i, int j) {
     T temp = arr[i];
     arr[i] = arr[j];
     arr[j] = temp;
+  }
+
+  public <T extends Comparable<T>> void sort(T[] arr) {
+    checkArgument(arr != null && !Arrays.asList(arr).contains(null));
+    sortArr(arr);
   }
 
   /**
@@ -239,7 +276,7 @@ public enum SortingAlgorithms {
    *
    * @param arr
    */
-  public abstract <T extends Comparable<T>> void sort(T[] arr);
+  protected abstract <T extends Comparable<T>> void sortArr(T[] arr);
 
   /**
    * Helper class that tests sorting algorithm.
@@ -255,12 +292,13 @@ public enum SortingAlgorithms {
     @BeforeClass
     public static void before() {
       TestSortingAlgorithm test = new TestSortingAlgorithm();
+      Arrays.sort(test.sortedArr);
       Z.print("Array to sort : " + Arrays.toString(test.arr));
       Z.print("Sorted  array : " + Arrays.toString(test.sortedArr));
     }
 
     @Before
-    public void sortArr() {
+    public void sort() {
       Arrays.sort(sortedArr);
     }
 
@@ -286,6 +324,12 @@ public enum SortingAlgorithms {
     @Test
     public void testMergeSort() {
       SortingAlgorithms.MERGE_SORT.sort(arr);
+      Assert.assertArrayEquals(sortedArr, arr);
+    }
+
+    @Test
+    public void testQuickSort() {
+      SortingAlgorithms.QUICK_SORT.sort(arr);
       Assert.assertArrayEquals(sortedArr, arr);
     }
 

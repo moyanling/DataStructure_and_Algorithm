@@ -3,38 +3,53 @@ package org.mo39.fmbh.algorithm;
 import java.util.Arrays;
 import java.util.Random;
 
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mo39.fmbh.alogrithm.sort.SortingAlgorithms;
 import org.mo39.fmbh.common.TestData;
 import org.mo39.fmbh.common.Z;
 
+/**
+ * Shuffle an array randomly.
+ * 
+ * @author Jihan Chen
+ *
+ */
 public enum ArrayShuffle {
 
   PERMUTE_BY_SORTING() {
 
-    class ValueWithPriority implements Comparable<ValueWithPriority> {
+    /**
+     * A value that has a priority.
+     * 
+     * @author Jihan Chen
+     *
+     */
+    class Value implements Comparable<Value> {
       public final int value;
       public final int priority;
 
-      public ValueWithPriority(int value, int priority) {
+      public Value(int value, int priority) {
         this.value = value;
         this.priority = priority;
       }
 
       @Override
-      public int compareTo(ValueWithPriority o) {
+      public int compareTo(Value o) {
         return this.priority - o.priority;
       }
     }
 
     private Random rand = new Random();
+    private int bound;
 
     @Override
     public void shuffle(int[] arr) {
-      ValueWithPriority[] newArr = new ValueWithPriority[arr.length];
+      bound = (int) Math.pow(arr.length, 3);
+      Value[] newArr = new Value[arr.length];
       for (int i = 0; i < arr.length; i++) {
-        newArr[i] = new ValueWithPriority(arr[i], rand.nextInt((int) Math.pow(arr.length, 3)));
+        newArr[i] = new Value(arr[i], rand.nextInt(bound));
       }
       SortingAlgorithms.MERGE_SORT.sort(newArr);
       for (int i = 0; i < arr.length; i++) {
@@ -42,14 +57,23 @@ public enum ArrayShuffle {
       }
     }
 
-
-
   },
 
   RANDOMIZE_IN_PLACE() {
 
+    private Random random = new Random();
+
     @Override
-    public void shuffle(int[] arr) {}
+    public void shuffle(int[] arr) {
+      for (int i = 0; i < arr.length; i++) {
+        int j = random.nextInt(arr.length - i) + i;
+        if (i != j) {
+          arr[i] += arr[j];
+          arr[j] = arr[i] - arr[j];
+          arr[i] -= arr[j];
+        }
+      }
+    }
 
   };
 
@@ -58,6 +82,7 @@ public enum ArrayShuffle {
   public static class TestArrayShuffle {
 
     private int[] arr = new TestData().intArr;
+    private int[] sortedArr = new TestData().intArr;
 
     @BeforeClass
     public static void before() {
@@ -65,10 +90,25 @@ public enum ArrayShuffle {
       Z.print("Original array : " + Arrays.toString(test.arr));
     }
 
+    @Before
+    public void sort() {
+      Arrays.sort(sortedArr);
+    }
+
     @Test
     public void testPermuteBySorting() {
       ArrayShuffle.PERMUTE_BY_SORTING.shuffle(arr);
       Z.print("Shuffled array : " + Arrays.toString(arr));
+      Arrays.sort(arr);
+      Assert.assertArrayEquals(sortedArr, arr);
+    }
+
+    @Test
+    public void testRandomizeInPlace() {
+      ArrayShuffle.RANDOMIZE_IN_PLACE.shuffle(arr);
+      Z.print("Shuffled array : " + Arrays.toString(arr));
+      Arrays.sort(arr);
+      Assert.assertArrayEquals(sortedArr, arr);
     }
 
   }
