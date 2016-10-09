@@ -1,6 +1,7 @@
-package org.mo39.fmbh.algorithm;
+package org.mo39.fmbh.algorithm.sort;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static org.mo39.fmbh.common.Z.swap;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +13,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mo39.fmbh.common.TestData;
 import org.mo39.fmbh.common.Z;
+import org.mo39.fmbh.datastructure.heap.Heap;
 
 /**
  * Loop Invariant is used to proof the algorithm.
@@ -19,7 +21,7 @@ import org.mo39.fmbh.common.Z;
  * @author Jihan Chen
  *
  */
-public enum SortingAlgorithms {
+public enum ComparisonSort {
 
   /**
    * Insertion sort. (Stable)<br>
@@ -149,7 +151,7 @@ public enum SortingAlgorithms {
    * O(1) because it's just calculating the split point q. In the merge process, it reverse the
    * split process and will take log</b> loop to complete the merge because it's the height of a
    * tree. In each merge, it is merging two sub array into one, it takes O(n). So the overall time
-   * complexity is <b>nlog(n)</b>
+   * complexity is <b>O(nlog(n))</b>
    * 
    * @author Jihan Chen
    * 
@@ -218,6 +220,35 @@ public enum SortingAlgorithms {
 
   },
 
+  /**
+   * Heap sort. (Not stable)<br>
+   * Build a max heap, then every time swap the top element to the end of heap, make heap exclude
+   * that element use heapify to maintain the rest elements of max heap.<br>
+   * <p>
+   * Initial state: after the max heap is built, the first element is the largest element.<br>
+   * Loop invariant: each time swap the largest element with the last element in the heap, make the
+   * size minus 1 and use heapify to maintain the structure so that after every loop, the top
+   * element is always the largest and the tail of the array are sorted.<br>
+   * End state: the loop stops after i = 1. So all elements larger than arr[0] is moved to the tail
+   * (the sorted sequence) and arr[0] itself is the smallest element<br>
+   * <p>
+   * It takes O(n) to build a heap, O(log(n)) to heapify and will heapify n - 1 times. So the time
+   * complexity of heap sort is <b>O(nlog(n))</b>
+   */
+  HEAP_SORT() {
+
+    @Override
+    protected <T extends Comparable<T>> void sortArr(T[] arr) {
+      Heap<T> maxHeap = Heap.newMaxHeap(arr);
+      for (int i = arr.length - 1; i > 0; i--) {
+        swap(arr, 0, i);
+        maxHeap.setSize(maxHeap.getSize() - 1);
+        maxHeap.heapify(0);
+      }
+    }
+
+  },
+
   QUICK_SORT() {
 
     @Override
@@ -253,19 +284,6 @@ public enum SortingAlgorithms {
 
   };
 
-  /**
-   * Helper function that swaps two elements at position i and j.
-   *
-   * @param arr
-   * @param i
-   * @param j
-   */
-  private static <T> void swap(T[] arr, int i, int j) {
-    T temp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = temp;
-  }
-
   public <T extends Comparable<T>> void sort(T[] arr) {
     checkArgument(arr != null && !Arrays.asList(arr).contains(null));
     sortArr(arr);
@@ -294,7 +312,7 @@ public enum SortingAlgorithms {
       TestSortingAlgorithm test = new TestSortingAlgorithm();
       Arrays.sort(test.sortedArr);
       Z.print("Array to sort : " + Arrays.toString(test.arr));
-      Z.print("Sorted  array : " + Arrays.toString(test.sortedArr));
+      Z.print("Sorted array : " + Arrays.toString(test.sortedArr));
     }
 
     @Before
@@ -304,32 +322,38 @@ public enum SortingAlgorithms {
 
     @Test
     public void testInsertionSort() {
-      SortingAlgorithms.INSERTION_SORT.sort(arr);
+      ComparisonSort.INSERTION_SORT.sort(arr);
       Assert.assertArrayEquals(sortedArr, arr);
 
     }
 
     @Test
     public void testBubbleSort() {
-      SortingAlgorithms.BUBBEL_SORT.sort(arr);
+      ComparisonSort.BUBBEL_SORT.sort(arr);
       Assert.assertArrayEquals(sortedArr, arr);
     }
 
     @Test
     public void testSelectionSort() {
-      SortingAlgorithms.SELECTION_SORT.sort(arr);
+      ComparisonSort.SELECTION_SORT.sort(arr);
       Assert.assertArrayEquals(sortedArr, arr);
     }
 
     @Test
     public void testMergeSort() {
-      SortingAlgorithms.MERGE_SORT.sort(arr);
+      ComparisonSort.MERGE_SORT.sort(arr);
+      Assert.assertArrayEquals(sortedArr, arr);
+    }
+
+    @Test
+    public void testHeapSort() {
+      ComparisonSort.HEAP_SORT.sort(arr);
       Assert.assertArrayEquals(sortedArr, arr);
     }
 
     @Test
     public void testQuickSort() {
-      SortingAlgorithms.QUICK_SORT.sort(arr);
+      ComparisonSort.QUICK_SORT.sort(arr);
       Assert.assertArrayEquals(sortedArr, arr);
     }
 
