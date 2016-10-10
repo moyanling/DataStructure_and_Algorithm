@@ -9,6 +9,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mo39.fmbh.algorithm.sort.ComparisonSort;
 import org.mo39.fmbh.common.TestData;
+import org.mo39.fmbh.common.Value;
 import org.mo39.fmbh.common.Z;
 
 /**
@@ -21,38 +22,15 @@ public enum ArrayShuffle {
 
   PERMUTE_BY_SORTING() {
 
-    /**
-     * A value that has a priority.
-     * 
-     * @author Jihan Chen
-     *
-     */
-    class Value implements Comparable<Value> {
-      public final int value;
-      public final int priority;
-
-      public Value(int value, int priority) {
-        this.value = value;
-        this.priority = priority;
-      }
-
-      @Override
-      public int compareTo(Value o) {
-        return this.priority - o.priority;
-      }
-    }
-
-    private Random rand = new Random();
-    private int bound;
-
     @Override
-    public void shuffle(int[] arr) {
-      bound = (int) Math.pow(arr.length, 3);
-      Value[] newArr = new Value[arr.length];
+    public <T> void shuffle(T[] arr) {
+      int bound = (int) Math.pow(arr.length, 3);
+      @SuppressWarnings("unchecked")
+      Value<T>[] newArr = new Value[arr.length];
       for (int i = 0; i < arr.length; i++) {
-        newArr[i] = new Value(arr[i], rand.nextInt(bound));
+        newArr[i] = new Value<T>(arr[i], rand.nextInt(bound));
       }
-      ComparisonSort.MERGE_SORT.sort(newArr);
+      ComparisonSort.QUICK_SORT.sort(newArr);
       for (int i = 0; i < arr.length; i++) {
         arr[i] = newArr[i].value;
       }
@@ -62,28 +40,24 @@ public enum ArrayShuffle {
 
   RANDOMIZE_IN_PLACE() {
 
-    private Random random = new Random();
-
     @Override
-    public void shuffle(int[] arr) {
+    public <T> void shuffle(T[] arr) {
       for (int i = 0; i < arr.length; i++) {
-        int j = random.nextInt(arr.length - i) + i;
-        if (i != j) {
-          arr[i] += arr[j];
-          arr[j] = arr[i] - arr[j];
-          arr[i] -= arr[j];
-        }
+        int j = rand.nextInt(arr.length - i) + i;
+        Z.swap(arr, i, j);
       }
     }
 
   };
 
-  public abstract void shuffle(int[] arr);
+  private static Random rand = new Random();
+
+  public abstract <T> void shuffle(T[] arr);
 
   public static class TestArrayShuffle {
 
-    private int[] arr = new TestData().intArr;
-    private int[] sortedArr = new TestData().intArr;
+    private Integer[] arr = new TestData().integerArr;
+    private Integer[] sortedArr = new TestData().integerArr;
 
     @BeforeClass
     public static void before() {

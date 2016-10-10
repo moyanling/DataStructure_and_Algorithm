@@ -11,6 +11,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mo39.fmbh.algorithm.ArrayPartition;
 import org.mo39.fmbh.common.TestData;
 import org.mo39.fmbh.common.Z;
 import org.mo39.fmbh.datastructure.heap.Heap;
@@ -44,8 +45,7 @@ public enum ComparisonSort {
 
     @Override
     public <T extends Comparable<T>> void sortArr(T[] arr) {
-      // When i is 0, the initial state satisfies the loop invariant. So i
-      // starts from 1.
+      // When i is 0, the initial state satisfies the loop invariant. So i starts from 1.
       for (int i = 1; i < arr.length; i++) {
         T key = arr[i];
         int j = i - 1;
@@ -60,8 +60,7 @@ public enum ComparisonSort {
          */
         arr[j + 1] = key;
       }
-      // According to loop invariant, all elements from 0 to arr.length -
-      // 1 are sorted.
+      // According to loop invariant, all elements from 0 to arr.length - 1 are sorted.
     }
 
   },
@@ -104,7 +103,7 @@ public enum ComparisonSort {
   },
 
   /**
-   * Selection sort. (Not stable)<br>
+   * Selection sort. (Unstable)<br>
    * Each time select the smallest element and swap with the element at i.<br>
    * <p>
    * Initial state: i = 0. No element is sorted.<br>
@@ -121,8 +120,7 @@ public enum ComparisonSort {
 
     @Override
     public <T extends Comparable<T>> void sortArr(T[] arr) {
-      // Initial state starts before 0. No element satisfies the loop
-      // invariant.
+      // Initial state starts before 0. No element satisfies the loop invariant.
       for (int i = 0; i < arr.length; i++) {
         int j = i;
         int key = -1;
@@ -141,8 +139,8 @@ public enum ComparisonSort {
    * Split and merge left part and right part recursively.<br>
    * <p>
    * Initial state: before first merge, k = 0 and left and right have 1 element respectively.<br>
-   * Loop invariant: each merge get the smallest T from left and right. The merged part is always
-   * sorted and thus arr from k to r (inclusive) is sorted.<br>
+   * Loop invariant: each merge get the smallest element from left and right. The merged part is
+   * always sorted and thus arr from k to r (inclusive) is sorted.<br>
    * End state: k ends at r + 1 and r finally is arr.length - 1. So index from k = 0 to k = r =
    * arr.length - 1 of arr is sorted.<br>
    * <p>
@@ -221,9 +219,9 @@ public enum ComparisonSort {
   },
 
   /**
-   * Heap sort. (Not stable)<br>
+   * Heap sort. (Unstable)<br>
    * Build a max heap, then every time swap the top element to the end of heap, make heap exclude
-   * that element use heapify to maintain the rest elements of max heap.<br>
+   * that element use heapify to maintain the rest elements of max heap.
    * <p>
    * Initial state: after the max heap is built, the first element is the largest element.<br>
    * Loop invariant: each time swap the largest element with the last element in the heap, make the
@@ -249,6 +247,23 @@ public enum ComparisonSort {
 
   },
 
+  /**
+   * Quick sort (Unstable)<br>
+   * Use divide and conquer. Divide the array into two sub array. For each sub array, take the last
+   * element as pivot and do array partition.
+   * <p>
+   * This loop invariant verifies {@link ArrayPartition.LINEAR_SOLUTION}.<br>
+   * Initial state: starts from j = start - 1 to i = end, no element is left to j.<br>
+   * Loop invariant: if arr[start] is less than or equal to pivot <code>arr[r]</code>, swap it to
+   * the element at j and make j plus 1. So j is always pointing to the last element of a sequence
+   * whose elements are all smaller than or equal to pivot.<br>
+   * End: i = end and all elements are visited. So all elements smaller than or equal to pivot are
+   * swapped to the left of j.
+   * <p>
+   * partition takes O(n) to complete. Divide and conquer will make partition happens log(n) times.
+   * So the time complexity is <b>O(nlog(n))</b>
+   * 
+   */
   QUICK_SORT() {
 
     @Override
@@ -264,8 +279,11 @@ public enum ComparisonSort {
     }
 
     /**
-     * from index p (inclusive) to r - 1 (inclusive) so that all the elements are smaller than
-     * <code>arr[r]</code>.
+     * Part the array around pivot <code>arr[r]</code> so that from index p (inclusive) to r - 1
+     * (inclusive) are smaller than pivot and all the others are larger than pivot.<br>
+     * <p>
+     * Index i is pointing to the last element of the sequence, whose elements are all smaller than
+     * the pivot.
      * 
      * @param arr
      * @param p
@@ -273,13 +291,7 @@ public enum ComparisonSort {
      * @return
      */
     private <T extends Comparable<T>> int partition(T[] arr, int p, int r) {
-      T pivot = arr[r];
-      int i = p - 1;
-      for (int j = p; j < r; j++) {
-        if (arr[j].compareTo(pivot) <= 0) swap(arr, ++i, j);
-      }
-      swap(arr, ++i, r);
-      return i;
+      return ArrayPartition.LINEAR_SOLUTION.solve(arr, num -> num.compareTo(arr[r]) <= 0, p, r + 1);
     }
 
   };

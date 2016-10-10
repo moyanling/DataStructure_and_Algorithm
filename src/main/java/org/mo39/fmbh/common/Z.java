@@ -41,6 +41,7 @@ public class Z {
    * @param j
    */
   public static <T> void swap(T[] arr, int i, int j) {
+    if (i == j) return;
     T temp = arr[i];
     arr[i] = arr[j];
     arr[j] = temp;

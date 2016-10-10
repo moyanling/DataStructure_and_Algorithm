@@ -6,6 +6,8 @@ import org.mo39.fmbh.common.Z;
 
 /**
  * Abstract Heap.
+ * <p>
+ * //TODO T[] should be changed to ArrayList<T> so that new element can be inserted into heap.
  * 
  * @author Jihan Chen
  *
