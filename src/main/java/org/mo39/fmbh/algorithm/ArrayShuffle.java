@@ -7,7 +7,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mo39.fmbh.algorithm.sort.ComparisonSort;
 import org.mo39.fmbh.common.TestData;
 import org.mo39.fmbh.common.Value;
 import org.mo39.fmbh.common.Z;
@@ -30,7 +29,7 @@ public enum ArrayShuffle {
       for (int i = 0; i < arr.length; i++) {
         newArr[i] = new Value<T>(arr[i], rand.nextInt(bound));
       }
-      ComparisonSort.QUICK_SORT.sort(newArr);
+      Arrays.sort(newArr);
       for (int i = 0; i < arr.length; i++) {
         arr[i] = newArr[i].value;
       }
