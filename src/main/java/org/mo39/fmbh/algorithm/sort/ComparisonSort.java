@@ -14,7 +14,7 @@ import org.junit.Test;
 import org.mo39.fmbh.algorithm.ArrayPartition;
 import org.mo39.fmbh.common.TestData;
 import org.mo39.fmbh.common.Z;
-import org.mo39.fmbh.datastructure.heap.Heap;
+import org.mo39.fmbh.datastructure.heap.ArrayHeap;
 
 /**
  * Loop Invariant is used to proof the algorithm.
@@ -37,8 +37,6 @@ public enum ComparisonSort {
    * <p>
    * If binary search is used when insert the key to already sorted sequence (loop invariant), then
    * it's improved slightly and so called Binary Insertion Sort.
-   * 
-   * @author Jihan Chen
    * 
    */
   INSERTION_SORT() {
@@ -81,8 +79,6 @@ public enum ComparisonSort {
    * <br>
    * If flag <code>isSwapped</code> is not provided, bubble sort would not have such property.
    * 
-   * @author Jihan Chen
-   * 
    */
   BUBBEL_SORT() {
 
@@ -112,8 +108,6 @@ public enum ComparisonSort {
    * End state: i = arr.length and all elements to its left are sorted. So arr is sorted.
    * <p>
    * Best case and worst case are always <b>O(n^2)</b>.<br>
-   *
-   * @author Jihan Chen
    *
    */
   SELECTION_SORT() {
@@ -150,8 +144,6 @@ public enum ComparisonSort {
    * split process and will take log</b> loop to complete the merge because it's the height of a
    * tree. In each merge, it is merging two sub array into one, it takes O(n). So the overall time
    * complexity is <b>O(nlog(n))</b>
-   * 
-   * @author Jihan Chen
    * 
    */
   MERGE_SORT() {
@@ -237,7 +229,7 @@ public enum ComparisonSort {
 
     @Override
     protected <T extends Comparable<T>> void sortArr(T[] arr) {
-      Heap<T> maxHeap = Heap.newMaxHeap(arr);
+      ArrayHeap<T> maxHeap = ArrayHeap.newMaxHeap(arr);
       for (int i = arr.length - 1; i > 0; i--) {
         swap(arr, 0, i);
         maxHeap.setSize(maxHeap.getSize() - 1);

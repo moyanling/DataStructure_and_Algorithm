@@ -11,7 +11,9 @@ import org.junit.Test;
  * @author Jihan Chen
  *
  */
-public abstract class CountingSort {
+public class CountingSort {
+
+  private CountingSort() {}
 
   /**
    * k - 1 is the largest number in arr. No elements in arr is smaller than 0.
