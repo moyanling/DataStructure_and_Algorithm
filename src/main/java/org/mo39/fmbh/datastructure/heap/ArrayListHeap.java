@@ -36,16 +36,6 @@ public class ArrayListHeap<T extends Comparable<T>> extends AbstractHeap<T> {
   }
 
   @Override
-  public int getSize() {
-    return size;
-  }
-
-  @Override
-  public void setSize(int size) {
-    this.size = size;
-  }
-
-  @Override
   public void heapify(int i) {
     iterativeHeapify(i);
   }

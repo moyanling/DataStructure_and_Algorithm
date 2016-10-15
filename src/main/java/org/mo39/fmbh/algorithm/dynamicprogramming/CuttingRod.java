@@ -55,6 +55,41 @@ public enum CuttingRod {
       return max;
     }
 
+  },
+
+  /**
+   * This one builds up the solution from the very first case,<br>
+   * that is when i = 0, max = 0, to i = rod, max = memo[rod]. This is like a traverse, from bottom
+   * to the top. Solve the sub problem from a very basic level and build up the answer to the
+   * goal.//TODO need more understanding from abstract point of view. Go back here later.
+   * <p>
+   * <code>codeMemo</code> is used to save the rod cutting plan for each length smaller than rod.
+   */
+  BOTTOM_UP() {
+
+    @Override
+    public int solve(int rod) {
+      int[] memo = new int[rod + 1];
+      int[][] cutMemo = new int[rod + 1][];
+      cutMemo[0] = new int[] {0};
+      for (int i = 1; i < rod + 1; i++) {
+        int max = 0;
+        int[] cut = null;
+        for (int j = 1; j < i + 1; j++) {
+          int newMax = price[j - 1] + memo[i - j];
+          if (newMax > max) {
+            max = newMax;
+            cut = new int[cutMemo[i - j].length + 1];
+            cut[0] = j;
+            System.arraycopy(cutMemo[i - j], 0, cut, 1, cutMemo[i - j].length);
+          }
+        }
+        memo[i] = max;
+        cutMemo[i] = cut;
+      }
+      return memo[rod];
+    }
+
   };
 
   public final int[] price = {1, 5, 8, 9, 10, 17, 17, 20, 24, 30};
@@ -74,6 +109,7 @@ public enum CuttingRod {
     public void testSolution() {
       verifySolution(CuttingRod.RECURSIVE_SOLUTION);
       verifySolution(CuttingRod.TOP_DOWN_WITH_MEMOIZATION);
+      verifySolution(CuttingRod.BOTTOM_UP);
     }
 
   }
