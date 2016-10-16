@@ -2,6 +2,7 @@ package org.mo39.fmbh.common;
 
 import java.util.Stack;
 
+import org.mo39.fmbh.datastructure.binarytree.TreeNode;
 import org.mo39.fmbh.datastructure.linkedlist.ListNode;
 
 public class TestData {
@@ -63,5 +64,24 @@ public class TestData {
     stack.push(2);
     stack.push(5);
   }
+
+  public TreeNode<Integer> root = new TreeNode<>(0);
+  public TreeNode<Integer> treeNode1 = new TreeNode<>(1);
+  public TreeNode<Integer> treeNode2 = new TreeNode<>(2);
+  public TreeNode<Integer> treeNode3 = new TreeNode<>(3);
+  public TreeNode<Integer> treeNode4 = new TreeNode<>(4);
+  public TreeNode<Integer> treeNode5 = new TreeNode<>(5);
+  public TreeNode<Integer> treeNode6 = new TreeNode<>(6);
+
+  {
+    root.left = treeNode1;
+    root.right = treeNode2;
+    treeNode1.left = treeNode3;
+    treeNode1.right = treeNode4;
+    treeNode2.left = treeNode5;
+    treeNode2.right = treeNode6;
+  }
+
+
 
 }

@@ -20,8 +20,7 @@ public class Problem3_2 {
 
 	/**
 	 * This is a generic version of Stack.<br>
-	 * During the interview, this should be a bonus point.<br>
-	 *
+	 * 
 	 * @author Jihan Chen
 	 *
 	 * @param <T>
