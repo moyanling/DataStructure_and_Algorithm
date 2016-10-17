@@ -35,12 +35,16 @@ public class TreeNode<T> {
     return sol.solve(this);
   }
 
+  public List<T> InOrderTraversal(InOrderTraversalSol sol) {
+    return sol.solve(this);
+  }
+
   private enum LevelOrderTraversalSol {
 
     /**
      * Pay attention to the usage of Queue.<br>
      * Pay attention to how T are added to the result.
-     * 
+     *
      */
     ITERATIVE_SOLUTION() {
 
@@ -89,8 +93,8 @@ public class TreeNode<T> {
     },
 
     /**
-     * //TODO other ways of iterative solution:<br>
-     * https://discuss.leetcode.com/topic/6493/accepted-iterative-solution-in-java-using-stack/2
+     * This way is pushing every node into the stack and controlled to walk through the tree from
+     * root to left then right. This is not taking full advantage of stack.
      */
     ITERATIVE_SOLUTION_WITH_ROOT_STORED() {
 
@@ -111,6 +115,9 @@ public class TreeNode<T> {
 
     },
 
+    /**
+     * One of the best implementations. Take full advantage of stack to iterative over a tree.
+     */
     ITERATIVE_SOLUTION_WITH_BOTH_CHILDREN_STORED() {
 
       @Override
@@ -127,9 +134,64 @@ public class TreeNode<T> {
         return toRet;
       }
 
+    },
+
+    /**
+     * One advantage of this implementation is that the stack only stored the right child of the
+     * node.
+     */
+    ITERATIVE_SOLUTION_WITH_RIGHT_CHILD_STORED() {
+
+      @Override
+      public <T> List<T> solve(TreeNode<T> root) {
+        List<T> toRet = new ArrayList<>();
+        Stack<TreeNode<T>> rights = new Stack<>();
+        while (root != null) {
+          if (root.right != null) rights.push(root.right);
+          toRet.add(root.val);
+          root = root.left;
+          if (root == null && !rights.isEmpty()) root = rights.pop();
+        }
+        return toRet;
+      }
+
     };
 
     public abstract <T> List<T> solve(TreeNode<T> root);
+  }
+
+  private enum InOrderTraversalSol {
+
+    RECURSIVE_SOLUTION() {
+
+      @Override
+      public <T> List<T> solve(TreeNode<T> root) {
+        List<T> toRet = new ArrayList<>();
+        if (root.left != null) toRet.addAll(solve(root.left));
+        toRet.add(root.val);
+        if (root.right != null) toRet.addAll(solve(root.right));
+        return toRet;
+      }
+
+    },
+
+    ITERATIVE_SOLUTION_WITH_RIGHT_AND_ROOT_STORED() {
+
+      @Override
+      public <T> List<T> solve(TreeNode<T> root) {
+        List<T> toRet = new ArrayList<>();
+        Stack<T> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+
+        }
+        return null;
+      }
+
+    };
+
+    public abstract <T> List<T> solve(TreeNode<T> root);
+
   }
 
   @SuppressWarnings("serial")
@@ -151,6 +213,12 @@ public class TreeNode<T> {
       }
     };
 
+    private List<Integer> inOrder = new ArrayList<Integer>() {
+      {
+        addAll(Arrays.asList(new Integer[] {3, 1, 4, 0, 5, 2, 6}));
+      }
+    };
+
 
     @Test
     public void testLevelOrderTraversal() {
@@ -159,18 +227,24 @@ public class TreeNode<T> {
     }
 
     @Test
-    public void testPreorderTraversal() {
+    public void testPreOrderTraversal() {
       Assert.assertEquals(preOrder,
           root.preOrderTraversal(PreOrderTraversalSol.RECRUSIVE_SOLUTION));
       Assert.assertEquals(preOrder,
           root.preOrderTraversal(PreOrderTraversalSol.ITERATIVE_SOLUTION_WITH_ROOT_STORED));
       Assert.assertEquals(preOrder, root
           .preOrderTraversal(PreOrderTraversalSol.ITERATIVE_SOLUTION_WITH_BOTH_CHILDREN_STORED));
+      Assert.assertEquals(preOrder,
+          root.preOrderTraversal(PreOrderTraversalSol.ITERATIVE_SOLUTION_WITH_RIGHT_CHILD_STORED));
+    }
+
+    @Test
+    public void testInOrderTraversal() {
+      Assert.assertEquals(inOrder, root.InOrderTraversal(InOrderTraversalSol.RECURSIVE_SOLUTION));
     }
 
 
   }
-
 
 
 }
