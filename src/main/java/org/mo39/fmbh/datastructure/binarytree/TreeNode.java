@@ -92,7 +92,7 @@ public class TreeNode<T> {
      * //TODO other ways of iterative solution:<br>
      * https://discuss.leetcode.com/topic/6493/accepted-iterative-solution-in-java-using-stack/2
      */
-    ITERATIVE_SOLUTION() {
+    ITERATIVE_SOLUTION_WITH_ROOT_STORED() {
 
       @Override
       public <T> List<T> solve(TreeNode<T> root) {
@@ -109,16 +109,34 @@ public class TreeNode<T> {
         return toRet;
       }
 
+    },
+
+    ITERATIVE_SOLUTION_WITH_BOTH_CHILDREN_STORED() {
+
+      @Override
+      public <T> List<T> solve(TreeNode<T> root) {
+        List<T> toRet = new ArrayList<>();
+        Stack<TreeNode<T>> stack = new Stack<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+          root = stack.pop();
+          toRet.add(root.val);
+          if (root.right != null) stack.push(root.right);
+          if (root.left != null) stack.push(root.left);
+        }
+        return toRet;
+      }
+
     };
 
     public abstract <T> List<T> solve(TreeNode<T> root);
   }
 
+  @SuppressWarnings("serial")
   public static class TestTreeNode {
 
     private TreeNode<Integer> root = new TestData().root;
 
-    @SuppressWarnings("serial")
     private List<List<Integer>> levelOrder = new ArrayList<List<Integer>>() {
       {
         add(Arrays.asList(new Integer[] {0}));
@@ -127,7 +145,6 @@ public class TreeNode<T> {
       }
     };
 
-    @SuppressWarnings("serial")
     private List<Integer> preOrder = new ArrayList<Integer>() {
       {
         addAll(Arrays.asList(new Integer[] {0, 1, 3, 4, 2, 5, 6}));
@@ -146,7 +163,9 @@ public class TreeNode<T> {
       Assert.assertEquals(preOrder,
           root.preOrderTraversal(PreOrderTraversalSol.RECRUSIVE_SOLUTION));
       Assert.assertEquals(preOrder,
-          root.preOrderTraversal(PreOrderTraversalSol.ITERATIVE_SOLUTION));
+          root.preOrderTraversal(PreOrderTraversalSol.ITERATIVE_SOLUTION_WITH_ROOT_STORED));
+      Assert.assertEquals(preOrder, root
+          .preOrderTraversal(PreOrderTraversalSol.ITERATIVE_SOLUTION_WITH_BOTH_CHILDREN_STORED));
     }
 
 
