@@ -35,11 +35,15 @@ public class TreeNode<T> {
     return sol.solve(this);
   }
 
-  public List<T> InOrderTraversal(InOrderTraversalSol sol) {
+  public List<T> inOrderTraversal(InOrderTraversalSol sol) {
     return sol.solve(this);
   }
 
-  private enum LevelOrderTraversalSol {
+  public List<T> postOrderTraversal(PostOrderTraversalSol sol) {
+    return sol.solve(this);
+  }
+
+  public enum LevelOrderTraversalSol {
 
     /**
      * Pay attention to the usage of Queue.<br>
@@ -51,6 +55,7 @@ public class TreeNode<T> {
       @Override
       public <T> List<List<T>> solve(TreeNode<T> root) {
         List<List<T>> toRet = new ArrayList<>();
+        if (root == null) return toRet;
         Queue<TreeNode<T>> queue = new LinkedList<>();
         queue.offer(root);
         while (!queue.isEmpty()) {
@@ -73,7 +78,7 @@ public class TreeNode<T> {
 
   }
 
-  private enum PreOrderTraversalSol {
+  public enum PreOrderTraversalSol {
 
     /**
      * Neat and clean.
@@ -93,7 +98,7 @@ public class TreeNode<T> {
     },
 
     /**
-     * This way is pushing every node into the stack and controlled to walk through the tree from
+     * This way is pushing every node into the stack and is controlled to walk through the tree from
      * root to left then right. This is not taking full advantage of stack.
      */
     ITERATIVE_SOLUTION_WITH_ROOT_STORED() {
@@ -101,6 +106,7 @@ public class TreeNode<T> {
       @Override
       public <T> List<T> solve(TreeNode<T> root) {
         List<T> toRet = new ArrayList<>();
+        if (root == null) return toRet;
         Stack<TreeNode<T>> stack = new Stack<>();
         do {
           while (root != null) {
@@ -123,6 +129,7 @@ public class TreeNode<T> {
       @Override
       public <T> List<T> solve(TreeNode<T> root) {
         List<T> toRet = new ArrayList<>();
+        if (root == null) return toRet;
         Stack<TreeNode<T>> stack = new Stack<>();
         stack.push(root);
         while (!stack.isEmpty()) {
@@ -145,6 +152,7 @@ public class TreeNode<T> {
       @Override
       public <T> List<T> solve(TreeNode<T> root) {
         List<T> toRet = new ArrayList<>();
+        if (root == null) return toRet;
         Stack<TreeNode<T>> rights = new Stack<>();
         while (root != null) {
           if (root.right != null) rights.push(root.right);
@@ -160,34 +168,81 @@ public class TreeNode<T> {
     public abstract <T> List<T> solve(TreeNode<T> root);
   }
 
-  private enum InOrderTraversalSol {
+  public enum InOrderTraversalSol {
 
     RECURSIVE_SOLUTION() {
 
       @Override
       public <T> List<T> solve(TreeNode<T> root) {
         List<T> toRet = new ArrayList<>();
-        if (root.left != null) toRet.addAll(solve(root.left));
+        if (root == null) return toRet;
+        toRet.addAll(solve(root.left));
         toRet.add(root.val);
-        if (root.right != null) toRet.addAll(solve(root.right));
+        toRet.addAll(solve(root.right));
         return toRet;
       }
 
     },
 
-    ITERATIVE_SOLUTION_WITH_RIGHT_AND_ROOT_STORED() {
+    ITERATIVE_SOLUTION() {
 
       @Override
       public <T> List<T> solve(TreeNode<T> root) {
         List<T> toRet = new ArrayList<>();
-        Stack<T> stack = new Stack<>();
-        stack.push(root);
-        while (!stack.isEmpty()) {
-
-        }
-        return null;
+        if (root == null) return toRet;
+        Stack<TreeNode<T>> stack = new Stack<>();
+        do {
+          while (root != null) {
+            stack.push(root);
+            root = root.left;
+          }
+          root = stack.pop();
+          toRet.add(root.val);
+          root = root.right;
+        } while (!stack.isEmpty() || root != null);
+        return toRet;
       }
 
+    };
+
+    public abstract <T> List<T> solve(TreeNode<T> root);
+
+  }
+
+  public enum PostOrderTraversalSol {
+
+    RECURSIVE_SOLUTION() {
+
+      @Override
+      public <T> List<T> solve(TreeNode<T> root) {
+        List<T> toRet = new ArrayList<>();
+        if (root == null) return toRet;
+        toRet.addAll(solve(root.left));
+        toRet.addAll(solve(root.right));
+        toRet.add(root.val);
+        return toRet;
+      }
+
+    },
+
+    ITERATIVE_SOLUTION() {
+
+      @Override
+      public <T> List<T> solve(TreeNode<T> root) {
+        List<T> toRet = new ArrayList<>();
+        if (root == null) return toRet;
+        Stack<TreeNode<T>> stack = new Stack<>();
+        do {
+          while (root != null) {
+            stack.push(root);
+            root = root.left;
+          }
+          root = stack.pop();
+          toRet.add(root.val);
+          root = root.right;
+        } while (!stack.isEmpty());
+        return toRet;
+      }
     };
 
     public abstract <T> List<T> solve(TreeNode<T> root);
@@ -203,19 +258,26 @@ public class TreeNode<T> {
       {
         add(Arrays.asList(new Integer[] {0}));
         add(Arrays.asList(new Integer[] {1, 2}));
-        add(Arrays.asList(new Integer[] {3, 4, 5, 6}));
+        add(Arrays.asList(new Integer[] {3, 4}));
+        add(Arrays.asList(new Integer[] {5, 6, 7}));
       }
     };
 
     private List<Integer> preOrder = new ArrayList<Integer>() {
       {
-        addAll(Arrays.asList(new Integer[] {0, 1, 3, 4, 2, 5, 6}));
+        addAll(Arrays.asList(new Integer[] {0, 1, 3, 5, 6, 2, 4, 7}));
       }
     };
 
     private List<Integer> inOrder = new ArrayList<Integer>() {
       {
-        addAll(Arrays.asList(new Integer[] {3, 1, 4, 0, 5, 2, 6}));
+        addAll(Arrays.asList(new Integer[] {1, 5, 3, 6, 0, 2, 4, 7}));
+      }
+    };
+
+    private List<Integer> postOrder = new ArrayList<Integer>() {
+      {
+        addAll(Arrays.asList(new Integer[] {5, 6, 3, 1, 7, 4, 2, 0}));
       }
     };
 
@@ -240,7 +302,16 @@ public class TreeNode<T> {
 
     @Test
     public void testInOrderTraversal() {
-      Assert.assertEquals(inOrder, root.InOrderTraversal(InOrderTraversalSol.RECURSIVE_SOLUTION));
+      Assert.assertEquals(inOrder, root.inOrderTraversal(InOrderTraversalSol.RECURSIVE_SOLUTION));
+      Assert.assertEquals(inOrder, root.inOrderTraversal(InOrderTraversalSol.ITERATIVE_SOLUTION));
+    }
+
+    @Test
+    public void testPostOrderTraversal() {
+      Assert.assertEquals(postOrder,
+          root.postOrderTraversal(PostOrderTraversalSol.RECURSIVE_SOLUTION));
+      // Assert.assertEquals(postOrder,
+      // root.postOrderTraversal(PostOrderTraversalSol.ITERATIVE_SOLUTION));
     }
 
 

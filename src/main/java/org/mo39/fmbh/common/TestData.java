@@ -72,14 +72,16 @@ public class TestData {
   public TreeNode<Integer> treeNode4 = new TreeNode<>(4);
   public TreeNode<Integer> treeNode5 = new TreeNode<>(5);
   public TreeNode<Integer> treeNode6 = new TreeNode<>(6);
+  public TreeNode<Integer> treeNode7 = new TreeNode<>(7);
 
   {
     root.left = treeNode1;
     root.right = treeNode2;
-    treeNode1.left = treeNode3;
-    treeNode1.right = treeNode4;
-    treeNode2.left = treeNode5;
-    treeNode2.right = treeNode6;
+    treeNode1.right = treeNode3;
+    treeNode2.right = treeNode4;
+    treeNode3.left = treeNode5;
+    treeNode3.right = treeNode6;
+    treeNode4.right = treeNode7;
   }
 
 
