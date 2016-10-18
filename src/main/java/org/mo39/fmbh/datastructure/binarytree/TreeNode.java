@@ -1,7 +1,9 @@
 package org.mo39.fmbh.datastructure.binarytree;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -225,24 +227,36 @@ public class TreeNode<T> {
 
     },
 
+    /**
+     * //TODO
+     *
+     */
     ITERATIVE_SOLUTION() {
 
       @Override
       public <T> List<T> solve(TreeNode<T> root) {
+        return null;
+      }
+    },
+
+    REVERSED_PREORDER_SOLUTION() {
+
+      @Override
+      public <T> List<T> solve(TreeNode<T> root) {
         List<T> toRet = new ArrayList<>();
-        if (root == null) return toRet;
-        Stack<TreeNode<T>> stack = new Stack<>();
+        Deque<TreeNode<T>> deque = new ArrayDeque<>();
         do {
           while (root != null) {
-            stack.push(root);
+            deque.push(root);
+            toRet.add(root.val);
             root = root.left;
           }
-          root = stack.pop();
-          toRet.add(root.val);
+          root = deque.pop();
           root = root.right;
-        } while (!stack.isEmpty());
+        } while (deque.size() != 0 || root != null);
         return toRet;
       }
+
     };
 
     public abstract <T> List<T> solve(TreeNode<T> root);
@@ -298,6 +312,8 @@ public class TreeNode<T> {
           .preOrderTraversal(PreOrderTraversalSol.ITERATIVE_SOLUTION_WITH_BOTH_CHILDREN_STORED));
       Assert.assertEquals(preOrder,
           root.preOrderTraversal(PreOrderTraversalSol.ITERATIVE_SOLUTION_WITH_RIGHT_CHILD_STORED));
+      Assert.assertEquals(preOrder, // FIXME
+          root.postOrderTraversal(PostOrderTraversalSol.REVERSED_PREORDER_SOLUTION));
     }
 
     @Test
