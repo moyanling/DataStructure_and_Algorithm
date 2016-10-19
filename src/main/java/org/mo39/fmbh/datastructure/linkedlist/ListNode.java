@@ -7,8 +7,7 @@ import java.util.function.Predicate;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mo39.fmbh.common.TestData;
-
-import com.google.common.base.Preconditions;
+import org.mo39.fmbh.common.Z;
 
 /**
  * There are several characteristics of Linked List that needs attention.<br>
@@ -20,21 +19,21 @@ import com.google.common.base.Preconditions;
  * @author Jihan Chen
  *
  */
-public class ListNode {
+public class ListNode<T> {
 
   /**
    * The value of this ListNode
    */
-  public int val;
+  public T val;
 
   /**
    * The variable member that holds the next ListNode.
    */
-  public ListNode next;
+  public ListNode<T> next;
 
   public ListNode() {}
 
-  public ListNode(int val) {
+  public ListNode(T val) {
     this.val = val;
   }
 
@@ -46,7 +45,7 @@ public class ListNode {
   /**
    * Take this ListNode as the head and remove all duplicate elements.<br>
    * Two ListNode are considered duplicate when and only when {@link #val} are equal.
-   * 
+   *
    * @param sol
    */
   public void removeDuplicate(RemoveDuplicateSol sol) {
@@ -55,12 +54,12 @@ public class ListNode {
 
   /**
    * Take this ListNode as the head and find the last k element in this linked list.
-   * 
+   *
    * @param sol
    * @param k
    * @return
    */
-  public ListNode findLastKElement(FindLastKElementSol sol, int k) {
+  public ListNode<T> findLastKElement(FindLastKElementSol sol, int k) {
     return sol.solve(this, k);
   }
 
@@ -70,16 +69,16 @@ public class ListNode {
    * <p>
    * Dummy head is a useful technique.<br>
    * The end state after loop needs more process.<br>
-   * 
+   *
    * @param val
    * @return new head for this linked list
    */
-  public ListNode partition(Predicate<ListNode> p) {
-    ListNode head = this;
-    ListNode head1 = new ListNode();
-    ListNode head2 = new ListNode();
-    ListNode head1Copy = head1;
-    ListNode head2Copy = head2;
+  public ListNode<T> partition(Predicate<ListNode<T>> p) {
+    ListNode<T> head = this;
+    ListNode<T> head1 = new ListNode<T>();
+    ListNode<T> head2 = new ListNode<T>();
+    ListNode<T> head1Copy = head1;
+    ListNode<T> head2Copy = head2;
     while (head != null) {
       if (p.test(head)) {
         head1.next = head;
@@ -95,21 +94,7 @@ public class ListNode {
     return head1Copy.next;
   }
 
-
-
-  /**
-   * Take this ListNode as the head and remove the input element.<br>
-   * The input ListNode should not be the last element.
-   * 
-   * @param node
-   */
-  public static void delete(ListNode node) {
-    Preconditions.checkArgument(node.next != null);
-    node.val = node.next.val;
-    node.next = node.next.next;
-  }
-
-  private enum RemoveDuplicateSol {
+  public enum RemoveDuplicateSol {
 
     /**
      * Take advantage of Set. Concise but use extra space.
@@ -120,9 +105,9 @@ public class ListNode {
     SET_SOLUTION() {
 
       @Override
-      public void solve(ListNode head) {
-        ListNode pre = null;
-        Set<Integer> set = new HashSet<>();
+      public <T> void solve(ListNode<T> head) {
+        ListNode<T> pre = null;
+        Set<T> set = new HashSet<>();
         while (head != null) {
           if (!set.add(head.val)) pre.next = head.next;
           else pre = head;
@@ -147,11 +132,11 @@ public class ListNode {
        * @return
        */
       @Override
-      public void solve(ListNode head) {
+      public <T> void solve(ListNode<T> head) {
         if (head.next == null) return;
         while (head != null) {
-          ListNode newHead = head.next;
-          ListNode pre = head;
+          ListNode<T> newHead = head.next;
+          ListNode<T> pre = head;
           while (newHead != null) {
             if (newHead.val == head.val) pre.next = newHead.next;
             else pre = newHead;
@@ -163,10 +148,10 @@ public class ListNode {
 
     };
 
-    public abstract void solve(ListNode head);
+    public abstract <T> void solve(ListNode<T> head);
   }
 
-  private enum FindLastKElementSol {
+  public enum FindLastKElementSol {
 
     /**
      * Count the number after recursion return.
@@ -174,9 +159,9 @@ public class ListNode {
     RECURSIVE_SOLUTION() {
 
       private int count;
-      private ListNode toRet;
+      private ListNode<?> toRet;
 
-      private void traverseLinkedList(ListNode head, int k) {
+      private <T> void traverseLinkedList(ListNode<T> head, int k) {
         if (head == null) return;
         traverseLinkedList(head.next, k);
         count++;
@@ -185,10 +170,11 @@ public class ListNode {
         }
       }
 
+      @SuppressWarnings("unchecked")
       @Override
-      public ListNode solve(ListNode head, int k) {
+      public <T> ListNode<T> solve(ListNode<T> head, int k) {
         traverseLinkedList(head, k);
-        return toRet;
+        return (ListNode<T>) toRet;
       }
 
     },
@@ -200,9 +186,9 @@ public class ListNode {
     ITERATIVE_SOLUTION() {
 
       @Override
-      public ListNode solve(ListNode head, int k) {
+      public <T> ListNode<T> solve(ListNode<T> head, int k) {
         int len = 0;
-        ListNode headCopy = head;
+        ListNode<T> headCopy = head;
         while (head != null) {
           head = head.next;
           len++;
@@ -218,7 +204,7 @@ public class ListNode {
 
     };
 
-    public abstract ListNode solve(ListNode head, int k);
+    public abstract <T> ListNode<T> solve(ListNode<T> head, int k);
 
   }
 
@@ -227,22 +213,14 @@ public class ListNode {
   public static class TestListNode {
 
     private TestData testData = new TestData();
-    private ListNode head = testData.head;
+    private ListNode<Integer> head = testData.head;
 
-    private void verifyNoDuplicate(ListNode head) {
+    private void verifyNoDuplicate(ListNode<Integer> head) {
       Set<Integer> set = new HashSet<>();
       while (head != null) {
         Assert.assertTrue(set.add(head.val));
         head = head.next;
       }
-    }
-
-    private void verifyAllNodes(int[] expected, ListNode head) {
-      for (int i = 0; i < expected.length; i++) {
-        Assert.assertEquals(expected[i], head.val);
-        head = head.next;
-      }
-      Assert.assertNull(head);
     }
 
     @Test
@@ -259,23 +237,19 @@ public class ListNode {
 
     @Test
     public void testFindLastKElementRecursiveSolution() {
-      Assert.assertEquals(5, head.findLastKElement(FindLastKElementSol.RECURSIVE_SOLUTION, 3).val);
+      Assert.assertEquals((Integer) 5,
+          head.findLastKElement(FindLastKElementSol.RECURSIVE_SOLUTION, 3).val);
     }
 
     @Test
     public void testFindLastKElementIterativeSolution() {
-      Assert.assertEquals(5, head.findLastKElement(FindLastKElementSol.ITERATIVE_SOLUTION, 3).val);
-    }
-
-    @Test
-    public void testDelete() {
-      ListNode.delete(head);
-      verifyAllNodes(new int[] {3, 0, 7, 6, 5, 8, 5, 4, 3}, head);
+      Assert.assertEquals((Integer) 5,
+          head.findLastKElement(FindLastKElementSol.ITERATIVE_SOLUTION, 3).val);
     }
 
     @Test
     public void testPartition() {
-      verifyAllNodes(new int[] {1, 3, 0, 4, 3, 7, 6, 5, 8, 5},
+      Z.verifyAllNodes(new Integer[] {1, 3, 0, 4, 3, 7, 6, 5, 8, 5},
           head.partition(node -> node.val < 5));
 
     }

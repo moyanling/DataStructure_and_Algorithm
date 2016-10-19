@@ -18,16 +18,16 @@ public class TestData {
   public int[][] matrix1 =
       new int[][] {{1, 2, 3, 4}, {12, 0, 14, 5}, {11, 15, 3, 4}, {10, 9, 0, 7}};
 
-  public ListNode node0 = new ListNode(1);
-  public ListNode node1 = new ListNode(3);
-  public ListNode node2 = new ListNode(0);
-  public ListNode node3 = new ListNode(7);
-  public ListNode node4 = new ListNode(6);
-  public ListNode node5 = new ListNode(5);
-  public ListNode node6 = new ListNode(8);
-  public ListNode node7 = new ListNode(5);
-  public ListNode node8 = new ListNode(4);
-  public ListNode node9 = new ListNode(3);
+  public ListNode<Integer> node0 = new ListNode<>(1);
+  public ListNode<Integer> node1 = new ListNode<>(3);
+  public ListNode<Integer> node2 = new ListNode<>(0);
+  public ListNode<Integer> node3 = new ListNode<>(7);
+  public ListNode<Integer> node4 = new ListNode<>(6);
+  public ListNode<Integer> node5 = new ListNode<>(5);
+  public ListNode<Integer> node6 = new ListNode<>(8);
+  public ListNode<Integer> node7 = new ListNode<>(5);
+  public ListNode<Integer> node8 = new ListNode<>(4);
+  public ListNode<Integer> node9 = new ListNode<>(3);
 
   {
     node0.next = node1;
@@ -41,9 +41,9 @@ public class TestData {
     node8.next = node9;
   }
 
-  public ListNode head = node0;
+  public ListNode<Integer> head = node0;
 
-  public ListNode getCircleLinkedList() {
+  public ListNode<Integer> getCircleLinkedList() {
     node0.next = node1;
     node1.next = node2;
     node2.next = node3;
@@ -83,6 +83,38 @@ public class TestData {
     treeNode3.right = treeNode6;
     treeNode4.right = treeNode7;
   }
+
+  public ListNode<Integer> sortedLinkedList0 = new ListNode<Integer>(3) {
+    {
+      next = new ListNode<Integer>(7) {
+        {
+          next = new ListNode<Integer>(10) {
+            {
+              next = new ListNode<Integer>(31);
+            }
+          };
+        }
+      };
+    }
+  };
+
+  public ListNode<Integer> sortedLinkedList1 = new ListNode<Integer>(1) {
+    {
+      next = new ListNode<Integer>(2) {
+        {
+          next = new ListNode<Integer>(5) {
+            {
+              next = new ListNode<Integer>(6) {
+                {
+                  next = new ListNode<Integer>(8);
+                }
+              };
+            }
+          };
+        }
+      };
+    }
+  };
 
 
 

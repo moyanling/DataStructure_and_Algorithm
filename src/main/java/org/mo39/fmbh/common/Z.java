@@ -1,10 +1,10 @@
 package org.mo39.fmbh.common;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
+import org.junit.Assert;
 import org.mo39.fmbh.datastructure.linkedlist.ListNode;
 
 public class Z {
@@ -29,7 +29,7 @@ public class Z {
     print(Arrays.toString(arr));
   }
 
-  public static void printLinkedList(ListNode head) {
+  public static <T> void printLinkedList(ListNode<T> head) {
     while (head != null) {
       printnb(head + " -> ");
       head = head.next;
@@ -70,13 +70,12 @@ public class Z {
     list.set(j, list.set(i, list.get(j)));
   }
 
-  public static void main(String[] args) {
-    List<Integer> integers = new ArrayList<>();
-    integers.add(1);
-    integers.add(2);
-    Z.print(integers);
-    swap(integers, 0, 1);
-    Z.print(integers);
+  public static void verifyAllNodes(Integer[] expected, ListNode<Integer> head) {
+    for (int i = 0; i < expected.length; i++) {
+      Assert.assertEquals(expected[i], head.val);
+      head = head.next;
+    }
+    Assert.assertNull(head);
   }
 
 }
