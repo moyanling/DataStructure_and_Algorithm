@@ -249,7 +249,7 @@ public class ListNode<T> {
 
     @Test
     public void testPartition() {
-      Z.verifyAllNodes(new Integer[] {1, 3, 0, 4, 3, 7, 6, 5, 8, 5},
+      Z.verifyListNodes(new Integer[] {1, 3, 0, 4, 3, 7, 6, 5, 8, 5},
           head.partition(node -> node.val < 5));
 
     }

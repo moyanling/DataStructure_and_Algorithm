@@ -22,19 +22,14 @@ public enum MergeTwoSortedLinkedList {
         if (head0 == null || head0 != null && head1 != null && head0.val.compareTo(head1.val) > 0) {
           dummyHead.next = head1;
           head1 = head1.next;
-          dummyHead = dummyHead.next;
-          continue;
-        }
-        if (head1 == null || head0 != null && head1 != null && head0.val.compareTo(head1.val) < 0) {
+        } else {
           dummyHead.next = head0;
           head0 = head0.next;
-          dummyHead = dummyHead.next;
-          continue;
         }
+        dummyHead = dummyHead.next;
       }
       return dummyHeadCopy.next;
     }
-
 
   };
 
@@ -47,7 +42,7 @@ public enum MergeTwoSortedLinkedList {
 
     @Test
     public void testLinearSolution() {
-      Z.verifyAllNodes(new Integer[] {1, 2, 3, 5, 6, 7, 8, 10, 31},
+      Z.verifyListNodes(new Integer[] {1, 2, 3, 5, 6, 7, 8, 10, 31},
           MergeTwoSortedLinkedList.LINEAR_SOLUTION.solve(head0, head1));
     }
 

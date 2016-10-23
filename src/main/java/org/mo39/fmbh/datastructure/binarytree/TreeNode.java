@@ -1,9 +1,7 @@
 package org.mo39.fmbh.datastructure.binarytree;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -83,7 +81,7 @@ public class TreeNode<T> {
   public enum PreOrderTraversalSol {
 
     /**
-     * Neat and clean.
+     * Neat and clean recursive solution.
      */
     RECRUSIVE_SOLUTION() {
 
@@ -172,6 +170,9 @@ public class TreeNode<T> {
 
   public enum InOrderTraversalSol {
 
+    /**
+     * Neat and clean recursive solution.
+     */
     RECURSIVE_SOLUTION() {
 
       @Override
@@ -191,7 +192,6 @@ public class TreeNode<T> {
       @Override
       public <T> List<T> solve(TreeNode<T> root) {
         List<T> toRet = new ArrayList<>();
-        if (root == null) return toRet;
         Stack<TreeNode<T>> stack = new Stack<>();
         do {
           while (root != null) {
@@ -201,7 +201,7 @@ public class TreeNode<T> {
           root = stack.pop();
           toRet.add(root.val);
           root = root.right;
-        } while (!stack.isEmpty() || root != null);
+        } while (stack.size() != 0 || root != null);
         return toRet;
       }
 
@@ -228,32 +228,56 @@ public class TreeNode<T> {
     },
 
     /**
-     * //TODO
+     * The key point is to add the check of <code>pre</code> when going from the root to either left
+     * or right so that when the node goes back to it's parent, it won't repeat the route.
      *
      */
     ITERATIVE_SOLUTION() {
 
       @Override
       public <T> List<T> solve(TreeNode<T> root) {
-        return null;
+        List<T> toRet = new ArrayList<>();
+        if (root == null) return toRet;
+        Stack<TreeNode<T>> stack = new Stack<>();
+        TreeNode<T> pre = null;
+        do {
+          while (root != null && pre != root) {
+            stack.push(root);
+            pre = root;
+            root = root.left;
+          }
+          if (stack.peek().right != null && pre != stack.peek().right) {
+            root = stack.peek().right;
+            continue;
+          }
+          root = stack.pop();
+          toRet.add(root.val);
+          pre = root;
+        } while (stack.size() != 0);
+        return toRet;
       }
     },
 
+    /**
+     * This is a smart method to get the correct result of the post-order traversal.<br>
+     * Pay attention to the usage of LinkedList.
+     */
     REVERSED_PREORDER_SOLUTION() {
 
       @Override
       public <T> List<T> solve(TreeNode<T> root) {
-        List<T> toRet = new ArrayList<>();
-        Deque<TreeNode<T>> deque = new ArrayDeque<>();
+        LinkedList<T> toRet = new LinkedList<>();
+        Stack<TreeNode<T>> stack = new Stack<>();
         do {
-          while (root != null) {
-            deque.push(root);
-            toRet.add(root.val);
+          if (root != null) {
+            stack.push(root);
+            toRet.addFirst(root.val);
+            root = root.right;
+          } else {
+            root = stack.pop();
             root = root.left;
           }
-          root = deque.pop();
-          root = root.right;
-        } while (deque.size() != 0 || root != null);
+        } while (stack.size() != 0 || root != null);
         return toRet;
       }
 
@@ -312,8 +336,6 @@ public class TreeNode<T> {
           .preOrderTraversal(PreOrderTraversalSol.ITERATIVE_SOLUTION_WITH_BOTH_CHILDREN_STORED));
       Assert.assertEquals(preOrder,
           root.preOrderTraversal(PreOrderTraversalSol.ITERATIVE_SOLUTION_WITH_RIGHT_CHILD_STORED));
-      Assert.assertEquals(preOrder, // FIXME
-          root.postOrderTraversal(PostOrderTraversalSol.REVERSED_PREORDER_SOLUTION));
     }
 
     @Test
@@ -326,8 +348,10 @@ public class TreeNode<T> {
     public void testPostOrderTraversal() {
       Assert.assertEquals(postOrder,
           root.postOrderTraversal(PostOrderTraversalSol.RECURSIVE_SOLUTION));
-      // Assert.assertEquals(postOrder,
-      // root.postOrderTraversal(PostOrderTraversalSol.ITERATIVE_SOLUTION));
+      Assert.assertEquals(postOrder,
+          root.postOrderTraversal(PostOrderTraversalSol.ITERATIVE_SOLUTION));
+      Assert.assertEquals(postOrder,
+          root.postOrderTraversal(PostOrderTraversalSol.REVERSED_PREORDER_SOLUTION));
     }
 
 

@@ -70,7 +70,7 @@ public class Z {
     list.set(j, list.set(i, list.get(j)));
   }
 
-  public static void verifyAllNodes(Integer[] expected, ListNode<Integer> head) {
+  public static void verifyListNodes(Integer[] expected, ListNode<Integer> head) {
     for (int i = 0; i < expected.length; i++) {
       Assert.assertEquals(expected[i], head.val);
       head = head.next;
