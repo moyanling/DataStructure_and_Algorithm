@@ -14,7 +14,7 @@ import org.mo39.fmbh.common.TestData;
 
 public class TreeNode<T> {
 
-  public T val;
+  public final T val;
   public TreeNode<T> left;
   public TreeNode<T> right;
 
@@ -27,23 +27,47 @@ public class TreeNode<T> {
     return String.valueOf(val);
   }
 
-  public List<List<T>> levelOrderTraversal(LevelOrderTraversalSol sol) {
+  /**
+   * Breadth-first search traversal.
+   *
+   * @param sol
+   * @return
+   */
+  public List<List<T>> bfs(LevelOrderSol sol) {
     return sol.solve(this);
   }
 
-  public List<T> preOrderTraversal(PreOrderTraversalSol sol) {
+  /**
+   * Deepth-first search traversal.
+   *
+   * @param sol
+   * @return
+   */
+  public List<T> dfs(PreOrderSol sol) {
     return sol.solve(this);
   }
 
-  public List<T> inOrderTraversal(InOrderTraversalSol sol) {
+  /**
+   * Deepth-first search traversal.
+   *
+   * @param sol
+   * @return
+   */
+  public List<T> dfs(InOrderSol sol) {
     return sol.solve(this);
   }
 
-  public List<T> postOrderTraversal(PostOrderTraversalSol sol) {
+  /**
+   * Deepth-first search traversal.
+   *
+   * @param sol
+   * @return
+   */
+  public List<T> dfs(PostOrderSol sol) {
     return sol.solve(this);
   }
 
-  public enum LevelOrderTraversalSol {
+  public enum LevelOrderSol {
 
     /**
      * Pay attention to the usage of Queue.<br>
@@ -72,13 +96,47 @@ public class TreeNode<T> {
         return toRet;
       }
 
+    },
+
+    ITERATIVE_SOLUTION_WITH_NULL() {
+
+      @Override
+      public <T> List<List<T>> solve(TreeNode<T> root) {
+        List<List<T>> toRet = new ArrayList<>();
+        if (root == null) return toRet;
+        Queue<TreeNode<T>> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+          List<T> level = new ArrayList<>();
+          int size = queue.size();
+          boolean nullLevel = true;
+          for (int i = 0; i < size; i++) {
+            TreeNode<T> node = queue.poll();
+            level.add(node == null ? null : node.val);
+            if (node == null) {
+              queue.offer(null);
+              queue.offer(null);
+              continue;
+            }
+            nullLevel = false;
+            if (node.left != null) queue.offer(node.left);
+            else queue.offer(null);
+            if (node.right != null) queue.offer(node.right);
+            else queue.offer(null);
+          }
+          if (nullLevel) return toRet;
+          toRet.add(level);
+        }
+        return toRet;
+      }
+
     };
 
     public abstract <T> List<List<T>> solve(TreeNode<T> root);
 
   }
 
-  public enum PreOrderTraversalSol {
+  public enum PreOrderSol {
 
     /**
      * Neat and clean recursive solution.
@@ -168,7 +226,7 @@ public class TreeNode<T> {
     public abstract <T> List<T> solve(TreeNode<T> root);
   }
 
-  public enum InOrderTraversalSol {
+  public enum InOrderSol {
 
     /**
      * Neat and clean recursive solution.
@@ -211,7 +269,7 @@ public class TreeNode<T> {
 
   }
 
-  public enum PostOrderTraversalSol {
+  public enum PostOrderSol {
 
     RECURSIVE_SOLUTION() {
 
@@ -301,6 +359,15 @@ public class TreeNode<T> {
       }
     };
 
+    private List<List<Integer>> levelOrderWithNull = new ArrayList<List<Integer>>() {
+      {
+        add(Arrays.asList(new Integer[] {0}));
+        add(Arrays.asList(new Integer[] {1, 2}));
+        add(Arrays.asList(new Integer[] {null, 3, null, 4}));
+        add(Arrays.asList(new Integer[] {null, null, 5, 6, null, null, null, 7}));
+      }
+    };
+
     private List<Integer> preOrder = new ArrayList<Integer>() {
       {
         addAll(Arrays.asList(new Integer[] {0, 1, 3, 5, 6, 2, 4, 7}));
@@ -321,37 +388,32 @@ public class TreeNode<T> {
 
 
     @Test
-    public void testLevelOrderTraversal() {
-      Assert.assertEquals(levelOrder,
-          root.levelOrderTraversal(LevelOrderTraversalSol.ITERATIVE_SOLUTION));
+    public void testLevelOrder() {
+      Assert.assertEquals(levelOrder, root.bfs(LevelOrderSol.ITERATIVE_SOLUTION));
+      Assert.assertEquals(levelOrderWithNull, root.bfs(LevelOrderSol.ITERATIVE_SOLUTION_WITH_NULL));
     }
 
     @Test
-    public void testPreOrderTraversal() {
+    public void testPreOrder() {
+      Assert.assertEquals(preOrder, root.dfs(PreOrderSol.RECRUSIVE_SOLUTION));
+      Assert.assertEquals(preOrder, root.dfs(PreOrderSol.ITERATIVE_SOLUTION_WITH_ROOT_STORED));
       Assert.assertEquals(preOrder,
-          root.preOrderTraversal(PreOrderTraversalSol.RECRUSIVE_SOLUTION));
+          root.dfs(PreOrderSol.ITERATIVE_SOLUTION_WITH_BOTH_CHILDREN_STORED));
       Assert.assertEquals(preOrder,
-          root.preOrderTraversal(PreOrderTraversalSol.ITERATIVE_SOLUTION_WITH_ROOT_STORED));
-      Assert.assertEquals(preOrder, root
-          .preOrderTraversal(PreOrderTraversalSol.ITERATIVE_SOLUTION_WITH_BOTH_CHILDREN_STORED));
-      Assert.assertEquals(preOrder,
-          root.preOrderTraversal(PreOrderTraversalSol.ITERATIVE_SOLUTION_WITH_RIGHT_CHILD_STORED));
+          root.dfs(PreOrderSol.ITERATIVE_SOLUTION_WITH_RIGHT_CHILD_STORED));
     }
 
     @Test
-    public void testInOrderTraversal() {
-      Assert.assertEquals(inOrder, root.inOrderTraversal(InOrderTraversalSol.RECURSIVE_SOLUTION));
-      Assert.assertEquals(inOrder, root.inOrderTraversal(InOrderTraversalSol.ITERATIVE_SOLUTION));
+    public void testInOrder() {
+      Assert.assertEquals(inOrder, root.dfs(InOrderSol.RECURSIVE_SOLUTION));
+      Assert.assertEquals(inOrder, root.dfs(InOrderSol.ITERATIVE_SOLUTION));
     }
 
     @Test
-    public void testPostOrderTraversal() {
-      Assert.assertEquals(postOrder,
-          root.postOrderTraversal(PostOrderTraversalSol.RECURSIVE_SOLUTION));
-      Assert.assertEquals(postOrder,
-          root.postOrderTraversal(PostOrderTraversalSol.ITERATIVE_SOLUTION));
-      Assert.assertEquals(postOrder,
-          root.postOrderTraversal(PostOrderTraversalSol.REVERSED_PREORDER_SOLUTION));
+    public void testPostOrder() {
+      Assert.assertEquals(postOrder, root.dfs(PostOrderSol.RECURSIVE_SOLUTION));
+      Assert.assertEquals(postOrder, root.dfs(PostOrderSol.ITERATIVE_SOLUTION));
+      Assert.assertEquals(postOrder, root.dfs(PostOrderSol.REVERSED_PREORDER_SOLUTION));
     }
 
 

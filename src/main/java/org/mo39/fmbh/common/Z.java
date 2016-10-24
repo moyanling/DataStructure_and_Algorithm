@@ -1,11 +1,17 @@
 package org.mo39.fmbh.common;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
 import org.junit.Assert;
+import org.mo39.fmbh.datastructure.binarytree.TreeNode;
+import org.mo39.fmbh.datastructure.binarytree.TreeNode.LevelOrderSol;
 import org.mo39.fmbh.datastructure.linkedlist.ListNode;
+
+import com.google.common.base.Joiner;
 
 public class Z {
 
@@ -77,5 +83,20 @@ public class Z {
     }
     Assert.assertNull(head);
   }
+
+  public static <T> void print(TreeNode<T> root) {
+    List<T> list = new ArrayList<>();
+    for (List<T> level : root.bfs(LevelOrderSol.ITERATIVE_SOLUTION_WITH_NULL)) {
+      list.addAll(level);
+    }
+    print(Joiner.on(',').join(
+        list.stream().map(n -> n == null ? '#' : String.valueOf(n)).collect(Collectors.toList())));
+  }
+
+  public static void main(String[] args) {
+
+  }
+
+
 
 }

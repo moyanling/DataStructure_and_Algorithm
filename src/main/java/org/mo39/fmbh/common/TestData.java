@@ -9,8 +9,11 @@ public class TestData {
 
   public int[] intArr =
       new int[] {13, -3, -25, 20, -3, -16, -23, 18, 20, -7, 12, -5, -22, 15, -4, 7};
+
   public Integer[] integerArr =
       new Integer[] {13, -3, -25, 20, -3, -16, -23, 18, 20, -7, 12, -5, -22, 15, -4, 7};
+
+  public Integer[] noDupulicateIntegerArr0 = new Integer[] {13, -3, -25, -16, -23, 18, 20, -7, 12};
 
   public int[][] matrix0 =
       new int[][] {{1, 2, 3, 4}, {12, 13, 14, 5}, {11, 15, 16, 6}, {10, 9, 8, 7}};
@@ -115,7 +118,5 @@ public class TestData {
       };
     }
   };
-
-
 
 }
