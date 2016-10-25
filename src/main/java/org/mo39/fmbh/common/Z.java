@@ -1,17 +1,12 @@
 package org.mo39.fmbh.common;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
-import java.util.stream.Collectors;
 
 import org.junit.Assert;
 import org.mo39.fmbh.datastructure.binarytree.TreeNode;
-import org.mo39.fmbh.datastructure.binarytree.TreeNode.LevelOrderSol;
 import org.mo39.fmbh.datastructure.linkedlist.ListNode;
-
-import com.google.common.base.Joiner;
 
 public class Z {
 
@@ -76,7 +71,13 @@ public class Z {
     list.set(j, list.set(i, list.get(j)));
   }
 
-  public static void verifyListNodes(Integer[] expected, ListNode<Integer> head) {
+  /**
+   * Assert that one linked list is equal to a given array.
+   * 
+   * @param expected
+   * @param head
+   */
+  public static <T> void verifyListNodes(T[] expected, ListNode<T> head) {
     for (int i = 0; i < expected.length; i++) {
       Assert.assertEquals(expected[i], head.val);
       head = head.next;
@@ -84,19 +85,28 @@ public class Z {
     Assert.assertNull(head);
   }
 
-  public static <T> void print(TreeNode<T> root) {
-    List<T> list = new ArrayList<>();
-    for (List<T> level : root.bfs(LevelOrderSol.ITERATIVE_SOLUTION_WITH_NULL)) {
-      list.addAll(level);
+  /**
+   * Assert that two binary trees are equal.
+   * <p>
+   * Two binary tree are considered equal if they are structurally identical and the nodes have the
+   * same value.
+   * <p>
+   * {@link TreeNode.LevelOrderSol#ITERATIVE_SOLUTION_WITH_NULL} can also be used as a solution. It
+   * is not a fast solution but is valid (pass all the test cases on leetcode).
+   *
+   * @param root1
+   * @param root2
+   */
+  public static <T> void verifyTreeNodes(TreeNode<T> p, TreeNode<T> q) {
+    if (p == null || q == null) {
+      Assert.assertEquals(p, q);
+      return;
     }
-    print(Joiner.on(',').join(
-        list.stream().map(n -> n == null ? '#' : String.valueOf(n)).collect(Collectors.toList())));
+    Assert.assertEquals(p.val, q.val);
+    verifyTreeNodes(p.left, q.left);
+    verifyTreeNodes(p.right, q.right);
   }
 
-  public static void main(String[] args) {
-
-  }
-
-
+  public static void main(String[] args) {}
 
 }

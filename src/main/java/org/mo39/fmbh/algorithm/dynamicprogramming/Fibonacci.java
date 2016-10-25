@@ -16,6 +16,10 @@ public enum Fibonacci {
 
   },
 
+  /**
+   * //TODO store answer in static field and make the solution return immediately if it's already
+   * calculated.
+   */
   DYNAMIC_PROGRAMMING() {
 
     @Override

@@ -98,6 +98,10 @@ public class TreeNode<T> {
 
     },
 
+    /**
+     * Level order traversal with null value. Presents a complete tree.
+     * 
+     */
     ITERATIVE_SOLUTION_WITH_NULL() {
 
       @Override
