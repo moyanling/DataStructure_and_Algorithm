@@ -97,6 +97,24 @@ public class BST<T> {
   }
 
   /**
+   * Find a TreeNode given the search key and delete the node.
+   * <p>
+   * Note: <br>
+   * 1. {@link SearchSol#ITERATIVE_SOLUTION} is used to search for the TreeNode.<br>
+   * 2. This will throw an IllegalArgumentException if they key does not exists. Use
+   * {@link #deleteSilently} to allow non-existing key deletion.<br>
+   *
+   * @param key
+   */
+  public void delete(T key) {
+    delete(key, SearchSol.ITERATIVE_SOLUTION);
+  }
+
+  public void deleteSilently(T key) {
+    delete(key, SearchSol.ITERATIVE_SOLUTION);
+  }
+
+  /**
    * Get the maximum.
    *
    * @return
@@ -112,6 +130,11 @@ public class BST<T> {
    */
   public TreeNode<T> getMin() {
     return getPeakNode(o -> o.left);
+  }
+
+  private void delete(T key, SearchSol sol) {
+    TreeNode<T> searchResult = sol.solve(this, key);
+    checkArgument(searchResult != null, "key " + key + "does not exist.");
   }
 
   /**
@@ -196,7 +219,8 @@ public class BST<T> {
         while (curr != null) {
           int compareResult = bst.comparator.compare(key, curr.val);
           if (compareResult == 0) return curr;
-          else if (compareResult < 0) curr = curr.left;
+          parent = curr;
+          if (compareResult < 0) curr = curr.left;
           else curr = curr.right;
         }
         return null;
@@ -215,13 +239,22 @@ public class BST<T> {
         if (curr == null) return null;
         int compareResult = comparator.compare(key, curr.val);
         if (compareResult == 0) return curr;
-        else if (compareResult < 0) return recur(curr.left, comparator, key);
+        parent = curr;
+        if (compareResult < 0) return recur(curr.left, comparator, key);
         else return recur(curr.right, comparator, key);
       }
 
     };
 
+    /**
+     * The parent is traced when searching a specific key. Each time after a search is performed,
+     * the parent is updated and might be useful if needed. At the beginning it's a dummy node that
+     * holds a <code>null</code> value.
+     */
+    public TreeNode<?> parent = new TreeNode<Object>(null);
+
     public abstract <T> TreeNode<T> solve(BST<T> bst, T key);
+
   }
 
   public static class TestBST {
@@ -279,8 +312,11 @@ public class BST<T> {
       Assert.assertNull(bst.search(0, SearchSol.RECURSIVE_SOLUTION));
       Assert.assertEquals(new Integer(5), bst.search(5, SearchSol.ITERATIVE_SOLUTION).val);
       Assert.assertEquals(new Integer(5), bst.search(5, SearchSol.RECURSIVE_SOLUTION).val);
-      Assert.assertEquals(new Integer(3), bst.search(3, SearchSol.ITERATIVE_SOLUTION).val);
-      Assert.assertEquals(new Integer(3), bst.search(3, SearchSol.RECURSIVE_SOLUTION).val);
+      // ---------
+      bst.search(3, SearchSol.ITERATIVE_SOLUTION);
+      Assert.assertEquals(new Integer(7), SearchSol.ITERATIVE_SOLUTION.parent.val);
+      bst.search(3, SearchSol.RECURSIVE_SOLUTION);
+      Assert.assertEquals(new Integer(7), SearchSol.RECURSIVE_SOLUTION.parent.val);
     }
 
   }

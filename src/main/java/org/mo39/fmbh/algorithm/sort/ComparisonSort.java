@@ -11,9 +11,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mo39.fmbh.algorithm.ArrayPartition;
 import org.mo39.fmbh.common.TestData;
 import org.mo39.fmbh.common.Z;
+import org.mo39.fmbh.datastructure.array.ArrayPartition;
 import org.mo39.fmbh.datastructure.heap.ArrayHeap;
 
 /**

@@ -1,4 +1,4 @@
-package org.mo39.fmbh.algorithm;
+package org.mo39.fmbh.algorithm.dynamicprogramming;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -7,7 +7,7 @@ import org.mo39.fmbh.common.TestData;
 /**
  * Find the contiguous subarray within a one-dimensional array of numbers which has the largest sum.
  * Return a 3 length arr with first two as indexes and the third element as the maximum sum.
- * 
+ *
  * @author Jihan Chen
  *
  */
@@ -25,9 +25,9 @@ public enum MaximumSubArray {
    * <p>
    * Take the combination of two elements in arr and take the largest diff. <br>
    * The time complexity is <b>O(n^2)</b>
-   * 
+   *
    * @author Jihan Chen
-   * 
+   *
    */
   BRUTE_FORCE() {
 
@@ -65,7 +65,7 @@ public enum MaximumSubArray {
    * <p>
    * It takes log(n) to split and finish each recursion. And in each recursion, it takes O(n) to
    * find the maximum sum across mid. So the overall time complexity is <b>nlog(n)</b>.
-   * 
+   *
    * @param stockDiff
    * @param low
    * @param high
@@ -92,7 +92,7 @@ public enum MaximumSubArray {
     /**
      * Helper function that calculates the maximum sum that goes across the mid. The time complexity
      * for this process is <b>O(n)</b>.
-     * 
+     *
      * @param stockDiff
      * @param low
      * @param mid
@@ -126,7 +126,7 @@ public enum MaximumSubArray {
   },
 
   // TODO
-  LINEAR_SOLUTION() {
+  DYNAMIC_PROGRAMMING() {
 
     @Override
     public int[] solve(int[] arr) {
@@ -146,7 +146,7 @@ public enum MaximumSubArray {
 
   /**
    * Method declaration shared by all instances.
-   * 
+   *
    * @param stock
    * @return
    */
@@ -154,7 +154,7 @@ public enum MaximumSubArray {
 
   /**
    * Helper class used to test solutions.
-   * 
+   *
    * @author Jihan Chen
    *
    */
@@ -175,7 +175,7 @@ public enum MaximumSubArray {
 
     @Test
     public void testLinearSolution() {
-      Assert.assertArrayEquals(solution, MaximumSubArray.LINEAR_SOLUTION.solve(arr));
+      Assert.assertArrayEquals(solution, MaximumSubArray.DYNAMIC_PROGRAMMING.solve(arr));
     }
 
   }

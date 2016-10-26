@@ -1,4 +1,4 @@
-package org.mo39.fmbh.algorithm;
+package org.mo39.fmbh.datastructure.array;
 
 import java.util.function.Predicate;
 
