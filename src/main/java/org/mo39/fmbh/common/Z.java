@@ -3,10 +3,14 @@ package org.mo39.fmbh.common;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
 import org.junit.Assert;
 import org.mo39.fmbh.datastructure.binarytree.TreeNode;
+import org.mo39.fmbh.datastructure.binarytree.TreeNode.LevelOrderSol;
 import org.mo39.fmbh.datastructure.linkedlist.ListNode;
+
+import com.google.common.base.Joiner;
 
 public class Z {
 
@@ -30,7 +34,7 @@ public class Z {
     print(Arrays.toString(arr));
   }
 
-  public static <T> void printLinkedList(ListNode<T> head) {
+  public static <T> void print(ListNode<T> head) {
     while (head != null) {
       printnb(head + " -> ");
       head = head.next;
@@ -38,11 +42,19 @@ public class Z {
     print("null");
   }
 
-  public static <T> void printStack(Stack<T> stack) {
+  public static <T> void print(Stack<T> stack) {
     while (!stack.isEmpty()) {
       printnb(stack.pop() + " -> ");
     }
     printnb("null");
+  }
+
+  public static <T> void print(TreeNode<T> root) {
+    for (List<T> level : root.bfs(LevelOrderSol.ITERATIVE_SOLUTION_WITH_NULL)) {
+      print(Joiner.on(',').join(level.stream().map(o -> o == null ? '#' : String.valueOf(o))
+          .collect(Collectors.toList())));
+    }
+
   }
 
   /**

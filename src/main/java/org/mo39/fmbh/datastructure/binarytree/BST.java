@@ -76,6 +76,15 @@ public class BST<T> {
   }
 
   /**
+   * Convenient method to insert a data. Use {@link InsertSol#ITERATIVE_SOLUTION}.
+   * 
+   * @param data
+   */
+  public void isnert(T data) {
+    InsertSol.ITERATIVE_SOLUTION.solve(this, data);
+  }
+
+  /**
    * Insert a new node to this BST.
    *
    * @param data
@@ -93,25 +102,41 @@ public class BST<T> {
    * @return
    */
   public TreeNode<T> search(T key, SearchSol sol) {
-    return sol.solve(this, key);
+    NodeP<T> nodeP = sol.solve(this, key);
+    return nodeP == null ? null : nodeP.node;
   }
 
   /**
-   * Find a TreeNode given the search key and delete the node.
+   * Search and delete a TreeNode given the search key.
    * <p>
-   * Note: <br>
-   * 1. {@link SearchSol#ITERATIVE_SOLUTION} is used to search for the TreeNode.<br>
-   * 2. This will throw an IllegalArgumentException if they key does not exists. Use
-   * {@link #deleteSilently} to allow non-existing key deletion.<br>
+   * Note: {@link SearchSol#ITERATIVE_SOLUTION} is used to search for the TreeNode.<br>
    *
    * @param key
+   * @return true if the key is found and deleted. false if the key is not found.
    */
-  public void delete(T key) {
-    delete(key, SearchSol.ITERATIVE_SOLUTION);
+  public boolean delete(T key) {
+    return delete(key, SearchSol.ITERATIVE_SOLUTION);
   }
 
-  public void deleteSilently(T key) {
-    delete(key, SearchSol.ITERATIVE_SOLUTION);
+  /**
+   * Search and delete a TreeNode given the search key.
+   * 
+   * @param key
+   * @param sol
+   * @return true if the key is found and deleted. false if the key is not found.
+   */
+  public boolean delete(T key, SearchSol sol) {
+    NodeP<T> nodeP = sol.solve(this, key);
+    if (nodeP == null) return false;
+    if (nodeP.node.left == null && nodeP.node.right == null)
+      transplant(nodeP.parent, nodeP.node, null);
+    else if (nodeP.node.left == null || nodeP.node.right == null) transplant(nodeP.parent,
+        nodeP.node, nodeP.node.left == null ? nodeP.node.right : nodeP.node.left);
+    else {
+      transplant(nodeP.parent, nodeP.node, getPeakNode(nodeP.node.right, o -> o.left));
+
+    }
+    return true;
   }
 
   /**
@@ -120,7 +145,7 @@ public class BST<T> {
    * @return
    */
   public TreeNode<T> getMax() {
-    return getPeakNode(o -> o.right);
+    return getPeakNode(root, o -> o.right);
   }
 
   /**
@@ -129,13 +154,9 @@ public class BST<T> {
    * @return
    */
   public TreeNode<T> getMin() {
-    return getPeakNode(o -> o.left);
+    return getPeakNode(root, o -> o.left);
   }
 
-  private void delete(T key, SearchSol sol) {
-    TreeNode<T> searchResult = sol.solve(this, key);
-    checkArgument(searchResult != null, "key " + key + "does not exist.");
-  }
 
   /**
    * Use a translator to walk along the tree path to find the TreeNode with peak value.
@@ -143,16 +164,26 @@ public class BST<T> {
    * @param translator
    * @return
    */
-  private TreeNode<T> getPeakNode(Translator<TreeNode<T>, TreeNode<T>> translator) {
-    TreeNode<T> curr = root;
-    while (translator.translate(curr) != null) {
-      curr = translator.translate(curr);
+  private TreeNode<T> getPeakNode(TreeNode<T> root,
+      Translator<TreeNode<T>, TreeNode<T>> translator) {
+    while (translator.translate(root) != null) {
+      root = translator.translate(root);
     }
-    return curr;
+    return root;
+  }
+
+  private void transplant(TreeNode<T> parent, TreeNode<T> searchResult, TreeNode<T> newNode) {
+    if (parent.left == searchResult) {
+      parent.left = newNode;
+    } else parent.right = newNode;
   }
 
   public enum InsertSol {
 
+    /**
+     * Iteratively walk along the tree path and find the place to insert the wrapped data.
+     * 
+     */
     ITERATIVE_SOLUTION() {
 
       @Override
@@ -176,6 +207,10 @@ public class BST<T> {
 
     },
 
+    /**
+     * Recursively walk along the tree path and find the place to insert the wrapped data.
+     * 
+     */
     RECUSIVE_SOLUTION {
 
       @Override
@@ -214,12 +249,13 @@ public class BST<T> {
     ITERATIVE_SOLUTION() {
 
       @Override
-      public <T> TreeNode<T> solve(BST<T> bst, T key) {
+      public <T> NodeP<T> solve(BST<T> bst, T key) {
         TreeNode<T> curr = bst.root;
+        TreeNode<T> pre = null;
         while (curr != null) {
           int compareResult = bst.comparator.compare(key, curr.val);
-          if (compareResult == 0) return curr;
-          parent = curr;
+          if (compareResult == 0) return new NodeP<T>(curr, pre);
+          pre = curr;
           if (compareResult < 0) curr = curr.left;
           else curr = curr.right;
         }
@@ -231,30 +267,42 @@ public class BST<T> {
     RECURSIVE_SOLUTION() {
 
       @Override
-      public <T> TreeNode<T> solve(BST<T> bst, T key) {
-        return recur(bst.root, bst.comparator, key);
+      public <T> NodeP<T> solve(BST<T> bst, T key) {
+        return recur(bst.root, null, bst.comparator, key);
       }
 
-      private <T> TreeNode<T> recur(TreeNode<T> curr, Comparator<T> comparator, T key) {
+      private <T> NodeP<T> recur(TreeNode<T> curr, TreeNode<T> pre, Comparator<T> comparator,
+          T key) {
         if (curr == null) return null;
         int compareResult = comparator.compare(key, curr.val);
-        if (compareResult == 0) return curr;
-        parent = curr;
-        if (compareResult < 0) return recur(curr.left, comparator, key);
-        else return recur(curr.right, comparator, key);
+        if (compareResult == 0) return new NodeP<T>(curr, pre);
+        pre = curr;
+        if (compareResult < 0) return recur(curr.left, pre, comparator, key);
+        else return recur(curr.right, pre, comparator, key);
       }
 
     };
 
-    /**
-     * The parent is traced when searching a specific key. Each time after a search is performed,
-     * the parent is updated and might be useful if needed. At the beginning it's a dummy node that
-     * holds a <code>null</code> value.
-     */
-    public TreeNode<?> parent = new TreeNode<Object>(null);
+    public abstract <T> NodeP<T> solve(BST<T> bst, T key);
 
-    public abstract <T> TreeNode<T> solve(BST<T> bst, T key);
+  }
 
+  /**
+   * Helper class used to store a TreeNode and its parent.
+   * 
+   * @author Jihan Chen
+   *
+   * @param <T>
+   */
+  public static class NodeP<T> {
+
+    public final TreeNode<T> node;
+    public final TreeNode<T> parent;
+
+    public NodeP(TreeNode<T> node, TreeNode<T> parent) {
+      this.node = node;
+      this.parent = parent;
+    }
   }
 
   public static class TestBST {
@@ -299,6 +347,10 @@ public class BST<T> {
     @Test
     public void testGetMax() {
       Assert.assertEquals(new Integer(9), bst.getMax().val);
+      bst.delete(3);
+      // TreeNode<Integer> x = bst.root;
+      // x.left = null;
+      Z.print(bst.root);
     }
 
     @Test
@@ -308,15 +360,16 @@ public class BST<T> {
 
     @Test
     public void testSearch() {
+      // ---------
       Assert.assertNull(bst.search(0, SearchSol.ITERATIVE_SOLUTION));
       Assert.assertNull(bst.search(0, SearchSol.RECURSIVE_SOLUTION));
       Assert.assertEquals(new Integer(5), bst.search(5, SearchSol.ITERATIVE_SOLUTION).val);
       Assert.assertEquals(new Integer(5), bst.search(5, SearchSol.RECURSIVE_SOLUTION).val);
       // ---------
-      bst.search(3, SearchSol.ITERATIVE_SOLUTION);
-      Assert.assertEquals(new Integer(7), SearchSol.ITERATIVE_SOLUTION.parent.val);
-      bst.search(3, SearchSol.RECURSIVE_SOLUTION);
-      Assert.assertEquals(new Integer(7), SearchSol.RECURSIVE_SOLUTION.parent.val);
+      Assert.assertEquals(new Integer(7), SearchSol.ITERATIVE_SOLUTION.solve(bst, 9).parent.val);
+      Assert.assertEquals(new Integer(7), SearchSol.ITERATIVE_SOLUTION.solve(bst, 3).parent.val);
+      Assert.assertEquals(new Integer(7), SearchSol.RECURSIVE_SOLUTION.solve(bst, 9).parent.val);
+      Assert.assertEquals(new Integer(7), SearchSol.RECURSIVE_SOLUTION.solve(bst, 3).parent.val);
     }
 
   }
