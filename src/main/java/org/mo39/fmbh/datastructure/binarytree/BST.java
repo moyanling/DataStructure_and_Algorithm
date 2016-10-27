@@ -133,7 +133,7 @@ public class BST<T> {
     // If node is found but parent is null, then it's the root. Create a dummy node.
     if (nodeP.parent == null) {
       TreeNode<T> dummyRoot = new TreeNode<>(null);
-      dummyRoot.right = nodeP.node;
+      dummyRoot.right = root;
       nodeP = new NodeP<T>(nodeP.node, dummyRoot);
     }
     // The node to be deleted has no child.
@@ -149,7 +149,6 @@ public class BST<T> {
         nodeP.node.right.left = nodeP.node.left;
       } else {
         NodeP<T> p = getPeakNode(nodeP.node.right, o -> o.left);
-        Z.print(nodeP.node);
         transplant(p.parent, p.node, null);
         p.node.left = nodeP.node.left;
         p.node.right = nodeP.node.right;
@@ -425,7 +424,24 @@ public class BST<T> {
     }
 
     @Test
-    public void testDeleteNode() {
+    public void testDeleteTreeNode3() {
+      // Construct a bst structure manually.
+      TreeNode<Integer> root = new TreeNode<>(7);
+      TreeNode<Integer> treeNode2 = new TreeNode<>(2);
+      TreeNode<Integer> treeNode3 = new TreeNode<>(4);
+      TreeNode<Integer> treeNode4 = new TreeNode<>(5);
+      TreeNode<Integer> treeNode5 = new TreeNode<>(9);
+      root.left = treeNode3;
+      root.right = treeNode5;
+      treeNode3.left = treeNode2;
+      treeNode3.right = treeNode4;
+      // ---------
+      bst.delete(3);
+      Z.verifyTreeNodes(root, bst.root);
+    }
+
+    @Test
+    public void testDeleteTreeNode4() {
       // Construct a bst structure manually.
       TreeNode<Integer> root = new TreeNode<>(7);
       TreeNode<Integer> treeNode1 = new TreeNode<>(3);

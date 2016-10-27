@@ -6,7 +6,7 @@ import org.junit.Test;
 public enum Fibonacci {
 
   /**
-   * // Resolve the time complexity.
+   * The time complexity of this recursion is <b>O(2^n)</b>.
    *
    */
   RECUSIVE_SOLUTION() {
