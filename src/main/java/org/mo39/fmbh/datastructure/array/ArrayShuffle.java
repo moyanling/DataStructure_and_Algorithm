@@ -5,7 +5,6 @@ import java.util.Random;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mo39.fmbh.common.TestData;
 import org.mo39.fmbh.common.Value;
@@ -13,7 +12,7 @@ import org.mo39.fmbh.common.Z;
 
 /**
  * Shuffle an array randomly.
- * 
+ *
  * @author Jihan Chen
  *
  */
@@ -58,12 +57,6 @@ public enum ArrayShuffle {
     private Integer[] arr = new TestData().integerArr;
     private Integer[] sortedArr = new TestData().integerArr;
 
-    @BeforeClass
-    public static void before() {
-      TestArrayShuffle test = new TestArrayShuffle();
-      Z.print("Original array : " + Arrays.toString(test.arr));
-    }
-
     @Before
     public void sort() {
       Arrays.sort(sortedArr);
@@ -72,7 +65,6 @@ public enum ArrayShuffle {
     @Test
     public void testPermuteBySorting() {
       ArrayShuffle.PERMUTE_BY_SORTING.shuffle(arr);
-      Z.print("Shuffled array : " + Arrays.toString(arr));
       Arrays.sort(arr);
       Assert.assertArrayEquals(sortedArr, arr);
     }
@@ -80,7 +72,6 @@ public enum ArrayShuffle {
     @Test
     public void testRandomizeInPlace() {
       ArrayShuffle.RANDOMIZE_IN_PLACE.shuffle(arr);
-      Z.print("Shuffled array : " + Arrays.toString(arr));
       Arrays.sort(arr);
       Assert.assertArrayEquals(sortedArr, arr);
     }

@@ -76,8 +76,10 @@ public class BST<T> {
   }
 
   /**
-   * Convenient method to insert a data. Use {@link InsertSol#ITERATIVE_SOLUTION}.
-   * 
+   * Convenient method to insert a new node to this BST.
+   * <p>
+   * Note: {@link InsertSol#ITERATIVE_SOLUTION} is used to insert data.
+   *
    * @param data
    */
   public void isnert(T data) {
@@ -120,7 +122,7 @@ public class BST<T> {
 
   /**
    * Search and delete a TreeNode given the search key.
-   * 
+   *
    * @param key
    * @param sol
    * @return true if the key is found and deleted. false if the key is not found.
@@ -128,14 +130,34 @@ public class BST<T> {
   public boolean delete(T key, SearchSol sol) {
     NodeP<T> nodeP = sol.solve(this, key);
     if (nodeP == null) return false;
+    // If node is found but parent is null, then it's the root. Create a dummy node.
+    if (nodeP.parent == null) {
+      TreeNode<T> dummyRoot = new TreeNode<>(null);
+      dummyRoot.right = nodeP.node;
+      nodeP = new NodeP<T>(nodeP.node, dummyRoot);
+    }
+    // The node to be deleted has no child.
     if (nodeP.node.left == null && nodeP.node.right == null)
       transplant(nodeP.parent, nodeP.node, null);
+    // The node to be deleted has one child.
     else if (nodeP.node.left == null || nodeP.node.right == null) transplant(nodeP.parent,
         nodeP.node, nodeP.node.left == null ? nodeP.node.right : nodeP.node.left);
+    // The node to be deleted has two children.
     else {
-      transplant(nodeP.parent, nodeP.node, getPeakNode(nodeP.node.right, o -> o.left));
-
+      if (nodeP.node.right.left == null) {
+        transplant(nodeP.parent, nodeP.node, nodeP.node.right);
+        nodeP.node.right.left = nodeP.node.left;
+      } else {
+        NodeP<T> p = getPeakNode(nodeP.node.right, o -> o.left);
+        Z.print(nodeP.node);
+        transplant(p.parent, p.node, null);
+        p.node.left = nodeP.node.left;
+        p.node.right = nodeP.node.right;
+        transplant(nodeP.parent, nodeP.node, p.node);
+      }
     }
+    // If using dummyRoot, replace the new root.
+    if (nodeP.parent.val == null) root = nodeP.node.right;
     return true;
   }
 
@@ -145,7 +167,7 @@ public class BST<T> {
    * @return
    */
   public TreeNode<T> getMax() {
-    return getPeakNode(root, o -> o.right);
+    return getPeakNode(root, o -> o.right).node;
   }
 
   /**
@@ -154,35 +176,46 @@ public class BST<T> {
    * @return
    */
   public TreeNode<T> getMin() {
-    return getPeakNode(root, o -> o.left);
+    return getPeakNode(root, o -> o.left).node;
   }
 
 
   /**
-   * Use a translator to walk along the tree path to find the TreeNode with peak value.
+   * Use a translator to walk along the tree path to find the TreeNode with peak value. Return a
+   * node with its parent.
    *
    * @param translator
    * @return
    */
-  private TreeNode<T> getPeakNode(TreeNode<T> root,
-      Translator<TreeNode<T>, TreeNode<T>> translator) {
+  private NodeP<T> getPeakNode(TreeNode<T> root, Translator<TreeNode<T>, TreeNode<T>> translator) {
+    checkArgument(root != null);
+    TreeNode<T> pre = null;
     while (translator.translate(root) != null) {
+      pre = root;
       root = translator.translate(root);
     }
-    return root;
+    return new NodeP<T>(root, pre);
   }
 
-  private void transplant(TreeNode<T> parent, TreeNode<T> searchResult, TreeNode<T> newNode) {
-    if (parent.left == searchResult) {
+  /**
+   * Given a parent node, its child node, replace the child node with a new node.
+   *
+   * @param parent
+   * @param searchResult
+   * @param newNode
+   */
+  private void transplant(TreeNode<T> parent, TreeNode<T> child, TreeNode<T> newNode) {
+    if (parent.left == child) {
       parent.left = newNode;
-    } else parent.right = newNode;
+    } else if (parent.right == child) parent.right = newNode;
+    else throw new AssertionError();
   }
 
   public enum InsertSol {
 
     /**
      * Iteratively walk along the tree path and find the place to insert the wrapped data.
-     * 
+     *
      */
     ITERATIVE_SOLUTION() {
 
@@ -209,7 +242,7 @@ public class BST<T> {
 
     /**
      * Recursively walk along the tree path and find the place to insert the wrapped data.
-     * 
+     *
      */
     RECUSIVE_SOLUTION {
 
@@ -249,7 +282,7 @@ public class BST<T> {
     ITERATIVE_SOLUTION() {
 
       @Override
-      public <T> NodeP<T> solve(BST<T> bst, T key) {
+      public <T> NodeP<T> handle(BST<T> bst, T key) {
         TreeNode<T> curr = bst.root;
         TreeNode<T> pre = null;
         while (curr != null) {
@@ -267,7 +300,7 @@ public class BST<T> {
     RECURSIVE_SOLUTION() {
 
       @Override
-      public <T> NodeP<T> solve(BST<T> bst, T key) {
+      public <T> NodeP<T> handle(BST<T> bst, T key) {
         return recur(bst.root, null, bst.comparator, key);
       }
 
@@ -283,13 +316,18 @@ public class BST<T> {
 
     };
 
-    public abstract <T> NodeP<T> solve(BST<T> bst, T key);
+    protected abstract <T> NodeP<T> handle(BST<T> bst, T key);
+
+    public <T> NodeP<T> solve(BST<T> bst, T key) {
+      checkArgument(key != null);
+      return handle(bst, key);
+    }
 
   }
 
   /**
    * Helper class used to store a TreeNode and its parent.
-   * 
+   *
    * @author Jihan Chen
    *
    * @param <T>
@@ -347,10 +385,6 @@ public class BST<T> {
     @Test
     public void testGetMax() {
       Assert.assertEquals(new Integer(9), bst.getMax().val);
-      bst.delete(3);
-      // TreeNode<Integer> x = bst.root;
-      // x.left = null;
-      Z.print(bst.root);
     }
 
     @Test
@@ -370,6 +404,41 @@ public class BST<T> {
       Assert.assertEquals(new Integer(7), SearchSol.ITERATIVE_SOLUTION.solve(bst, 3).parent.val);
       Assert.assertEquals(new Integer(7), SearchSol.RECURSIVE_SOLUTION.solve(bst, 9).parent.val);
       Assert.assertEquals(new Integer(7), SearchSol.RECURSIVE_SOLUTION.solve(bst, 3).parent.val);
+    }
+
+    @Test
+    public void testDeleteRoot() {
+      // ---------
+      TreeNode<Integer> root = new TreeNode<>(9);
+      TreeNode<Integer> treeNode1 = new TreeNode<>(3);
+      TreeNode<Integer> treeNode2 = new TreeNode<>(2);
+      TreeNode<Integer> treeNode3 = new TreeNode<>(4);
+      TreeNode<Integer> treeNode4 = new TreeNode<>(5);
+      // Construct a bst structure manually.
+      root.left = treeNode1;
+      treeNode1.left = treeNode2;
+      treeNode1.right = treeNode3;
+      treeNode3.right = treeNode4;
+      // ---------
+      bst.delete(7);
+      Z.verifyTreeNodes(root, bst.root);
+    }
+
+    @Test
+    public void testDeleteNode() {
+      // Construct a bst structure manually.
+      TreeNode<Integer> root = new TreeNode<>(7);
+      TreeNode<Integer> treeNode1 = new TreeNode<>(3);
+      TreeNode<Integer> treeNode2 = new TreeNode<>(2);
+      TreeNode<Integer> treeNode4 = new TreeNode<>(5);
+      TreeNode<Integer> treeNode5 = new TreeNode<>(9);
+      root.left = treeNode1;
+      root.right = treeNode5;
+      treeNode1.left = treeNode2;
+      treeNode1.right = treeNode4;
+      // ---------
+      bst.delete(4);
+      Z.verifyTreeNodes(root, bst.root);
     }
 
   }

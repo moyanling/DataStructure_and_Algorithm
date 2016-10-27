@@ -9,10 +9,8 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mo39.fmbh.common.TestData;
-import org.mo39.fmbh.common.Z;
 import org.mo39.fmbh.datastructure.array.ArrayPartition;
 import org.mo39.fmbh.datastructure.heap.ArrayHeap;
 
@@ -37,7 +35,7 @@ public enum ComparisonSort {
    * <p>
    * If binary search is used when insert the key to already sorted sequence (loop invariant), then
    * it's improved slightly and so called Binary Insertion Sort.
-   * 
+   *
    */
   INSERTION_SORT() {
 
@@ -78,7 +76,7 @@ public enum ComparisonSort {
    * Such adaptive property only applys when it exits immediately after no swap happens in one loop.
    * <br>
    * If flag <code>isSwapped</code> is not provided, bubble sort would not have such property.
-   * 
+   *
    */
   BUBBEL_SORT() {
 
@@ -144,7 +142,7 @@ public enum ComparisonSort {
    * split process and will take log</b> loop to complete the merge because it's the height of a
    * tree. In each merge, it is merging two sub array into one, it takes O(n). So the overall time
    * complexity is <b>O(nlog(n))</b>
-   * 
+   *
    */
   MERGE_SORT() {
 
@@ -254,7 +252,7 @@ public enum ComparisonSort {
    * <p>
    * partition takes O(n) to complete. Divide and conquer will make partition happens log(n) times.
    * So the time complexity is <b>O(nlog(n))</b>
-   * 
+   *
    */
   QUICK_SORT() {
 
@@ -276,7 +274,7 @@ public enum ComparisonSort {
      * <p>
      * Index i is pointing to the last element of the sequence, whose elements are all smaller than
      * the pivot.
-     * 
+     *
      * @param arr
      * @param p
      * @param r
@@ -310,14 +308,6 @@ public enum ComparisonSort {
 
     private Integer[] arr = new TestData().integerArr;
     private Integer[] sortedArr = new TestData().integerArr;
-
-    @BeforeClass
-    public static void before() {
-      TestSortingAlgorithm test = new TestSortingAlgorithm();
-      Arrays.sort(test.sortedArr);
-      Z.print("Array to sort : " + Arrays.toString(test.arr));
-      Z.print("Sorted array : " + Arrays.toString(test.sortedArr));
-    }
 
     @Before
     public void sort() {
