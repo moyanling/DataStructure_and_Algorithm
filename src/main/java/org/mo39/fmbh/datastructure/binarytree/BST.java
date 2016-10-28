@@ -17,8 +17,8 @@ import org.mo39.fmbh.common.interfaces.Translator;
  * <p>
  * After research, there's no way to get generic type of T at runtime because of type-erasure, so
  * it's not possible to make sure the generic type T implements Comparable when initiating the
- * instance using construct if T itself does not extends Comparable. Instead of cast to Comparableat
- * runtime, the constructor is changed to static factory method to check generic type at compile
+ * instance using constructor if T itself does not extends Comparable. Instead of cast to Comparable
+ * at runtime, the constructor is changed to static factory method to check generic type at compile
  * time. So, the conclusion is, always consider static factory method over constructor.
  * <p>
  * Cast is not used for these two reasons:<br>
@@ -219,7 +219,7 @@ public class BST<T> {
     ITERATIVE_SOLUTION() {
 
       @Override
-      public <T> void solve(BST<T> bst, T data) {
+      public <T> void handle(BST<T> bst, T data) {
         if (bst.root == null) {
           bst.root = new TreeNode<>(data);
           return;
@@ -246,11 +246,7 @@ public class BST<T> {
     RECUSIVE_SOLUTION {
 
       @Override
-      public <T> void solve(BST<T> bst, T data) {
-        if (bst.root == null) {
-          bst.root = new TreeNode<>(data);
-          return;
-        }
+      public <T> void handle(BST<T> bst, T data) {
         recur(data, bst.comparator, bst.root);
       }
 
@@ -273,7 +269,16 @@ public class BST<T> {
       }
     };
 
-    public abstract <T> void solve(BST<T> bst, T data);
+    public <T> void solve(BST<T> bst, T data) {
+      checkArgument(data != null);
+      if (bst.root == null) {
+        bst.root = new TreeNode<>(data);
+        return;
+      }
+      handle(bst, data);
+    };
+
+    public abstract <T> void handle(BST<T> bst, T data);
   }
 
   public enum SearchSol {
