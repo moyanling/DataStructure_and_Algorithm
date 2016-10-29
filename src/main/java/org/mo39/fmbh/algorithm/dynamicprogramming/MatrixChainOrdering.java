@@ -17,67 +17,61 @@ public enum MatrixChainOrdering {
 
   RECUSIVE_SOLUTION() {
 
-    // @Override
-    // public Result solve(int[] m) {
-    // // return solve(m, 0, m.length - 1);
-    // return null;
-    // }
-
     @Override
     public int solve(int[] m) {
-      // if (q - p <= 2) {
-      // Z.print(p + "\t" + q);
-      // return new Result(m[p] * m[p + 1] * m[p + 2], Lists.newArrayList(m[p], m[p + 1], m[p +
-      // 2]));
-      // }
-      // Result min = null;
-      // for (int i = p; i < q; i++) {
-      // for (int r = i + 2; r < q; r++) {
-      // Result result0 = solve(m, i, r);
-      // // i + 1 is not needed here.
-      // Result result1 = solve(m, r, q);
-      // if (min == null || result0.num + result1.num < min.num) {
-      // List<Integer> list = new ArrayList<>();
-      // list.addAll(result0.indexes);
-      // list.addAll(result1.indexes);
-      // min = new Result(result0.num + result1.num, list);
-      // }
-      // }
-      // }
-      if (m.length <= 3) { return m[0] * m[1] * m[2]; }
-      Integer result = null;
-      int[] mLeft = new int[3];
-      System.arraycopy(m, 0, mLeft, 0, 3);
-      int leftResult = solve(mLeft);
-      Z.print(mLeft);
-      int[] mRight = new int[m.length - 1];
-      System.arraycopy(m, 3, mRight, 2, m.length - 3);
-      mRight[0] = mLeft[0];
-      mRight[1] = mLeft[mLeft.length - 1];
-      int rightResult = solve(mRight);
-      Z.print(mRight);
-      Z.print(leftResult + rightResult);
-      if (result == null || result > leftResult + rightResult) {
-        result = leftResult + rightResult;
+      return solve(m, 0, m.length - 1);
+    }
+
+    // @Override
+    // public int solve(int[] m) {
+    // if (m.length <= 3) return m[0] * m[1] * m[2];
+    // Integer result = null;
+    // int[] mLeft = new int[3];
+    // System.arraycopy(m, 0, mLeft, 0, 3);
+    // int leftResult = solve(mLeft);
+    // Z.print(mLeft);
+    // int[] mRight = new int[m.length - 1];
+    // System.arraycopy(m, 3, mRight, 2, m.length - 3);
+    // mRight[0] = mLeft[0];
+    // mRight[1] = mLeft[mLeft.length - 1];
+    // int rightResult = solve(mRight);
+    // Z.print(mRight);
+    // Z.print(leftResult + rightResult);
+    // if (result == null || result > leftResult + rightResult) {
+    // result = leftResult + rightResult;
+    // }
+    // list.add(leftResult + rightResult);
+    // mRight = new int[3];
+    // System.arraycopy(m, m.length - 3, mRight, 0, 3);
+    // rightResult = solve(mRight);
+    // Z.print(mRight);
+    // mLeft = new int[m.length - 1];
+    // System.arraycopy(m, 0, mLeft, 0, m.length - 3);
+    // mLeft[mLeft.length - 2] = mRight[0];
+    // mLeft[mLeft.length - 1] = mRight[mRight.length - 1];
+    // leftResult = solve(mLeft);
+    // Z.print(mLeft);
+    // Z.print(rightResult + leftResult);
+    // if (result == null || result > leftResult + rightResult) {
+    // result = leftResult + rightResult;
+    // }
+    // list.add(leftResult + rightResult);
+    // Z.print();
+    // return result;
+    // // return solve(m, 0, m.length - 1).num;
+    // }
+
+    public int solve(int[] m, int lower, int upper) {
+      if (lower == upper) {
+//        Z.print(lower);
+        return 0;
       }
-      list.add(leftResult + rightResult);
-      mRight = new int[3];
-      System.arraycopy(m, m.length - 3, mRight, 0, 3);
-      rightResult = solve(mRight);
-      Z.print(mRight);
-      mLeft = new int[m.length - 1];
-      System.arraycopy(m, 0, mLeft, 0, m.length - 3);
-      mLeft[mLeft.length - 2] = mRight[0];
-      mLeft[mLeft.length - 1] = mRight[mRight.length - 1];
-      leftResult = solve(mLeft);
-      Z.print(mLeft);
-      Z.print(rightResult + leftResult);
-      if (result == null || result > leftResult + rightResult) {
-        result = leftResult + rightResult;
+      Integer min = null;
+      for (int i = lower; i <= upper; i++) {
+        int result = solve(m, lower, i) + solve(m, i, upper) + m[lower] * m[i] * m[upper];
+        if (min == null || min > result) min = result;
       }
-      list.add(leftResult + rightResult);
-      Z.print();
-      return result;
+      return min;
     }
 
 
@@ -111,7 +105,6 @@ public enum MatrixChainOrdering {
     @Test
     public void testRecursiveSolution() {
       Z.print(MatrixChainOrdering.RECUSIVE_SOLUTION.solve(arr));
-      Z.print(MatrixChainOrdering.RECUSIVE_SOLUTION.list);
     }
 
   }
