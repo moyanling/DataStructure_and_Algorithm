@@ -67,6 +67,27 @@ public class TreeNode<T> {
     return sol.solve(this);
   }
 
+  /**
+   * Get the depth of this TreeNode.
+   * 
+   * @param sol
+   * @return
+   */
+  public int depth() {
+    return depth(this);
+  }
+
+  /**
+   * Nice and clean one line recursive solution. DFS is not a good iterative solution for this
+   * problem.
+   * 
+   * @param root
+   * @return
+   */
+  private int depth(TreeNode<T> root) {
+    return root == null ? 0 : Math.max(depth(root.left), depth(root.right)) + 1;
+  }
+
   public enum LevelOrderSol {
 
     /**
@@ -123,10 +144,8 @@ public class TreeNode<T> {
               continue;
             }
             nullLevel = false;
-            if (node.left != null) queue.offer(node.left);
-            else queue.offer(null);
-            if (node.right != null) queue.offer(node.right);
-            else queue.offer(null);
+            queue.offer(node.left);
+            queue.offer(node.right);
           }
           if (nullLevel) return toRet;
           toRet.add(level);
@@ -353,6 +372,7 @@ public class TreeNode<T> {
   public static class TestTreeNode {
 
     private TreeNode<Integer> root = new TestData().root;
+    private int depth = 4;
 
     private List<List<Integer>> levelOrder = new ArrayList<List<Integer>>() {
       {
@@ -418,6 +438,11 @@ public class TreeNode<T> {
       Assert.assertEquals(postOrder, root.dfs(PostOrderSol.RECURSIVE_SOLUTION));
       Assert.assertEquals(postOrder, root.dfs(PostOrderSol.ITERATIVE_SOLUTION));
       Assert.assertEquals(postOrder, root.dfs(PostOrderSol.REVERSED_PREORDER_SOLUTION));
+    }
+
+    @Test
+    public void testDepth() {
+      Assert.assertEquals(depth, root.depth());
     }
 
 

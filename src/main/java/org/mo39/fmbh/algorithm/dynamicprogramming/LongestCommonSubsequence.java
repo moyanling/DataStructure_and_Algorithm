@@ -33,7 +33,7 @@ public enum LongestCommonSubsequence {
    * Given X = &lt;x[1], x[2], ..., x[m]&gt;
    * for i = 0 , 1, ..., m,
    * Define X[i] = &lt;x[1], x[2], ..., x[i]&gt; is the i<sup>th</sup> prefix of X.
-   * And define c[i,j] is the length of the LCS of X[i] and Y[j].
+   * And define c[i,j] is the length of the common subsequence of X[i] and Y[j].
    *
    *          | 0                           if i=0 or j=0
    * c[i,j] = | c[i-1,j-1] + 1              if i,j>0 and x[i] = y[j]
