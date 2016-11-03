@@ -58,12 +58,68 @@ public enum LongestCommonSubsequence {
 
   },
 
-  ITERATIVE_SOLUTION() {
+  /**
+   * This one is nothing more than add a memo to the recursive solution.
+   * 
+   */
+  TOP_DOWN_WITH_MEMO() {
+
+    private char[][][] memo;
 
     @Override
     public char[] solve(String s1, String s2) {
-      // TODO Auto-generated method stub
-      return null;
+      memo = new char[s1.length() + 1][s2.length() + 1][];
+      return recur(s1.toCharArray(), s1.length(), s2.toCharArray(), s2.length());
+    }
+
+    private char[] recur(char[] charArr1, int end1, char[] charArr2, int end2) {
+      if (end1 == 0 || end2 == 0) return new char[0];
+      if (memo[end1][end2] != null) return memo[end1][end2];
+      if (charArr1[end1 - 1] == charArr2[end2 - 1]) {
+        memo[end1 - 1][end2 - 1] = recur(charArr1, end1 - 1, charArr2, end2 - 1);
+        return ArrayUtils.add(memo[end1 - 1][end2 - 1], charArr1[end1 - 1]);
+      }
+      char[] result1 = recur(charArr1, end1 - 1, charArr2, end2);
+      char[] result2 = recur(charArr1, end1, charArr2, end2 - 1);
+      if (result1.length > result2.length) {
+        memo[end1 - 1][end2] = result1;
+        return result1;
+      } else {
+        memo[end1][end2 - 1] = result2;
+        return result2;
+      }
+    }
+
+  },
+
+  /**
+   * //TODO 15.4-4
+   * 
+   */
+  DYNAMIC_PROGRAMMING() {
+
+    private char[][][] memo;
+
+    @Override
+    public char[] solve(String s1, String s2) {
+      memo = new char[s1.length()][s2.length()][];
+      char[] charArr1 = s1.toCharArray();
+      char[] charArr2 = s2.toCharArray();
+      for (int i = 1; i < s1.length() + 1; i++) {
+        for (int j = 1; j < s2.length() + 1; j++) {
+          if (charArr1[i - 1] == charArr2[j - 1])
+            memo[i - 1][j - 1] = ArrayUtils.add(memo(i - 1, j - 1), charArr1[i - 1]);
+          else if (memo(i - 1, j).length < memo(i, j - 1).length)
+            memo[i - 1][j - 1] = memo(i, j - 1);
+          else memo[i - 1][j - 1] = memo(i - 1, j);
+        }
+      }
+      return memo[charArr1.length - 1][charArr2.length - 1];
+    }
+
+    private char[] memo(int i, int j) {
+      if (i == 0 || j == 0) return new char[0];
+      return memo[i - 1][j - 1];
     }
 
   };
@@ -73,17 +129,30 @@ public enum LongestCommonSubsequence {
   @SuppressWarnings("serial")
   public static class TestLongestCommonSubsequence {
 
+    private String s1 = "ABCBDAB";
+    private String s2 = "BDCABA";
+
     private List<char[]> list = new ArrayList<char[]>() {
       {
         add(new char[] {'B', 'D', 'A', 'B'});
         add(new char[] {'B', 'C', 'A', 'B'});
+        add(new char[] {'B', 'C', 'B', 'A'});
       }
     };
 
     @Test
     public void testRecursiveSolution() {
-      Assert.assertThat(list,
-          hasItems(LongestCommonSubsequence.RECURSIVE_SOLUTION.solve("ABCBDAB", "BDCABA")));
+      Assert.assertThat(list, hasItems(LongestCommonSubsequence.RECURSIVE_SOLUTION.solve(s1, s2)));
+    }
+
+    @Test
+    public void testTopDownWithMemo() {
+      Assert.assertThat(list, hasItems(LongestCommonSubsequence.TOP_DOWN_WITH_MEMO.solve(s1, s2)));
+    }
+
+    @Test
+    public void testDynamicProgramming() {
+      Assert.assertThat(list, hasItems(LongestCommonSubsequence.DYNAMIC_PROGRAMMING.solve(s1, s2)));
     }
 
   }
