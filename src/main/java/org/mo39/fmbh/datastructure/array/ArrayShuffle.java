@@ -7,7 +7,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mo39.fmbh.common.TestData;
-import org.mo39.fmbh.common.Value;
 import org.mo39.fmbh.common.Z;
 
 /**
@@ -18,20 +17,26 @@ import org.mo39.fmbh.common.Z;
  */
 public enum ArrayShuffle {
 
+  /**
+   * This is using a randomly generated number as a comparator. Not sure if all elements have equal
+   * possibility.//TODO
+   * 
+   */
   PERMUTE_BY_SORTING() {
 
     @Override
     public <T> void shuffle(T[] arr) {
       int bound = (int) Math.pow(arr.length, 3);
-      @SuppressWarnings("unchecked")
-      Value<T>[] newArr = new Value[arr.length];
-      for (int i = 0; i < arr.length; i++) {
-        newArr[i] = new Value<T>(arr[i], rand.nextInt(bound));
-      }
-      Arrays.sort(newArr);
-      for (int i = 0; i < arr.length; i++) {
-        arr[i] = newArr[i].value;
-      }
+      Arrays.sort(arr, (o1, o2) -> rand.nextInt(bound) - rand.nextInt(bound));
+      // @SuppressWarnings("unchecked")
+      // Value<T>[] newArr = new Value[arr.length];
+      // for (int i = 0; i < arr.length; i++) {
+      // newArr[i] = new Value<T>(arr[i], rand.nextInt(bound));
+      // }
+      // Arrays.sort(newArr);
+      // for (int i = 0; i < arr.length; i++) {
+      // arr[i] = newArr[i].value;
+      // }
     }
 
   },
