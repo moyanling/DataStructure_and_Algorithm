@@ -7,7 +7,7 @@ import org.mo39.fmbh.common.Z;
 
 /**
  * There is a slightly better way to do this.//???
- * 
+ *
  * @author Jihan Chen
  *
  */
@@ -15,7 +15,6 @@ public class Problem3_6 {
 
   public static void main(String[] args) {
     Z.print(new TestData().stack);
-    Z.print();
     Z.print(new Problem3_6().sortStack(new TestData().stack));
   }
 

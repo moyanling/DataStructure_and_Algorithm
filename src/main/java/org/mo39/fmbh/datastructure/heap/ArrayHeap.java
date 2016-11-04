@@ -5,12 +5,13 @@ import java.util.Comparator;
 import org.mo39.fmbh.common.Z;
 
 /**
- * Heap.
+ * ArrayHeap used only for sort.
  * <p>
- * Heap should support insert operation. But array does not support insertion and thus an ArrayList
+ * Heap should support insert operation. But array does not support insertion otherwise an ArrayList
  * has to be used to maintain the elements, which conflicts the in-place sorting. So this class is
- * only designed for heap sort and insertion is not supported. For Heap with insertion, {@see ListHeap}
- * 
+ * only designed for heap sort and insertion is not supported. For Heap with insertion,
+ * {@see ListHeap}
+ *
  * @author Jihan Chen
  *
  * @param <T>
@@ -42,7 +43,7 @@ public class ArrayHeap<T> {
   /**
    * Take an array to build a new Heap and heapify from the parent of the last leaf node. No need to
    * heapify a single leaf node.
-   * 
+   *
    */
   public ArrayHeap(T[] arr, Comparator<T> c) {
     this.c = c;

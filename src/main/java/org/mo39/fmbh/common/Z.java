@@ -1,9 +1,17 @@
 package org.mo39.fmbh.common;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.mo39.fmbh.datastructure.binarytree.TreeNode;
@@ -20,10 +28,6 @@ public class Z {
 
   public static void print(Object obj) {
     System.out.println(obj);
-  }
-
-  public static void print() {
-    System.out.println();
   }
 
   public static <T> void print(T[] arr) {
@@ -46,7 +50,7 @@ public class Z {
     while (!stack.isEmpty()) {
       printnb(stack.pop() + " -> ");
     }
-    printnb("null");
+    print("null");
   }
 
   public static <T> void print(TreeNode<T> root) {
@@ -85,7 +89,7 @@ public class Z {
 
   /**
    * Assert that one linked list is equal to a given array.
-   * 
+   *
    * @param expected
    * @param head
    */
@@ -119,6 +123,103 @@ public class Z {
     verifyTreeNodes(p.right, q.right);
   }
 
-  public static void main(String[] args) {}
+
+  private static final Predicate<Path> PREDICATE =
+  //@formatter:off
+    p ->
+      Files.isRegularFile(p)
+      && p.toString().matches(".*(datastructure|algorithm).*")
+      && p.getFileName().toString().contains(new String("java"))
+      && !p.getFileName().toString().contains(new String("Problem"))
+      && !p.getFileName().toString().contains(new String("package-inpo")
+    );
+  //@formatter:on
+
+  private static final Function<Path, String> MAPPER = //
+      p -> p.getFileName().toString();
+
+  private static String mapToString(Path p) {
+    String str = p.getFileName().toString();
+    i
+  }
+
+
+
+  /**
+   * Get the table of content to the screen.
+   *
+   */
+  private static void getTableOfContent() {
+    Path root = Paths.get(System.getProperty("user.dir"));
+    try (Stream<Path> paths = Files.walk(root)) {
+      Stream<Path> newPaths = paths.filter(f -> PREDICATE.test(f));
+      newPaths.forEach(filePath -> {
+        System.out.println(filePath);
+      });
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * Pretty print the directory tree and its file names.
+   *
+   * @param folder must be a folder.
+   * @return
+   */
+  public static void printDirectoryTree(File folder) {
+    int indent = 0;
+    StringBuilder sb = new StringBuilder();
+    printDirectoryTree(folder, indent, sb);
+    print(sb.toString());
+  }
+
+  private static void printDirectoryTree(File folder, int indent, StringBuilder sb) {
+    if (!folder.isDirectory()) { throw new IllegalArgumentException("folder is not a Directory"); }
+    sb.append(getIndentString(indent));
+    sb.append("+--");
+    sb.append(folder.getName());
+    sb.append("/");
+    sb.append("\n");
+    for (File file : folder.listFiles()) {
+      if (file.isDirectory()) {
+        printDirectoryTree(file, indent + 1, sb);
+      } else {
+        printFile(file, indent + 1, sb);
+      }
+    }
+
+  }
+
+  private static void printFile(File file, int indent, StringBuilder sb) {
+
+    sb.append(getIndentString(indent));
+    sb.append("+--");
+    sb.append(file.getName());
+    sb.append("\n");
+  }
+
+  private static String getIndentString(int indent) {
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < indent; i++) {
+      sb.append("|  ");
+    }
+    return sb.toString();
+  }
+
+  private static final String TAB = "\\t";
+
+  /**
+   * Print table of content to the screen using a specific format.
+   *
+   */
+  private static void print(Stream<Path> p) {
+    StringBuilder sb = new StringBuilder();
+  }
+
+  public static void main(String[] args) {
+    getTableOfContent();
+    // printDirectoryTree(Paths.get(System.getProperty("user.dir")).toFile());
+  }
 
 }

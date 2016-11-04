@@ -1,4 +1,4 @@
-package org.mo39.fmbh.datastructure.queue;
+package org.mo39.fmbh.common.interfaces;
 
 public interface HasPriority<P extends Comparable<P>> {
 

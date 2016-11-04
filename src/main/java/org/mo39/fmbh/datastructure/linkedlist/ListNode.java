@@ -53,6 +53,18 @@ public class ListNode<T> {
   }
 
   /**
+   * Take this ListNode as the head and remove all duplicate elements.<br>
+   * Two ListNode are considered duplicate when and only when {@link #val} are equal.
+   * <p>
+   * Note: {@link RemoveDuplicateSol#SET_SOLUTION} is used.
+   *
+   * @param sol
+   */
+  public void removeDuplicate() {
+    RemoveDuplicateSol.SET_SOLUTION.solve(this);
+  }
+
+  /**
    * Take this ListNode as the head and find the last k element in this linked list.
    *
    * @param sol
@@ -118,7 +130,7 @@ public class ListNode<T> {
     },
 
     /**
-     * This solution use combination to find duplicate, which takes O(n^2).<br>
+     * This solution use combination to find duplicate, which takes <b>O(n^2)</b>.<br>
      * Another is to sort a this linked list then visit one by one, which takes O(nlog(n)).<br>
      * But the sorting one is rather trouble if swap value is not allowed.<br>
      * And maybe we are not allowed to change the structure of linked list.
