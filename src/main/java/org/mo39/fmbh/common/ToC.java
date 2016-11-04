@@ -96,19 +96,18 @@ public class ToC {
 
   public static void updateReadMe() throws IOException {
     List<String> lines = Files.readAllLines(README);
-    int start = lines.indexOf("<tableofcontent>");
-    int end = lines.indexOf("</tableofcontent>");
+    int start = lines.indexOf("<tableofcontent>") + 1;
+    int end = lines.indexOf("</tableofcontent>") - 1;
     List<String> newLines = IntStream.range(0, lines.size()).filter(i -> i <= start || i >= end)
         .mapToObj(i -> lines.get(i)).collect(Collectors.toList());
     String[] newToC = format(getTableOfContent(), null).split("\n");
     for (int i = newToC.length - 1; i >= 0; i--) {
-      newLines.add(start, newToC[i]);
+      newLines.add(start + 1, newToC[i]);
     }
     com.google.common.io.Files.write(Joiner.on('\n').join(newLines).getBytes(), README.toFile());
   }
 
   public static void main(String[] args) throws IOException {
-    // ToC.printHtml();
     ToC.updateReadMe();
   }
 

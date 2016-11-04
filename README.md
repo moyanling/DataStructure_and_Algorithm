@@ -3,6 +3,7 @@
 DataStructure and Algorithm for self-practice.
 
 Table of Content:
+<tableofcontent>
 <pre>
 Data Structures:
 	linkedlist
@@ -31,6 +32,5 @@ Algorithms:
 	sort
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/sort/ComparisonSort.java">ComparisonSort</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/sort/CountingSort.java">CountingSort</a>
-<tableofcontent>
-</tableofcontent>
 </pre>
+</tableofcontent>
