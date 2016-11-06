@@ -96,10 +96,15 @@ public class ToC {
 
   public static void updateReadMe() throws IOException {
     List<String> lines = Files.readAllLines(README);
-    int start = lines.indexOf("<tableofcontent>") + 1;
-    int end = lines.indexOf("</tableofcontent>") - 1;
-    List<String> newLines = IntStream.range(0, lines.size()).filter(i -> i <= start || i >= end)
-        .mapToObj(i -> lines.get(i)).collect(Collectors.toList());
+    int start = lines.indexOf("<div class='tableofcontent'>") + 1;
+    int end = 0;
+    for (int i = start; i < lines.size(); i++) {
+      if (lines.get(i).equals("</div>")) end = i - 1;
+    }
+    final int finalEnd = end;
+    List<String> newLines =
+        IntStream.range(0, lines.size()).filter(i -> i <= start || i >= finalEnd)
+            .mapToObj(i -> lines.get(i)).collect(Collectors.toList());
     String[] newToC = format(getTableOfContent(), null).split("\n");
     for (int i = newToC.length - 1; i >= 0; i--) {
       newLines.add(start + 1, newToC[i]);
@@ -109,6 +114,7 @@ public class ToC {
 
   public static void main(String[] args) throws IOException {
     ToC.updateReadMe();
+    print();
   }
 
 }
