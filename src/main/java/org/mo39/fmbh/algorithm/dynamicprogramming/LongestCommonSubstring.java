@@ -76,7 +76,7 @@ public enum LongestCommonSubstring {
    * Suppose the performance of {@link Stream#filter(java.util.function.Predicate)} is O(n), then
    * the time complexity of this solution is <b>O(n^2)</b> and space complexity is <b>O(n)</b>.
    */
-  DYNAMIC_PROGRAMMING_0 {
+  BOTTOM_UP_METHOD_0 {
 
     public List<int[]> memo = new ArrayList<>();
 
@@ -115,7 +115,7 @@ public enum LongestCommonSubstring {
    * //TODO http://www.cnblogs.com/ider/p/longest-common-substring-problem-optimization.html
    * 
    */
-  DYNAMIC_PROGRAMMING_1 {
+  BOTTOM_UP_METHOD_1 {
 
     @Override
     public List<String> solve(String s1, String s2) {
@@ -154,7 +154,7 @@ public enum LongestCommonSubstring {
 
     @Test
     public void testDynamicProgramming() {
-      Assert.assertThat(LongestCommonSubstring.DYNAMIC_PROGRAMMING_0.solve(s1, s2),
+      Assert.assertThat(LongestCommonSubstring.BOTTOM_UP_METHOD_0.solve(s1, s2),
           containsInAnyOrder(expected.toArray()));
     }
 

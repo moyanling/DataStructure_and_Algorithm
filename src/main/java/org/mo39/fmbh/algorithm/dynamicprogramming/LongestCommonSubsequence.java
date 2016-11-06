@@ -96,7 +96,7 @@ public enum LongestCommonSubsequence {
    * //TODO 15.4-4
    * 
    */
-  DYNAMIC_PROGRAMMING() {
+  BOTTOM_UP_METHOD() {
 
     private char[][][] memo;
 
@@ -152,7 +152,7 @@ public enum LongestCommonSubsequence {
 
     @Test
     public void testDynamicProgramming() {
-      Assert.assertThat(list, hasItems(LongestCommonSubsequence.DYNAMIC_PROGRAMMING.solve(s1, s2)));
+      Assert.assertThat(list, hasItems(LongestCommonSubsequence.BOTTOM_UP_METHOD.solve(s1, s2)));
     }
 
   }

@@ -74,7 +74,7 @@ public enum RangeSumQuery {
    * Time complexity is <b>O(n)</b> to initiate. <b>O(1)</b> to solve.
    * 
    */
-  DYNAMIC_PROGRAMMING {
+  BOTTOM_UP_METHOD {
 
     protected int[] nums;
 

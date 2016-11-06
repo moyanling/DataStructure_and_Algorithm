@@ -1,8 +1,11 @@
 package org.mo39.fmbh.algorithm.dynamicprogramming;
 
+import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.INTRODUCTION_TO_ALGORITHM;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.mo39.fmbh.common.TestData;
+import org.mo39.fmbh.common.annotation.ProblemSource;
 
 /**
  * Find the contiguous subarray within a one-dimensional array of numbers which has the largest sum.
@@ -11,6 +14,7 @@ import org.mo39.fmbh.common.TestData;
  * @author Jihan Chen
  *
  */
+@ProblemSource(INTRODUCTION_TO_ALGORITHM)
 public enum MaximumSubArray {
 
   /**
@@ -126,7 +130,7 @@ public enum MaximumSubArray {
   },
 
   // TODO
-  DYNAMIC_PROGRAMMING() {
+  BOTTOM_UP_METHOD() {
 
     @Override
     public int[] solve(int[] arr) {
@@ -175,7 +179,7 @@ public enum MaximumSubArray {
 
     @Test
     public void testLinearSolution() {
-      Assert.assertArrayEquals(solution, MaximumSubArray.DYNAMIC_PROGRAMMING.solve(arr));
+      Assert.assertArrayEquals(solution, MaximumSubArray.BOTTOM_UP_METHOD.solve(arr));
     }
 
   }

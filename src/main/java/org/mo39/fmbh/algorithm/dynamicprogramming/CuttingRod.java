@@ -40,7 +40,7 @@ public enum CuttingRod {
    * the result and speed up the calculation.
    * 
    */
-  TOP_DOWN_WITH_MEMOIZATION() {
+  TOP_DOWN_WITH_MEMO() {
 
     private int[] memo = new int[price.length];
 
@@ -65,7 +65,7 @@ public enum CuttingRod {
    * <p>
    * <code>codeMemo</code> is used to save the rod cutting plan for each length smaller than rod.
    */
-  BOTTOM_UP() {
+  BOTTOM_UP_METHOD() {
 
     @Override
     public int solve(int rod) {
@@ -108,8 +108,8 @@ public enum CuttingRod {
     @Test
     public void testSolution() {
       verifySolution(CuttingRod.RECURSIVE_SOLUTION);
-      verifySolution(CuttingRod.TOP_DOWN_WITH_MEMOIZATION);
-      verifySolution(CuttingRod.BOTTOM_UP);
+      verifySolution(CuttingRod.TOP_DOWN_WITH_MEMO);
+      verifySolution(CuttingRod.BOTTOM_UP_METHOD);
     }
 
   }

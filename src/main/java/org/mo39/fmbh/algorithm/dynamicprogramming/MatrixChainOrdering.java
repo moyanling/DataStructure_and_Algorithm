@@ -1,7 +1,10 @@
 package org.mo39.fmbh.algorithm.dynamicprogramming;
 
+import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.INTRODUCTION_TO_ALGORITHM;
+
 import org.junit.Assert;
 import org.junit.Test;
+import org.mo39.fmbh.common.annotation.ProblemSource;
 
 /**
  * Given a chain of matrix, decide the order of the chain so that calculation can be the least when
@@ -10,6 +13,7 @@ import org.junit.Test;
  * @author Jihan Chen
  *
  */
+@ProblemSource(INTRODUCTION_TO_ALGORITHM)
 public enum MatrixChainOrdering {
 
   /**
@@ -81,7 +85,7 @@ public enum MatrixChainOrdering {
    * //TODO go back and understand the solution.
    * 
    */
-  DYNAMIC_PROGRAMMING() {
+  BOTTOM_UP_METHOD() {
 
     private int[][] memo;
 
@@ -129,7 +133,7 @@ public enum MatrixChainOrdering {
 
     @Test
     public void testDynamicProgramming() {
-      Assert.assertEquals(expected, MatrixChainOrdering.DYNAMIC_PROGRAMMING.solve(arr));
+      Assert.assertEquals(expected, MatrixChainOrdering.BOTTOM_UP_METHOD.solve(arr));
     }
 
   }

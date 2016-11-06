@@ -9,7 +9,10 @@ public enum Fibonacci {
    * The time complexity of this recursion is <b>O(2^n)</b>.
    * <p>
    * Recurrence Formula:<br>
-   * //TODO
+   *          | 0                       if i=0
+   * sum[i] = | 1                       if i=1
+   *          | sum[i-2]+sum[i-1]       o.w.
+   * 
    */
   RECUSIVE_SOLUTION() {
 
@@ -32,7 +35,7 @@ public enum Fibonacci {
    * {@link Integer#MAX_VALUE} very fast (at n = 45, result = 433494437), so <code>len</code> is set
    * at 30.
    */
-  DYNAMIC_PROGRAMMING() {
+  BOTTOM_UP_METHOD() {
 
     private int len = 30;
     private int curr = 2;
@@ -78,7 +81,7 @@ public enum Fibonacci {
     @Test
     public void testDynamicProgramming() {
       for (int i = 0; i < expected.length; i++) {
-        Assert.assertEquals(expected[i], Fibonacci.DYNAMIC_PROGRAMMING.solve(i));
+        Assert.assertEquals(expected[i], Fibonacci.BOTTOM_UP_METHOD.solve(i));
       }
     }
 
