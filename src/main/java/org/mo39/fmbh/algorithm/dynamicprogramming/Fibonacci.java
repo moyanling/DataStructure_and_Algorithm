@@ -9,10 +9,12 @@ public enum Fibonacci {
    * The time complexity of this recursion is <b>O(2^n)</b>.
    * <p>
    * Recurrence Formula:<br>
+   *
+   * <pre>
    *          | 0                       if i=0
    * sum[i] = | 1                       if i=1
    *          | sum[i-2]+sum[i-1]       o.w.
-   * 
+   * </pre>
    */
   RECUSIVE_SOLUTION() {
 
