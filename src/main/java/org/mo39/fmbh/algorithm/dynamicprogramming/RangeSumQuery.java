@@ -1,5 +1,9 @@
 package org.mo39.fmbh.algorithm.dynamicprogramming;
 
+import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.LEETCODE;
+
+import org.mo39.fmbh.common.annotation.ProblemSource;
+
 /**
  * 
  * @see <a href="https://leetcode.com/problems/range-sum-query-immutable/">Range Sum Query -
@@ -8,6 +12,7 @@ package org.mo39.fmbh.algorithm.dynamicprogramming;
  * @author Jihan Chen
  *
  */
+@ProblemSource(LEETCODE)
 public enum RangeSumQuery {
 
   /**
@@ -47,7 +52,7 @@ public enum RangeSumQuery {
    * Time complexity is <b>O(n^2)</b> to initiate. <b>O(1)</b> to solve.
    * 
    */
-  BOTTOM_UP_SOLUTION {
+  BOTTOM_UP_METHOD_0 {
 
     protected int[] nums;
     protected Integer[][] memo;
@@ -74,7 +79,7 @@ public enum RangeSumQuery {
    * Time complexity is <b>O(n)</b> to initiate. <b>O(1)</b> to solve.
    * 
    */
-  BOTTOM_UP_METHOD {
+  BOTTOM_UP_METHOD_1 {
 
     protected int[] nums;
 

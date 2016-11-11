@@ -4,13 +4,13 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import java.io.IOException;
 import java.util.Comparator;
+import java.util.function.Function;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mo39.fmbh.common.TestData;
 import org.mo39.fmbh.common.Z;
-import org.mo39.fmbh.common.interfaces.Translator;
 
 /**
  * Binary Search Tree.
@@ -186,12 +186,12 @@ public class BST<T> {
    * @param translator
    * @return
    */
-  private NodeP<T> getPeakNode(TreeNode<T> root, Translator<TreeNode<T>, TreeNode<T>> translator) {
+  private NodeP<T> getPeakNode(TreeNode<T> root, Function<TreeNode<T>, TreeNode<T>> f) {
     checkArgument(root != null);
     TreeNode<T> pre = null;
-    while (translator.translate(root) != null) {
+    while (f.apply(root) != null) {
       pre = root;
-      root = translator.translate(root);
+      root = f.apply(root);
     }
     return new NodeP<T>(root, pre);
   }

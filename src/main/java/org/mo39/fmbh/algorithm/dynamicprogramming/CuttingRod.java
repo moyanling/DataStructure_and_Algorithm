@@ -1,7 +1,10 @@
 package org.mo39.fmbh.algorithm.dynamicprogramming;
 
+import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.INTRODUCTION_TO_ALGORITHM;
+
 import org.junit.Assert;
 import org.junit.Test;
+import org.mo39.fmbh.common.annotation.ProblemSource;
 
 
 /**
@@ -11,6 +14,7 @@ import org.junit.Test;
  * @author Jihan Chen
  *
  */
+@ProblemSource(INTRODUCTION_TO_ALGORITHM)
 public enum CuttingRod {
 
   /**

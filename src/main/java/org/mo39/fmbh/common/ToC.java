@@ -13,8 +13,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import org.mo39.fmbh.common.interfaces.Translator;
-
 import com.google.common.base.Joiner;
 
 public class ToC {
@@ -62,7 +60,7 @@ public class ToC {
    *
    */
   private static String format(Map<String, List<String[]>> dict,
-      Translator<String, String> translator) {
+      Function<String, String> translator) {
     StringBuilder sb = new StringBuilder();
     for (String key : dict.keySet()) {
       if (key.equals("algorithm")) sb.append("Algorithms:\n");
@@ -76,7 +74,7 @@ public class ToC {
               "\t" + "\t" + "- "
                   + (translator == null
                       ? String.format(HREF_FORMAT, Joiner.on('/').join(arr), arr[2])
-                      : translator.translate(arr[2]))
+                      : translator.apply(arr[2]))
                   + "\n");
         }
       }

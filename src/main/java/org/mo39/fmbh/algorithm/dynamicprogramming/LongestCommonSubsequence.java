@@ -1,6 +1,7 @@
 package org.mo39.fmbh.algorithm.dynamicprogramming;
 
 import static org.hamcrest.CoreMatchers.hasItems;
+import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.INTRODUCTION_TO_ALGORITHM;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Assert;
 import org.junit.Test;
+import org.mo39.fmbh.common.annotation.ProblemSource;
 
 /**
  * Given two string, find the longest common sub-sequence.
@@ -15,6 +17,7 @@ import org.junit.Test;
  * @author Jihan Chen
  *
  */
+@ProblemSource(INTRODUCTION_TO_ALGORITHM)
 public enum LongestCommonSubsequence {
 
   /**

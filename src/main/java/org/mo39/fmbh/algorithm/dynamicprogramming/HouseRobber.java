@@ -77,7 +77,7 @@ public enum HouseRobber {
   },
 
   /**
-   * dp[i][1] means rob the current house and dp[i][0] means don't.
+   * dp[i][1] means rob the current house and dp[i][0] means don't.//TODO
    */
   BOTTOM_UP_METHOD_0 {
 
@@ -118,17 +118,16 @@ public enum HouseRobber {
     public int solve(int[] nums) {
       for (int n : nums) {
         toAdd += n;
-        if (toAdd < cantAdd) {
-          /**
-           * If we rob current but total money is still smaller than the one not rob, then why
-           * matter to rob it? This makes us lose the chance to rob next house.
-           */
-          toAdd = cantAdd;
-        } else {
-          /**
-           * Otherwise, since we add the current house to toAdd, it can not add next house next
-           * time, so swap it with cantAdd.
-           */
+        /**
+         * If we rob current but total money is still smaller than the one not rob, then why bother
+         * rob it? This makes us lose the chance to rob next house. So make it the same as cantAdd.
+         */
+        if (toAdd < cantAdd) toAdd = cantAdd;
+        /**
+         * Otherwise, since we add the current house to toAdd, it can not add next house next time,
+         * so swap it with cantAdd.
+         */
+        else {
           int temp = toAdd;
           toAdd = cantAdd;
           cantAdd = temp;
@@ -140,8 +139,7 @@ public enum HouseRobber {
   },
 
   /**
-   * This one use almost the same idea but a better implementation compared to
-   * {@link BOTTOM_UP_METHOD_1}
+   * //TODO
    */
   BOTTOM_UP_METHOD_2 {
 
