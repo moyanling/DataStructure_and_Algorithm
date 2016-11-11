@@ -9,7 +9,7 @@ import org.mo39.fmbh.common.annotation.ProblemSource;
 /**
  * @see <a href="https://leetcode.com/problems/count-numbers-with-unique-digits/">Count Numbers with
  *      Unique Digits</a>
- * 
+ *
  * @author Jihan Chen
  *
  */
@@ -23,7 +23,22 @@ public enum CountNumbersWithUniqueDigits {
     @Override
     public int solve(int n) {
       // TODO
-      return 0;
+      return answer[n];
+    }
+
+  },
+
+  BOTTOM_UP_METHOD {
+
+    @Override
+    public int solve(int n) {
+      n = Math.min(n, 10);
+      int count = 1, pre = 9;
+      for (int i = 1; i <= n; i++) {
+        count += pre;
+        pre *= 10 - i;
+      }
+      return count;
     }
 
   };
@@ -34,7 +49,7 @@ public enum CountNumbersWithUniqueDigits {
 
     @Test
     public void testSolutions() {
-      Z.print(CHEATER.solve(2));
+      Z.print(BOTTOM_UP_METHOD.solve(114));
 
     }
 
