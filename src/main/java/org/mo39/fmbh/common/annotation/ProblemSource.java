@@ -22,7 +22,7 @@ public @interface ProblemSource {
    * 
    * @return
    */
-  SourceValue value();
+  SourceValue[] value();
 
   /**
    * Enum of the problem source.

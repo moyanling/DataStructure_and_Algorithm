@@ -168,18 +168,10 @@ public enum MaximumSubArray {
     private int[] solution = new int[] {7, 10, 43};
 
     @Test
-    public void testBruteForce() {
-      Assert.assertArrayEquals(solution, MaximumSubArray.BRUTE_FORCE.solve(arr));
-    }
-
-    @Test
-    public void testDivideAndConquer() {
-      Assert.assertArrayEquals(solution, MaximumSubArray.DIVIDE_AND_CONQUER.solve(arr));
-    }
-
-    @Test
-    public void testLinearSolution() {
-      Assert.assertArrayEquals(solution, MaximumSubArray.BOTTOM_UP_METHOD.solve(arr));
+    public void testSolutions() {
+      Assert.assertArrayEquals(solution, BRUTE_FORCE.solve(arr));
+      Assert.assertArrayEquals(solution, DIVIDE_AND_CONQUER.solve(arr));
+      Assert.assertArrayEquals(solution, BOTTOM_UP_METHOD.solve(arr));
     }
 
   }

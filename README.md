@@ -5,8 +5,13 @@ Table of Content:
 <pre>
 Data Structures:
 	linkedlist
+		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/linkedlist/FindLastKElement.java">FindLastKElement</a>
+		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/linkedlist/LinkedListCycle.java">LinkedListCycle</a>
+		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/linkedlist/LinkedListCycleII.java">LinkedListCycleII</a>
+		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/linkedlist/LinkedListPartition.java">LinkedListPartition</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/linkedlist/ListNode.java">ListNode</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/linkedlist/MergeTwoSortedLinkedList.java">MergeTwoSortedLinkedList</a>
+		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/linkedlist/RemoveDuplicate.java">RemoveDuplicate</a>
 	array
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/array/ArrayPartition.java">ArrayPartition</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/array/ArrayShuffle.java">ArrayShuffle</a>

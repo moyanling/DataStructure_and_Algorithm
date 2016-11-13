@@ -1,5 +1,8 @@
 package org.mo39.fmbh.datastructure.array;
 
+import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.INTRODUCTION_TO_ALGORITHM;
+import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.LEETCODE;
+
 import java.util.Arrays;
 import java.util.Random;
 
@@ -8,13 +11,17 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mo39.fmbh.common.TestData;
 import org.mo39.fmbh.common.Z;
+import org.mo39.fmbh.common.annotation.ProblemSource;
 
 /**
  * Shuffle an array randomly.
  *
+ * @see <a href="https://leetcode.com/problems/shuffle-an-array/">Shuffle an Array</a>
+ * 
  * @author Jihan Chen
  *
  */
+@ProblemSource({LEETCODE, INTRODUCTION_TO_ALGORITHM})
 public enum ArrayShuffle {
 
   /**

@@ -39,11 +39,11 @@ public enum MergeTwoSortedLinkedList {
 
     private ListNode<Integer> head0 = new TestData().sortedLinkedList0;
     private ListNode<Integer> head1 = new TestData().sortedLinkedList1;
+    private Integer[] expected = {1, 2, 3, 5, 6, 7, 8, 10, 31};
 
     @Test
     public void testLinearSolution() {
-      Z.verifyListNodes(new Integer[] {1, 2, 3, 5, 6, 7, 8, 10, 31},
-          MergeTwoSortedLinkedList.LINEAR_SOLUTION.solve(head0, head1));
+      Z.verifyListNodes(expected, LINEAR_SOLUTION.solve(head0, head1));
     }
 
   }

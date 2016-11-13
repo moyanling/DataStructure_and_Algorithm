@@ -7,6 +7,10 @@ import org.junit.Test;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
 /**
+ * This problem is quite intuitive after drawing the solution for <code>n = 5</code>. The occurrence
+ * formula and recursive solution can be easily inferred after that. Symmetric can be used to reduce
+ * half of the calculation.
+ * 
  * @see <a href="https://leetcode.com/problems/unique-binary-search-trees/">Unique Binary Search
  *      Trees</a>
  * 
@@ -16,7 +20,27 @@ import org.mo39.fmbh.common.annotation.ProblemSource;
 @ProblemSource(LEETCODE)
 public enum UniqueBinarySearchTrees {
 
+  /**
+   * Time complexity is //TODO
+   */
+  RECURSIVE_SOLUTION {
 
+    @Override
+    public int solve(int n) {
+      if (n == 0) return 1;
+      int count = 0;
+      for (int j = 0; j < n / 2; j++) {
+        count += solve(j) * solve(n - 1 - j) * 2;
+      }
+      if (n % 2 != 0) count += solve(n / 2) * solve(n / 2);
+      return count;
+    }
+
+  },
+
+  /**
+   * Time complexity is O(n^2).
+   */
   BOTTOM_UP_METHOD {
 
     private int[] memo;
@@ -42,8 +66,8 @@ public enum UniqueBinarySearchTrees {
 
     @Test
     public void testBottomUpMethod() {
+      Assert.assertEquals(42, RECURSIVE_SOLUTION.solve(5));
       Assert.assertEquals(42, BOTTOM_UP_METHOD.solve(5));
-
     }
 
   }

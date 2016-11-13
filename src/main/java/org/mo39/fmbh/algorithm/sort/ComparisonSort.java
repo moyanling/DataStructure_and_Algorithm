@@ -286,8 +286,13 @@ public enum ComparisonSort {
 
   };
 
-  public <T extends Comparable<T>> void sort(T[] arr) {
-    checkArgument(arr != null && !Arrays.asList(arr).contains(null));
+  /**
+   * If the array contains null element, then an NullPointerException may be thrown.
+   * 
+   * @param arr
+   */
+  public <T extends Comparable<T>> void sort(T[] arr) throws NullPointerException {
+    checkArgument(arr != null);
     sortArr(arr);
   }
 

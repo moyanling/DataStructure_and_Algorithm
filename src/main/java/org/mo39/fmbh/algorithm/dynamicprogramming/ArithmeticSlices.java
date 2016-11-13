@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
 /**
- * @see <a href="https://leetcode.com/problems/arithmetic-slices/">numsrithmetic Slices</a>
+ * @see <a href="https://leetcode.com/problems/arithmetic-slices/">Arithmetic Slices</a>
  * 
  * @author Jihan Chen
  *

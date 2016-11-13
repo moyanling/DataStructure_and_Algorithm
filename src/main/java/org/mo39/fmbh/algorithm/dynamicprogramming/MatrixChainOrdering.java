@@ -122,18 +122,10 @@ public enum MatrixChainOrdering {
     private int expected = 8000;
 
     @Test
-    public void testRecursiveSolution0() {
-      Assert.assertEquals(expected, MatrixChainOrdering.RECURSIVE_SOLUTION_0.solve(arr));
-    }
-
-    @Test
-    public void testRecursiveSolution1() {
-      Assert.assertEquals(expected, MatrixChainOrdering.RECURSIVE_SOLUTION_1.solve(arr));
-    }
-
-    @Test
-    public void testDynamicProgramming() {
-      Assert.assertEquals(expected, MatrixChainOrdering.BOTTOM_UP_METHOD.solve(arr));
+    public void testSolutions() {
+      Assert.assertEquals(expected, RECURSIVE_SOLUTION_0.solve(arr));
+      Assert.assertEquals(expected, RECURSIVE_SOLUTION_1.solve(arr));
+      Assert.assertEquals(expected, BOTTOM_UP_METHOD.solve(arr));
     }
 
   }

@@ -22,7 +22,7 @@ public enum LongestCommonSubstring {
    * Brute force.
    * 
    */
-  BRUTE_FORCE {
+  BRUTE_FORCE_0 {
 
     @Override
     public List<String> solve(String s1, String s2) {
@@ -53,30 +53,11 @@ public enum LongestCommonSubstring {
   },
 
   /**
-   * This is a nice solution yielded by myself.
-   * <p>
-   * Recurrence Formula:
-   * 
-   * <pre>
-   * Given X = &lt;x[1], x[2], ..., x[m]&gt;
-   * for i = 0 , 1, ..., m,
-   * Define X[i] = &lt;x[1], x[2], ..., x[i]&gt; is the i<sup>th</sup> prefix of X.
-   * And define c[i,j] is the length of the common substring of X[i] and Y[j].
-   *
-   *              | 0                   if i>X.length or j>Y.length or x[i] != y[j]
-   * c[i+1,j+1] = | c[i,j] + 1          if i,j>0 and x[i] = y[j]
-   * </pre>
-   * 
-   * So in order to get the base case, a combination is used to get all common sub-string of 1
-   * single character. Then build up the common sub-string with the recurrence formula.
-   * <p>
-   * In stead of a table of m*n size, a list of index pair <code>List<int[]></code> is used to
-   * reduce the space.
-   * <p>
+   * This is nothing but a brute force.<br/>
    * Suppose the performance of {@link Stream#filter(java.util.function.Predicate)} is O(n), then
-   * the time complexity of this solution is <b>O(n^2)</b> and space complexity is <b>O(n)</b>.
+   * the time complexity of this solution is <b>O(n^3)</b> and space complexity is <b>O(n)</b>.
    */
-  BOTTOM_UP_METHOD_0 {
+  BRUTE_FORCE_1 {
 
     public List<int[]> memo = new ArrayList<>();
 
@@ -115,7 +96,7 @@ public enum LongestCommonSubstring {
    * //TODO http://www.cnblogs.com/ider/p/longest-common-substring-problem-optimization.html
    * 
    */
-  BOTTOM_UP_METHOD_1 {
+  BOTTOM_UP_METHOD {
 
     @Override
     public List<String> solve(String s1, String s2) {
@@ -147,16 +128,11 @@ public enum LongestCommonSubstring {
     };
 
     @Test
-    public void testBruteForce() {
-      Assert.assertThat(LongestCommonSubstring.BRUTE_FORCE.solve(s1, s2),
-          containsInAnyOrder(expected.toArray()));
+    public void testSolutions() {
+      Assert.assertThat(BRUTE_FORCE_0.solve(s1, s2), containsInAnyOrder(expected.toArray()));
+      Assert.assertThat(BRUTE_FORCE_1.solve(s1, s2), containsInAnyOrder(expected.toArray()));
     }
 
-    @Test
-    public void testDynamicProgramming() {
-      Assert.assertThat(LongestCommonSubstring.BOTTOM_UP_METHOD_0.solve(s1, s2),
-          containsInAnyOrder(expected.toArray()));
-    }
 
   }
 
