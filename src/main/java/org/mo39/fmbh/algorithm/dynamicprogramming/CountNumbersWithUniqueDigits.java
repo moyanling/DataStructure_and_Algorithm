@@ -2,8 +2,8 @@ package org.mo39.fmbh.algorithm.dynamicprogramming;
 
 import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.LEETCODE;
 
+import org.junit.Assert;
 import org.junit.Test;
-import org.mo39.fmbh.common.Z;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
 /**
@@ -18,12 +18,11 @@ public enum CountNumbersWithUniqueDigits {
 
   CHEATER {
 
-    private int[] answer = {10, 91,};
+    private int[] answer = {1, 10, 91, 739, 5275, 32491, 168571, 712891, 2345851, 5611771, 8877691};
 
     @Override
     public int solve(int n) {
-      // TODO
-      return answer[n];
+      return answer[Math.min(n, 10)];
     }
 
   },
@@ -47,10 +46,12 @@ public enum CountNumbersWithUniqueDigits {
 
   public static class TestCountNumbersWithUniqueDigits {
 
+    private int expected = 8877691;
+
     @Test
     public void testSolutions() {
-      Z.print(BOTTOM_UP_METHOD.solve(114));
-
+      Assert.assertEquals(expected, CHEATER.solve(10));
+      Assert.assertEquals(expected, BOTTOM_UP_METHOD.solve(10));
     }
 
   }
