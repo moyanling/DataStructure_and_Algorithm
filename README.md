@@ -39,6 +39,8 @@ Algorithms:
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/dynamicprogramming/PaintFence.java">PaintFence</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/dynamicprogramming/RangeSumQuery.java">RangeSumQuery</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/dynamicprogramming/UniqueBinarySearchTrees.java">UniqueBinarySearchTrees</a>
+		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/dynamicprogramming/UniquePath.java">UniquePath</a>
+		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/dynamicprogramming/WiggleSubsequence.java">WiggleSubsequence</a>
 	sort
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/sort/ComparisonSort.java">ComparisonSort</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/sort/CountingSort.java">CountingSort</a>

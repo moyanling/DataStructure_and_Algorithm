@@ -28,7 +28,7 @@ public class TreeNode<T> {
   }
 
   /**
-   * Breadth-first search traversal.
+   * Breadth-first search traversal taking this TreeNode as root.
    *
    * @param sol
    * @return
@@ -38,7 +38,7 @@ public class TreeNode<T> {
   }
 
   /**
-   * Deepth-first search traversal.
+   * Deepth-first search traversal taking this TreeNode as root.
    *
    * @param sol
    * @return
@@ -48,7 +48,7 @@ public class TreeNode<T> {
   }
 
   /**
-   * Deepth-first search traversal.
+   * Deepth-first search traversal taking this TreeNode as root.
    *
    * @param sol
    * @return
@@ -58,7 +58,7 @@ public class TreeNode<T> {
   }
 
   /**
-   * Deepth-first search traversal.
+   * Deepth-first search traversal taking this TreeNode as root.
    *
    * @param sol
    * @return
@@ -70,11 +70,19 @@ public class TreeNode<T> {
   /**
    * Get the depth of this TreeNode.
    * 
-   * @param sol
-   * @return
+   * @return depth
    */
   public int depth() {
     return depth(this);
+  }
+
+  /**
+   * A tree is balanced if the heights of two sub-trees of any node never differ by more than one.
+   * 
+   * @return true if isBalanced. false otherwise.
+   */
+  public boolean isBalanced() {
+    return isBalanced(this);
   }
 
   /**
@@ -87,6 +95,13 @@ public class TreeNode<T> {
   private int depth(TreeNode<T> root) {
     return root == null ? 0 : Math.max(depth(root.left), depth(root.right)) + 1;
   }
+
+  private boolean isBalanced(TreeNode<T> root) {
+    return root == null || Math.abs(depth(root.left) - depth(root.right)) <= 1 //
+        && isBalanced(root.left) && isBalanced(root.right);
+  }
+
+
 
   public enum LevelOrderSol {
 
@@ -445,6 +460,11 @@ public class TreeNode<T> {
       Assert.assertEquals(depth, root.depth());
     }
 
+    @Test
+    public void testIsBalanced() {
+      Assert.assertFalse(root.isBalanced());
+      Assert.assertTrue(new TestData().getCompleteTree().isBalanced());
+    }
 
   }
 

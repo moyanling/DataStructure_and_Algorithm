@@ -87,6 +87,17 @@ public class TestData {
     treeNode4.right = treeNode7;
   }
 
+  public TreeNode<Integer> getCompleteTree() {
+    root.left = treeNode1;
+    root.right = treeNode2;
+    treeNode1.left = treeNode3;
+    treeNode1.right = treeNode4;
+    treeNode2.left = treeNode5;
+    treeNode2.right = treeNode6;
+    treeNode3.left = treeNode7;
+    return root;
+  }
+
   public ListNode<Integer> sortedLinkedList0 = new ListNode<Integer>(3) {
     {
       next = new ListNode<Integer>(7) {
