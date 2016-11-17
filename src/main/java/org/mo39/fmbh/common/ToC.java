@@ -20,9 +20,15 @@ public class ToC {
   private static final Path ROOT = Paths.get(System.getProperty("user.dir"));
   private static final Path README = Paths.get(ROOT.toString(), "README.md");
   private static final String PACKAGE_PREFIX = "org\\mo39\\fmbh\\";
-  private static final Function<Path, String[]> MAPPER = p -> mapToString(p);
   private static final String HREF_FORMAT =
       "<a href=\"https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/%s.java\">%s</a>";
+
+  private static final Function<Path, String[]> MAPPER = p -> {
+    String str = p.toString();
+    int index = str.lastIndexOf(PACKAGE_PREFIX);
+    return str.substring(index + PACKAGE_PREFIX.length(), str.length() - 5).split("\\\\");
+  };
+
   private static final Predicate<Path> PREDICATE =
       //@formatter:off
         p ->
@@ -33,12 +39,6 @@ public class ToC {
           && !p.getFileName().toString().contains(new String("package-info")
         );
       //@formatter:on
-
-  private static String[] mapToString(Path p) {
-    String str = p.toString();
-    int index = str.lastIndexOf(PACKAGE_PREFIX);
-    return str.substring(index + PACKAGE_PREFIX.length(), str.length() - 5).split("\\\\");
-  }
 
   /**
    * Get the table of content to the screen.
