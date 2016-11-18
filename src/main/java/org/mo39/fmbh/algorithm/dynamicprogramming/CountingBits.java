@@ -6,12 +6,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
-/**
- * @see <a href="https://leetcode.com/problems/counting-bits/">Counting Bits</a>
- * 
- * @author Jihan Chen
- *
- */
 @ProblemSource(LEETCODE)
 public enum CountingBits {
 
