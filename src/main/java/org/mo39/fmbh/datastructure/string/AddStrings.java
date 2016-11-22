@@ -2,8 +2,8 @@ package org.mo39.fmbh.datastructure.string;
 
 import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.LEETCODE;
 
+import org.junit.Assert;
 import org.junit.Test;
-import org.mo39.fmbh.common.Z;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
 @ProblemSource(LEETCODE)
@@ -11,16 +11,17 @@ public enum AddStrings {
 
   RECURSIVE_SOLUTION {
 
-    StringBuilder sb = new StringBuilder();
+    StringBuilder sb;
 
     @Override
     public String solve(String num1, String num2) {
+      sb = new StringBuilder();
       recur(num1, num2, 0, 0);
       return sb.toString();
     }
 
     private void recur(String num1, String num2, int i, int carry) {
-      if (i >= num1.length() && i >= num2.length()) return;
+      if (i >= num1.length() && i >= num2.length() && carry == 0) return;
       int newDigit = getDigit(num1, i) + getDigit(num2, i) + carry;
       if (newDigit >= 10) {
         newDigit -= 10;
@@ -29,8 +30,6 @@ public enum AddStrings {
       recur(num1, num2, i + 1, carry);
       sb.append(newDigit);
     }
-
-
 
   },
 
@@ -65,9 +64,14 @@ public enum AddStrings {
 
   public static class TestAddStrings {
 
+    private String num1 = "123456789";
+    private String num2 = "987654321";
+    private String expected = "1111111110";
+
     @Test
     public void testSolutions() {
-      Z.print(ITERATIVE_SOLUTION.solve("123456789", "987654321"));
+      Assert.assertEquals(expected, ITERATIVE_SOLUTION.solve(num1, num2));
+      Assert.assertEquals(expected, RECURSIVE_SOLUTION.solve(num1, num2));
     }
 
   }

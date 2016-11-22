@@ -63,7 +63,7 @@ public enum LongestCommonSubsequence {
 
   /**
    * This one is nothing more than add a memo to the recursive solution.
-   * 
+   *
    */
   TOP_DOWN_WITH_MEMO() {
 
@@ -97,7 +97,7 @@ public enum LongestCommonSubsequence {
 
   /**
    * //TODO 15.4-4
-   * 
+   *
    */
   BOTTOM_UP_METHOD() {
 
@@ -144,20 +144,10 @@ public enum LongestCommonSubsequence {
     };
 
     @Test
-    public void testRecursiveSolution() {
-      Assert.assertThat(list, hasItems(LongestCommonSubsequence.RECURSIVE_SOLUTION.solve(s1, s2)));
+    public void testSolutions() {
+      Assert.assertThat(list, hasItems(RECURSIVE_SOLUTION.solve(s1, s2)));
+      Assert.assertThat(list, hasItems(TOP_DOWN_WITH_MEMO.solve(s1, s2)));
+      Assert.assertThat(list, hasItems(BOTTOM_UP_METHOD.solve(s1, s2)));
     }
-
-    @Test
-    public void testTopDownWithMemo() {
-      Assert.assertThat(list, hasItems(LongestCommonSubsequence.TOP_DOWN_WITH_MEMO.solve(s1, s2)));
-    }
-
-    @Test
-    public void testDynamicProgramming() {
-      Assert.assertThat(list, hasItems(LongestCommonSubsequence.BOTTOM_UP_METHOD.solve(s1, s2)));
-    }
-
   }
-
 }

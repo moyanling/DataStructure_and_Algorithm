@@ -1,8 +1,10 @@
 package org.mo39.fmbh.algorithm.dynamicprogramming;
 
+import static java.util.stream.Collectors.toList;
 import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.LEETCODE;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 import org.mo39.fmbh.common.Z;
@@ -11,65 +13,81 @@ import org.mo39.fmbh.common.annotation.ProblemSource;
 @ProblemSource(LEETCODE)
 public enum LongestIncreasingSubsequence {
 
-  RECURSIVE_SOLUTION {
-
+  /**
+   * Time complexity is <b>O(n^4)</b>. while is O(n), and the stream is doing filter on a O(n^2)
+   * list, where each filter function runs O(n) complexity, so it's O(n^4);
+   *
+   */
+  BRUTE_FORCE {
 
     @Override
-    public int solve(int[] nums) {
-      if (nums.length == 1) return 1;
-      return recur(nums, nums.length - 2, nums[nums.length - 1]) + 1;
-    }
-
-    private int recur(int[] nums, int end, int lastValue) {
-      if (end < 0) return 0;
-      int len1 = 0, len2 = 0;
-      if (nums[end] < lastValue) {
-        Z.print("end    " + end + " : " + nums[end]);
-        len1 = 1 + recur(nums, end - 1, nums[end]);
-      } else {
-        len1 = recur(nums, end - 2, lastValue);
+    public List<List<Integer>> solve(int[] nums) {
+      Result.nums = nums;
+      List<Result> results = new ArrayList<>();
+      for (int i = 0; i < nums.length; i++) {
+        for (int j = i + 1; j < nums.length; j++) {
+          if (nums[j] > nums[i]) results.add(new Result(i, j));
+        }
       }
-      int len3 = recur(nums, end - 1, nums[end]);
-      if (lastValue == 10) {
-        Z.print("!!!!!!!!!!!!!!!!!!!!!!!!!");
+      int len = 1;
+      while (len < nums.length) {
+        List<Result> newResults = results.stream().filter(r -> r.update()).collect(toList());
+        if (newResults.size() == 0) return results.stream().map(r -> r.toValue()).collect(toList());
+        else results = newResults;
       }
-      // int[] newNums = Arrays.copyOf(nums, nums.length);
-      // Z.swap(newNums, end, end + 1);
-      // len2 = recur(newNums, end - 1, newNums[end]);
-      return Math.max(Math.max(len1, len2), len3);
-      // return Math.max(len1, len2);
+      return results.stream().map(r -> r.toValue()).collect(toList());
     }
 
   },
 
-  TOP_DOWN_WITH_MEMO {
+  BOTTOM_UP_METHOD {
 
-    int[] memo;
+    int[][] memo;
 
     @Override
-    public int solve(int[] nums) {
-      if (nums.length == 1) return 1;
-      memo = new int[nums.length];
-      int result = recur(nums, nums.length - 1);
-      return result == 0 ? 0 : result + 1;
-    }
+    public List<List<Integer>> solve(int[] nums) {
+      memo = new int[nums.length][nums.length];
+      memo[0] = nums;
+      for (int i = 1; i < nums.length; i++) {
+        for (int j = 0; j < nums.length; j++) {
 
-    private int recur(int[] nums, int end) {
-      if (end <= 0) return 0;
-      int len1 = 0, len2 = 0;
-      if (nums[end] > nums[end - 1]) {
-        len1 = 1 + recur(nums, end - 1);
+        }
       }
-      int[] newNums = Arrays.copyOf(nums, nums.length);
-      Z.swap(newNums, end, end - 1);
-      len2 = recur(newNums, end - 1);
-      memo[end] = Math.max(len1, len2);
-      return memo[end];
+
+      return null;
     }
 
   };
 
-  public abstract int solve(int[] nums);
+
+  private static class Result {
+
+    public static int[] nums;
+    public List<Integer> sequence = new ArrayList<>();
+
+    public Result(int i, int j) {
+      sequence.add(i);
+      sequence.add(j);
+    }
+
+    public boolean update() {
+      int lastIndex = sequence.get(sequence.size() - 1);
+      for (int i = lastIndex + 1; i < nums.length; i++) {
+        if (nums[i] > nums[lastIndex]) {
+          sequence.add(i);
+          return true;
+        }
+      }
+      return false;
+    }
+
+    public List<Integer> toValue() {
+      return sequence.stream().map(i -> nums[i]).collect(toList());
+    }
+
+  }
+
+  public abstract List<List<Integer>> solve(int[] nums);
 
   public static class TestLongestIncreasingSubsequence {
 
@@ -80,8 +98,8 @@ public enum LongestIncreasingSubsequence {
     public void testSolutions() {
       // Assert.assertEquals(expected, RECURSIVE_SOLUTION.solve(nums));
       // Assert.assertEquals(expected, TOP_DOWN_WITH_MEMO.solve(nums));
-      Z.print(RECURSIVE_SOLUTION.solve(new int[] {1, 3, 6, 7, 9, 4, 10, 5, 6}));
-      Z.print(RECURSIVE_SOLUTION.solve(nums));
+      Z.print(BRUTE_FORCE.solve(new int[] {1, 3, 6, 7, 9, 4, 10, 5, 6}));
+      // Z.print(RECURSIVE_SOLUTION.solve(nums));
     }
 
   }
