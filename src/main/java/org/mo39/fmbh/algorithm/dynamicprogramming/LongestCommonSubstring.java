@@ -4,13 +4,16 @@ import static java.util.stream.Collectors.toList;
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.mo39.fmbh.common.MapKey;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -164,20 +167,37 @@ public enum LongestCommonSubstring {
   /**
    * So nice and elegant.
    */
-  BOTTOM_UP_METHOD {
-
-    int[][] memo;
-    Result result;
+  BOTTOM_UP_METHOD_0 {
 
     @Override
     public List<String> solve(String s1, String s2) {
-      result = new Result(s1);
-      memo = new int[s1.length() + 1][s2.length() + 1];
+      Result result = new Result(s1);
+      int[][] memo = new int[s1.length() + 1][s2.length() + 1];
       for (int i = 0; i < s1.length(); i++) {
         for (int j = 0; j < s2.length(); j++) {
           if (s1.charAt(i) == s2.charAt(j)) {
             int len = ((i < 1 || j < 1) ? 0 : memo[i - 1][j - 1]) + 1;
             memo[i][j] = len;
+            result.update(len, i - len + 1);
+          }
+        }
+      }
+      return result.toStrList();
+    }
+
+  },
+
+  BOTTOM_UP_METHOD_1 {
+
+    @Override
+    public List<String> solve(String s1, String s2) {
+      Map<MapKey, Integer> map = new HashMap<>();
+      Result result = new Result(s1);
+      for (int i = 0; i < s1.length(); i++) {
+        for (int j = 0; j < s2.length(); j++) {
+          if (s1.charAt(i) == s2.charAt(j)) {
+            int len = map.getOrDefault(MapKey.valueOf(i - 1, j - 1), 0) + 1;
+            map.put(MapKey.valueOf(i, j), len);
             result.update(len, i - len + 1);
           }
         }
@@ -234,7 +254,8 @@ public enum LongestCommonSubstring {
       Assert.assertThat(BRUTE_FORCE_1.solve(s1, s2), containsInAnyOrder(expected));
       Assert.assertThat(RECURSIVE_SOLUTION.solve(s1, s2), containsInAnyOrder(expected));
       Assert.assertThat(TOP_DOWN_WITH_MEMO.solve(s1, s2), containsInAnyOrder(expected));
-      Assert.assertThat(BOTTOM_UP_METHOD.solve(s1, s2), containsInAnyOrder(expected));
+      Assert.assertThat(BOTTOM_UP_METHOD_0.solve(s1, s2), containsInAnyOrder(expected));
+      Assert.assertThat(BOTTOM_UP_METHOD_1.solve(s1, s2), containsInAnyOrder(expected));
     }
 
 

@@ -4,12 +4,6 @@ import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.LEETCODE
 
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
-/**
- * @see <a href="https://leetcode.com/problems/paint-fence/">Paint Fence</a>
- * 
- * @author Jihan Chen
- *
- */
 @ProblemSource(LEETCODE)
 public enum PaintFence {
 

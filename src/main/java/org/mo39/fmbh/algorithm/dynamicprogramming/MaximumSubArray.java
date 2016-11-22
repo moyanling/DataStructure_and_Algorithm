@@ -1,6 +1,7 @@
 package org.mo39.fmbh.algorithm.dynamicprogramming;
 
 import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.INTRODUCTION_TO_ALGORITHM;
+import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.LEETCODE;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,7 +15,7 @@ import org.mo39.fmbh.common.annotation.ProblemSource;
  * @author Jihan Chen
  *
  */
-@ProblemSource(INTRODUCTION_TO_ALGORITHM)
+@ProblemSource({INTRODUCTION_TO_ALGORITHM, LEETCODE})
 public enum MaximumSubArray {
 
   /**

@@ -33,6 +33,15 @@ public enum ArrayPartition {
     return solve(arr, predicate, 0, arr.length);
   };
 
+  /**
+   * Inclusive start and exclusive end.
+   * 
+   * @param arr
+   * @param predicate
+   * @param start
+   * @param end
+   * @return
+   */
   public abstract <T> int solve(T[] arr, Predicate<T> predicate, int start, int end);
 
   public static class TestArrayPartition {

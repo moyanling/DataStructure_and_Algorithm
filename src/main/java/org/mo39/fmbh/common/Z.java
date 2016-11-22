@@ -20,7 +20,7 @@ public class Z {
   }
 
   public static void print(Object obj) {
-    System.out.println(obj);
+    System.out.println(String.valueOf(obj));
   }
 
   public static <T> void print(T[] arr) {
@@ -64,6 +64,20 @@ public class Z {
   public static <T> void swap(T[] arr, int i, int j) {
     if (i == j) return;
     T temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+  }
+
+  /**
+   * Helper function that swaps two elements at position i and j in an array.
+   *
+   * @param arr
+   * @param i
+   * @param j
+   */
+  public static void swap(int[] arr, int i, int j) {
+    if (i == j) return;
+    int temp = arr[i];
     arr[i] = arr[j];
     arr[j] = temp;
   }

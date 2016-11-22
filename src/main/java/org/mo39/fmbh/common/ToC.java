@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -41,17 +41,16 @@ public class ToC {
       //@formatter:on
 
   /**
-   * Get the table of content to the screen.
-   *
+   * Get a list of problems. Each problem is presented as a String array.
+   * 
+   * @return
    */
-  private static Map<String, List<String[]>> getTableOfContent() {
+  public static List<String[]> getAllProblems() {
     try (Stream<Path> paths = Files.walk(ROOT)) {
-      Map<String, List<String[]>> groups =
-          paths.filter(PREDICATE).map(MAPPER).collect(Collectors.groupingBy(s -> s[0]));
-      return groups;
+      return paths.filter(PREDICATE).map(MAPPER).collect(Collectors.toList());
     } catch (IOException e) {
       e.printStackTrace();
-      return new HashMap<>();
+      return new ArrayList<>();
     }
   }
 
@@ -59,9 +58,10 @@ public class ToC {
    * Print table of content to the screen using a specific format.
    *
    */
-  private static String format(Map<String, List<String[]>> dict,
-      Function<String, String> translator) {
+  private static String format(List<String[]> listOfProblems, Function<String, String> translator) {
     StringBuilder sb = new StringBuilder();
+    Map<String, List<String[]>> dict =
+        listOfProblems.stream().collect(Collectors.groupingBy(s -> s[0]));
     for (String key : dict.keySet()) {
       if (key.equals("algorithm")) sb.append("Algorithms:\n");
       else sb.append("Data Structures:\n");
@@ -85,11 +85,11 @@ public class ToC {
 
 
   public static void printHtml() {
-    Z.print(format(getTableOfContent(), null));
+    Z.print(format(getAllProblems(), null));
   }
 
   public static void print() {
-    Z.print(format(getTableOfContent(), s -> s + ".java"));
+    Z.print(format(getAllProblems(), s -> s + ".java"));
   }
 
   public static void updateReadMe() throws IOException {
@@ -103,7 +103,7 @@ public class ToC {
     List<String> newLines =
         IntStream.range(0, lines.size()).filter(i -> i <= start || i >= finalEnd)
             .mapToObj(i -> lines.get(i)).collect(Collectors.toList());
-    String[] newToC = format(getTableOfContent(), null).split("\n");
+    String[] newToC = format(getAllProblems(), null).split("\n");
     for (int i = newToC.length - 1; i >= 0; i--) {
       newLines.add(start + 1, newToC[i]);
     }
@@ -112,7 +112,6 @@ public class ToC {
 
   public static void main(String[] args) throws IOException {
     ToC.updateReadMe();
-    print();
   }
 
 }
