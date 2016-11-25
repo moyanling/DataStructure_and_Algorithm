@@ -6,6 +6,18 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
+/**
+ * Given two non-negative numbers num1 and num2 represented as string, return the sum of num1 and
+ * num2.<br/>
+ * Note:<br/>
+ * The length of both num1 and num2 is < 5100.<br/>
+ * Both num1 and num2 contains only digits 0-9.<br/>
+ * Both num1 and num2 does not contain any leading zero.<br/>
+ * You must not use any built-in BigInteger library or convert the inputs to integer directly.
+ * 
+ * @see <a href="https://leetcode.com/problems/add-strings/">Add Strings</a>
+ * @author Jihan Chen
+ */
 @ProblemSource(LEETCODE)
 public enum AddStrings {
 

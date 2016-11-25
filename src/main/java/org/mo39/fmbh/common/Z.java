@@ -47,11 +47,9 @@ public class Z {
   }
 
   public static <T> void printTreeBfs(TreeNode<T> root) {
-    for (List<T> level : root.bfs(LevelOrderSol.ITERATIVE_SOLUTION_WITH_NULL)) {
-      print(Joiner.on(',').join(level.stream().map(o -> o == null ? '#' : String.valueOf(o))
-          .collect(Collectors.toList())));
-    }
-
+    root.bfs(LevelOrderSol.ITERATIVE_SOLUTION_WITH_NULL).stream()
+        .forEach(l -> print(Joiner.on(',').join(l.stream()
+            .map(o -> o == null ? '#' : String.valueOf(o)).collect(Collectors.toList()))));
   }
 
   /**

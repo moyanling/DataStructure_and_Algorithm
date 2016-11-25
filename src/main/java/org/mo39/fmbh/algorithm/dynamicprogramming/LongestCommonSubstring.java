@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.mo39.fmbh.common.MapKey;
+import org.mo39.fmbh.common.Tuple;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -191,13 +191,13 @@ public enum LongestCommonSubstring {
 
     @Override
     public List<String> solve(String s1, String s2) {
-      Map<MapKey, Integer> map = new HashMap<>();
+      Map<Tuple<Integer>, Integer> map = new HashMap<>();
       Result result = new Result(s1);
       for (int i = 0; i < s1.length(); i++) {
         for (int j = 0; j < s2.length(); j++) {
           if (s1.charAt(i) == s2.charAt(j)) {
-            int len = map.getOrDefault(MapKey.valueOf(i - 1, j - 1), 0) + 1;
-            map.put(MapKey.valueOf(i, j), len);
+            int len = map.getOrDefault(Tuple.valueOf(i - 1, j - 1), 0) + 1;
+            map.put(Tuple.valueOf(i, j), len);
             result.update(len, i - len + 1);
           }
         }

@@ -36,6 +36,7 @@ import org.mo39.fmbh.common.Z;
  */
 public class BST<T> {
 
+  private int size = 0;
   private TreeNode<T> root;
   private Comparator<T> comparator;
 
@@ -75,6 +76,10 @@ public class BST<T> {
     return root;
   }
 
+  public int getSize() {
+    return size;
+  }
+
   /**
    * Convenient method to insert a new node to this BST.
    * <p>
@@ -82,8 +87,8 @@ public class BST<T> {
    *
    * @param data
    */
-  public void isnert(T data) {
-    InsertSol.ITERATIVE_SOLUTION.solve(this, data);
+  public void insert(T data) {
+    insert(data, InsertSol.ITERATIVE_SOLUTION);
   }
 
   /**
@@ -93,6 +98,7 @@ public class BST<T> {
    * @param sol
    */
   public void insert(T data, InsertSol sol) {
+    size++;
     sol.solve(this, data);
   }
 
@@ -117,7 +123,10 @@ public class BST<T> {
    * @return true if the key is found and deleted. false if the key is not found.
    */
   public boolean delete(T key) {
-    return delete(key, SearchSol.ITERATIVE_SOLUTION);
+    if (delete(key, SearchSol.ITERATIVE_SOLUTION)) {
+      size--;
+      return true;
+    } else return false;
   }
 
   /**
@@ -220,16 +229,12 @@ public class BST<T> {
 
       @Override
       public <T> void handle(BST<T> bst, T data) {
-        if (bst.root == null) {
-          bst.root = new TreeNode<>(data);
-          return;
-        }
         TreeNode<T> pre = null;
         TreeNode<T> curr = bst.root;
         while (curr != null) {
           pre = curr;
           int compareResult = bst.comparator.compare(data, curr.val);
-          checkArgument(compareResult != 0, "Duplicate node are not allowed.");
+          checkArgument(compareResult != 0, "Duplicate node are not allowed: " + data);
           if (compareResult < 0) curr = curr.left;
           else curr = curr.right;
         }
