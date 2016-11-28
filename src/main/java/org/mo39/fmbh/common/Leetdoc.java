@@ -65,7 +65,7 @@ public class Leetdoc {
     return Joiner.on("").join(charList);
   }
 
-  public static final Predicate<Path> IS_LEETCODE_PROBLEM = str -> {
+  public static final Predicate<Path> IS_LEETCODE_PROBLEM = IS_PROBLEM.and(str -> {
     Class<?> klass;
     try {
       klass = Class.forName(getFullyQualifiedName(str));
@@ -80,24 +80,24 @@ public class Leetdoc {
       return false;
     }
     return Arrays.asList(ps.value()).contains(SourceValue.LEETCODE);
-  };
+  });
 
   public static final Consumer<Path> UPDATE_COMMENTS = path -> {
     // "(class|enum) " + name + " \\{"
     String name = getClassName(path);
     String link = linkOf(name);
-    Document doc = null;
-    try {
-      doc = Jsoup.connect(link).get();
-    } catch (Exception e) {
-      log.error("Error getting html for " + link);
-      return;
-    }
     List<String> lines = null;
     try {
       lines = Files.readAllLines(path);
     } catch (IOException e) {
       log.error("Error reading " + path.toString());
+      return;
+    }
+    Document doc = null;
+    try {
+      doc = Jsoup.connect(link).get();
+    } catch (Exception e) {
+      log.error("Error getting html for " + link);
       return;
     }
     int index = -1;
@@ -141,8 +141,6 @@ public class Leetdoc {
     }
   };
 
-
-
   public static class LeetcodeDescription extends CommentTemplate.Element {
 
     private String description;
@@ -178,13 +176,8 @@ public class Leetdoc {
 
   }
 
-  public static List<String[]> getLeetcodeProblemsWithNoComments() throws IOException {
-    Files.walk(ROOT).filter(IS_PROBLEM).filter(IS_LEETCODE_PROBLEM).forEach(UPDATE_COMMENTS);
-    return null;
-  }
-
   public static void main(String[] args) throws Exception {
-    getLeetcodeProblemsWithNoComments();
+    Files.walk(ROOT).filter(IS_LEETCODE_PROBLEM).forEach(UPDATE_COMMENTS);
   }
 
 }

@@ -14,9 +14,8 @@ import com.google.common.collect.Lists;
 
 /**
  * Write a program that outputs the string representation of numbers from 1 to n.<br/>
- * But for multiples of three it should output “Fizz” instead of the number and for the multiples of
- * five output “Buzz”. For numbers which are multiples of both three and five output “FizzBuzz”.
- * <br/>
+ * But for multiples of three it should output Fizz instead of the number and for the multiples of
+ * five output Buzz. For numbers which are multiples of both three and five output FizzBuzz. <br/>
  * Example:<br/>
  * n = 15,<br/>
  * Return:<br/>
@@ -37,7 +36,7 @@ import com.google.common.collect.Lists;
  * "14",<br/>
  * "FizzBuzz"<br/>
  * ]
- * 
+ *
  * @see <a href="https://leetcode.com/problems/fizz-buzz/">Fizz Buzz</a>
  * @author Jihan Chen
  */
