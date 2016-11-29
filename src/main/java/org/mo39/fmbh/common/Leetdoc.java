@@ -83,7 +83,6 @@ public class Leetdoc {
   });
 
   public static final Consumer<Path> UPDATE_COMMENTS = path -> {
-    // "(class|enum) " + name + " \\{"
     String name = getClassName(path);
     String link = linkOf(name);
     List<String> lines = null;

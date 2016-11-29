@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.mo39.fmbh.common.Z;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
 
@@ -27,7 +28,7 @@ import org.mo39.fmbh.common.annotation.ProblemSource;
  * Example:<br/>
  * A = [1, 2, 3, 4]<br/>
  * return: 3, for 3 arithmetic slices in A: [1, 2, 3], [2, 3, 4] and [1, 2, 3, 4] itself.
- * 
+ *
  * @see <a href="https://leetcode.com/problems/arithmetic-slices/">Arithmetic Slices</a>
  * @author Jihan Chen
  */
@@ -46,7 +47,7 @@ public enum ArithmeticSlices {
       while (l.size() != 0) {
         final int len = length;
         l = l.stream()
-            .filter(o -> (o + len) < nums.length
+            .filter(o -> o + len < nums.length
                 && nums[o + len] - nums[o + len - 1] == nums[o + 1] - nums[o])
             .collect(Collectors.toList());
         count += l.size();
@@ -59,7 +60,7 @@ public enum ArithmeticSlices {
 
   /**
    * This is an alternative not using add, which might be easier to understand in some aspect.
-   * 
+   *
    */
   BOTTOM_UP_METHOD_0 {
 
@@ -87,7 +88,7 @@ public enum ArithmeticSlices {
    * are Arithmetic.<br/>
    * 2. The number of all these kind of subsequences for an Arithmetic are 1+2+3+...+(n-3) where n
    * is the length of this Arithmetic.
-   * 
+   *
    */
   BOTTOM_UP_METHOD_1 {
 
@@ -115,6 +116,7 @@ public enum ArithmeticSlices {
       Assert.assertEquals(expected, BRUTE_FORCE.solve(nums));
       Assert.assertEquals(expected, BOTTOM_UP_METHOD_0.solve(nums));
       Assert.assertEquals(expected, BOTTOM_UP_METHOD_1.solve(nums));
+      Z.print(BOTTOM_UP_METHOD_1.solve(new int[] {2, 4, 6, 8, 10}));
     }
 
   }

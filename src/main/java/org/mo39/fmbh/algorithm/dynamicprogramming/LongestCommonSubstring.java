@@ -28,7 +28,7 @@ public enum LongestCommonSubstring {
 
   /**
    * Brute force.
-   * 
+   *
    */
   BRUTE_FORCE_0 {
 
@@ -101,7 +101,7 @@ public enum LongestCommonSubstring {
    * There are three sub-cases for this problem.<br>
    * The key point is: the function need to go through all three sub-cases, so <code>else</else>
    * cannot be used.
-   * 
+   *
    */
   RECURSIVE_SOLUTION {
 
@@ -176,7 +176,7 @@ public enum LongestCommonSubstring {
       for (int i = 0; i < s1.length(); i++) {
         for (int j = 0; j < s2.length(); j++) {
           if (s1.charAt(i) == s2.charAt(j)) {
-            int len = ((i < 1 || j < 1) ? 0 : memo[i - 1][j - 1]) + 1;
+            int len = (i < 1 || j < 1 ? 0 : memo[i - 1][j - 1]) + 1;
             memo[i][j] = len;
             result.update(len, i - len + 1);
           }
@@ -191,7 +191,7 @@ public enum LongestCommonSubstring {
 
     @Override
     public List<String> solve(String s1, String s2) {
-      Map<Tuple<Integer>, Integer> map = new HashMap<>();
+      Map<Tuple<Integer, Integer>, Integer> map = new HashMap<>();
       Result result = new Result(s1);
       for (int i = 0; i < s1.length(); i++) {
         for (int j = 0; j < s2.length(); j++) {

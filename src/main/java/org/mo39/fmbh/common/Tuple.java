@@ -3,25 +3,25 @@ package org.mo39.fmbh.common;
 import java.util.Objects;
 
 
-public class Tuple<T> {
+public class Tuple<T, K> {
 
   public final T a;
-  public final T b;
+  public final K b;
 
-  private Tuple(T i, T j) {
+  private Tuple(T i, K j) {
     this.a = i;
     this.b = j;
   }
 
-  public static <T> Tuple<T> valueOf(T i, T j) {
-    return new Tuple<T>(i, j);
+  public static <T, K> Tuple<T, K> valueOf(T i, K j) {
+    return new Tuple<T, K>(i, j);
   }
 
   @Override
   public boolean equals(Object obj) {
     if (this == obj) return true;
     if (obj.getClass() != this.getClass()) return false;
-    Tuple<?> other = Tuple.class.cast(obj);
+    Tuple<?, ?> other = Tuple.class.cast(obj);
     if (Objects.equals(this.a, other.a) && Objects.equals(this.b, other.b)) return true;
     return false;
   }
@@ -30,4 +30,10 @@ public class Tuple<T> {
   public int hashCode() {
     return Objects.hash(a, b);
   }
+
+  @Override
+  public String toString() {
+    return String.format("<%d,%d>", a, b);
+  }
+
 }

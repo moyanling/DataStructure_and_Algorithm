@@ -97,8 +97,8 @@ public class ToC {
   }
 
   public static void main(String[] args) throws IOException {
-    ToC.updateReadMe();
     Z.print(getToC(SIMPLE_NAME_STYLE));
+    ToC.updateReadMe();
   }
 
 }
