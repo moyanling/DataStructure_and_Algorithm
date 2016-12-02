@@ -47,10 +47,6 @@ public enum FrogJump {
       return false;
     }
 
-    public boolean recur(int[] stones, int i) {
-      return false;
-    }
-
   },
 
   BOTTOM_UP_METHOD {

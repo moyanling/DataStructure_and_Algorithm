@@ -2,11 +2,7 @@ package org.mo39.fmbh.algorithm.dynamicprogramming;
 
 import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.LEETCODE;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.Test;
-import org.mo39.fmbh.common.Tuple;
 import org.mo39.fmbh.common.Z;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
@@ -53,22 +49,7 @@ public enum ArithmeticSlicesIISubsequence {
 
     @Override
     public int solve(int[] A) {
-      Map<Tuple<Integer, Integer>, Integer> map = new HashMap<>();
-      for (int i = 0; i < A.length; i++) {
-        for (int j = i + 1; j < A.length; j++) {
-          final int lastIndex = j;
-          final int newStart = i;
-//          Tuple key = Tuple()
-//          map.compute();
-        }
-      }
-      int num = 0;
-      for (Tuple key : map.keySet()) {
-//        int len = map.get(key).b;
-//        num += len < 3 ? 0 : (len - 2) * (len - 1) / 2;
-      }
-      Z.print(map);
-      return num;
+      return 0;
     }
 
   };
@@ -78,7 +59,6 @@ public enum ArithmeticSlicesIISubsequence {
   public static class TestArithmeticSlicesIISubsequence {
 
     private int[] nums = {1, 2, 3, 4, 5, 6};
-    private int expected = 7;
 
     @Test
     public void testSolutions() {
