@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.Assert;
+import org.junit.Test;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
 /**
@@ -22,7 +24,7 @@ import org.mo39.fmbh.common.annotation.ProblemSource;
  * 7<br/>
  * Explanation:<br/>
  * One longest palindrome that can be built is "dccaccd", whose length is 7.
- * 
+ *
  * @see <a href="https://leetcode.com/problems/longest-palindrome/">Longest Palindrome</a>
  * @author Jihan Chen
  */
@@ -56,5 +58,17 @@ public enum LongestPalindrome {
   };
 
   public abstract int solve(String s);
+
+  public static class TestLongestPalindrome {
+
+    private String s = "abccccdd";
+    private int expected = 7;
+
+    @Test
+    public void testSolutions() {
+      Assert.assertEquals(expected, HASHMAP_SOLUTION.solve(s));
+      Assert.assertEquals(expected, SET_SOLUTION.solve(s));
+    }
+  }
 
 }

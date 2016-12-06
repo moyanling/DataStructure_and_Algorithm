@@ -74,11 +74,7 @@ public class Leetdoc {
       return false;
     }
     ProblemSource ps = klass.getAnnotation(ProblemSource.class);
-    if (ps == null) return false;
-    if (ps.value().length != 1) {
-      log.info("Multiple ProblemSource found for " + klass.getName() + ". Skipped.");
-      return false;
-    }
+    if (ps == null || ps.value().length != 1) return false;
     return Arrays.asList(ps.value()).contains(SourceValue.LEETCODE);
   });
 
