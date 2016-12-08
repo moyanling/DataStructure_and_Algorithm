@@ -2,7 +2,6 @@ package org.mo39.fmbh.algorithm.dynamicprogramming;
 
 import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.LEETCODE;
 
-import org.junit.Test;
 import org.mo39.fmbh.common.Z;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
@@ -60,7 +59,6 @@ public enum ArithmeticSlicesIISubsequence {
 
     private int[] nums = {1, 2, 3, 4, 5, 6};
 
-    @Test
     public void testSolutions() {
       Z.print(SOLUTION.solve(nums));
     }

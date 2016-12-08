@@ -3,7 +3,6 @@ package org.mo39.fmbh.algorithm.dynamicprogramming;
 import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.LEETCODE;
 
 import org.junit.Assert;
-import org.junit.Test;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
 /**
@@ -69,7 +68,6 @@ public enum FrogJump {
     private int[] stones1 = {0, 1, 2, 3, 4, 5, 6, 12};
     private boolean expected1 = false;
 
-    @Test
     public void testSolutions() {
       Assert.assertEquals(expected0, BOTTOM_UP_METHOD.solve(stones0));
       Assert.assertEquals(expected1, BOTTOM_UP_METHOD.solve(stones1));

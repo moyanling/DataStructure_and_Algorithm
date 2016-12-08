@@ -13,8 +13,8 @@ public class Tuple<T, K> {
     this.b = j;
   }
 
-  public static <T, K> Tuple<T, K> valueOf(T i, K j) {
-    return new Tuple<T, K>(i, j);
+  public static <T, K> Tuple<T, K> valueOf(T a, K b) {
+    return new Tuple<T, K>(a, b);
   }
 
   @Override

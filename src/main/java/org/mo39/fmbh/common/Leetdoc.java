@@ -1,8 +1,8 @@
 package org.mo39.fmbh.common;
 
+import static org.mo39.fmbh.common.Constants.IS_PROBLEM;
 import static org.mo39.fmbh.common.Constants.PACKAGE_PREFIX;
-import static org.mo39.fmbh.common.Constants.ROOT;
-import static org.mo39.fmbh.common.ToC.IS_PROBLEM;
+import static org.mo39.fmbh.common.Constants.SRC_ROOT;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -88,13 +88,6 @@ public class Leetdoc {
       log.error("Error reading " + path.toString());
       return;
     }
-    Document doc = null;
-    try {
-      doc = Jsoup.connect(link).get();
-    } catch (Exception e) {
-      log.error("Error getting html for " + link);
-      return;
-    }
     int index = -1;
     // First move down, find the line of class definition.
     while (!lines.get(++index).matches(".*(class|enum) " + name + " \\{")) {
@@ -105,6 +98,13 @@ public class Leetdoc {
     }
     // Then move up, skip annotations.
     while (lines.get(--index).trim().length() > 0) {
+    }
+    Document doc = null;
+    try {
+      doc = Jsoup.connect(link).get();
+    } catch (Exception e) {
+      log.error("Error getting html for " + link);
+      return;
     }
     // Get description from html document. Sometimes this would fetch an unrelated description.
     String description = doc.select("meta[name=description]").first().attr("content");
@@ -172,7 +172,7 @@ public class Leetdoc {
   }
 
   public static void main(String[] args) throws Exception {
-    Files.walk(ROOT).filter(IS_LEETCODE_PROBLEM).forEach(UPDATE_COMMENTS);
+    Files.walk(SRC_ROOT).filter(IS_LEETCODE_PROBLEM).forEach(UPDATE_COMMENTS);
   }
 
 }

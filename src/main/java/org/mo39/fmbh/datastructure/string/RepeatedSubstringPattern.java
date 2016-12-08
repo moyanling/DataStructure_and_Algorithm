@@ -6,6 +6,26 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
+/**
+ * Given a non-empty string check if it can be constructed by taking a substring of it and appending
+ * multiple copies of the substring together. You may assume the given string consists of lowercase
+ * English letters only and its length will not exceed 10000. <br/>
+ * Example 1:<br/>
+ * Input: "abab"<br/>
+ * Output: True<br/>
+ * Explanation: It's the substring "ab" twice.<br/>
+ * Example 2:<br/>
+ * Input: "aba"<br/>
+ * Output: False<br/>
+ * Example 3:<br/>
+ * Input: "abcabcabcabc"<br/>
+ * Output: True<br/>
+ * Explanation: It's the substring "abc" four times. (And the substring "abcabc" twice.)
+ * 
+ * @see <a href="https://leetcode.com/problems/repeated-substring-pattern/">Repeated Substring
+ *      Pattern</a>
+ * @author Jihan Chen
+ */
 @ProblemSource(LEETCODE)
 public enum RepeatedSubstringPattern {
 

@@ -1,6 +1,5 @@
 package org.mo39.fmbh.common;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
@@ -126,10 +125,6 @@ public class Z {
     Assert.assertEquals(p.val, q.val);
     verifyTreeNodes(p.left, q.left);
     verifyTreeNodes(p.right, q.right);
-  }
-
-  public static void main(String[] args) throws IOException {
-
   }
 
 }

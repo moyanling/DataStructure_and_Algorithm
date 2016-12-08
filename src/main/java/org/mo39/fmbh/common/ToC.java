@@ -5,6 +5,7 @@ import static java.lang.String.format;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 import static org.mo39.fmbh.common.Constants.GIT_LINK;
+import static org.mo39.fmbh.common.Constants.IS_PROBLEM;
 import static org.mo39.fmbh.common.Constants.PACKAGE_PREFIX;
 import static org.mo39.fmbh.common.Constants.README;
 import static org.mo39.fmbh.common.Constants.ROOT;
@@ -15,7 +16,6 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 import com.google.common.base.Joiner;
@@ -28,17 +28,6 @@ public class ToC {
     int index = str.lastIndexOf(PACKAGE_PREFIX);
     return str.substring(index + PACKAGE_PREFIX.length(), str.length() - 5).split("\\\\");
   };
-
-  public static final Predicate<Path> IS_PROBLEM =
-      //@formatter:off
-        p ->
-          Files.isRegularFile(p)
-          && p.toString().matches(".*(datastructure|algorithm).*")
-          && p.getFileName().toString().contains(new String("java"))
-          && !p.getFileName().toString().contains(new String("Problem"))
-          && !p.getFileName().toString().contains(new String("package-info")
-        );
-      //@formatter:on
 
   public static final Function<String[], String> SIMPLE_NAME_STYLE = strArr -> strArr[2];
   public static final Function<String[], String> HREF_LINK_STYLE =

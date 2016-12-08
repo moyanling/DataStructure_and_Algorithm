@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.mo39.fmbh.common.Z;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
 
@@ -116,7 +115,6 @@ public enum ArithmeticSlices {
       Assert.assertEquals(expected, BRUTE_FORCE.solve(nums));
       Assert.assertEquals(expected, BOTTOM_UP_METHOD_0.solve(nums));
       Assert.assertEquals(expected, BOTTOM_UP_METHOD_1.solve(nums));
-      Z.print(BOTTOM_UP_METHOD_1.solve(new int[] {2, 4, 6, 8, 10}));
     }
 
   }

@@ -17,16 +17,23 @@ Data Structures:
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/string/FindAllAnagramsInAString.java">FindAllAnagramsInAString</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/string/FizzBuzz.java">FizzBuzz</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/string/LongestPalindrome.java">LongestPalindrome</a>
+		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/string/NumberOfSegmentsInAString.java">NumberOfSegmentsInAString</a>
+		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/string/RepeatedSubstringPattern.java">RepeatedSubstringPattern</a>
+		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/string/StringSearchingAlgorithm.java">StringSearchingAlgorithm</a>
 	array
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/array/ArrayPartition.java">ArrayPartition</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/array/ArrayShuffle.java">ArrayShuffle</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/array/IslandPerimeter.java">IslandPerimeter</a>
+		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/array/NumberOfBoomerangs.java">NumberOfBoomerangs</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/array/TwoSumIIInputArrayIsSorted.java">TwoSumIIInputArrayIsSorted</a>
 	binarytree
+		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/binarytree/AVL.java">AVL</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/binarytree/BST.java">BST</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/binarytree/ConvertSortedArrayToBinarySearchTree.java">ConvertSortedArrayToBinarySearchTree</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/binarytree/PathSum.java">PathSum</a>
+		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/binarytree/PathSumIII.java">PathSumIII</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/binarytree/SumOfLeftLeaves.java">SumOfLeftLeaves</a>
+		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/binarytree/Tree.java">Tree</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/binarytree/TreeNode.java">TreeNode</a>
 	heap
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/heap/ArrayHeap.java">ArrayHeap</a>
@@ -38,6 +45,7 @@ Algorithms:
 	dynamicprogramming
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/dynamicprogramming/ArithmeticSlices.java">ArithmeticSlices</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/dynamicprogramming/ArithmeticSlicesIISubsequence.java">ArithmeticSlicesIISubsequence</a>
+		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/dynamicprogramming/CombinationSumIV.java">CombinationSumIV</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/dynamicprogramming/CountingBits.java">CountingBits</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/dynamicprogramming/CountNumbersWithUniqueDigits.java">CountNumbersWithUniqueDigits</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/dynamicprogramming/CuttingRod.java">CuttingRod</a>
@@ -62,6 +70,9 @@ Algorithms:
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/sort/WiggleSort.java">WiggleSort</a>
 	math
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/math/ArrangingCoins.java">ArrangingCoins</a>
+		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/math/HappyNumber.java">HappyNumber</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/math/MinimumMovesToEqualArrayElements.java">MinimumMovesToEqualArrayElements</a>
+	bitmanipulation
+		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/bitmanipulation/BinaryWatch.java">BinaryWatch</a>
 </pre>
 </div>
