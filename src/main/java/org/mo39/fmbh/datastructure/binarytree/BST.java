@@ -4,6 +4,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import java.io.IOException;
 import java.util.Comparator;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import org.junit.Assert;
@@ -98,8 +99,13 @@ public class BST<T> extends Tree<T> {
    */
   @Override
   public TreeNode<T> search(T key) {
-    Tuple<TreeNode<T>, TreeNode<T>> tuple = SearchSol.ITERATIVE_SOLUTION.solve(this, key);
-    return tuple == null ? null : tuple.a;
+    return SearchSol.ITERATIVE_SOLUTION.solve(this, key).a;
+  }
+
+  @Override
+  public TreeNode<T> trace(T key, Consumer<TreeNode<T>> consumer) {
+    Tuple<TreeNode<T>, TreeNode<T>> tuple = TraceSol.ITERATIVE_SOLUTION.solve(this, key, consumer);
+    return tuple.a == null ? tuple.b : tuple.a;
   }
 
   /**
@@ -289,22 +295,66 @@ public class BST<T> extends Tree<T> {
     public abstract <T> void handle(Tree<T> bst, T data);
   }
 
-  public enum SearchSol {
+  public enum TraceSol {
 
-    ITERATIVE_SOLUTION() {
+    ITERATIVE_SOLUTION {
 
       @Override
-      public <T> Tuple<TreeNode<T>, TreeNode<T>> handle(Tree<T> bst, T key) {
+      public <T> Tuple<TreeNode<T>, TreeNode<T>> handle(Tree<T> bst, T key,
+          Consumer<TreeNode<T>> consumer) {
         TreeNode<T> curr = bst.root;
         TreeNode<T> pre = null;
         while (curr != null) {
+          consumer.accept(curr);
           int compareResult = bst.comparator.compare(key, curr.val);
           if (compareResult == 0) return Tuple.valueOf(curr, pre);
           pre = curr;
           if (compareResult < 0) curr = curr.left;
           else curr = curr.right;
         }
-        return null;
+        return Tuple.valueOf(null, pre);
+      }
+
+    },
+
+    RECURSIVE_SOLUTION {
+
+      @Override
+      public <T> Tuple<TreeNode<T>, TreeNode<T>> handle(Tree<T> bst, T key,
+          Consumer<TreeNode<T>> consumer) {
+        return recur(bst.root, null, bst.comparator, key, consumer);
+      }
+
+      private <T> Tuple<TreeNode<T>, TreeNode<T>> recur(TreeNode<T> curr, TreeNode<T> pre,
+          Comparator<T> comparator, T key, Consumer<TreeNode<T>> consumer) {
+        if (curr == null) return Tuple.valueOf(null, pre);
+        consumer.accept(curr);
+        int compareResult = comparator.compare(key, curr.val);
+        if (compareResult == 0) return Tuple.valueOf(curr, pre);
+        pre = curr;
+        if (compareResult < 0) return recur(curr.left, pre, comparator, key, consumer);
+        return recur(curr.right, pre, comparator, key, consumer);
+      }
+
+    };
+
+    protected abstract <T> Tuple<TreeNode<T>, TreeNode<T>> handle(Tree<T> bst, T key,
+        Consumer<TreeNode<T>> consumer);
+
+    public <T> Tuple<TreeNode<T>, TreeNode<T>> solve(Tree<T> bst, T key,
+        Consumer<TreeNode<T>> consumer) {
+      checkArgument(key != null);
+      return handle(bst, key, consumer);
+    }
+  }
+
+  public enum SearchSol {
+
+    ITERATIVE_SOLUTION() {
+
+      @Override
+      public <T> Tuple<TreeNode<T>, TreeNode<T>> handle(Tree<T> bst, T key) {
+        return TraceSol.ITERATIVE_SOLUTION.solve(bst, key, t -> {return;});
       }
 
     },
@@ -313,17 +363,7 @@ public class BST<T> extends Tree<T> {
 
       @Override
       public <T> Tuple<TreeNode<T>, TreeNode<T>> handle(Tree<T> bst, T key) {
-        return recur(bst.root, null, bst.comparator, key);
-      }
-
-      private <T> Tuple<TreeNode<T>, TreeNode<T>> recur(TreeNode<T> curr, TreeNode<T> pre,
-          Comparator<T> comparator, T key) {
-        if (curr == null) return null;
-        int compareResult = comparator.compare(key, curr.val);
-        if (compareResult == 0) return Tuple.valueOf(curr, pre);
-        pre = curr;
-        if (compareResult < 0) return recur(curr.left, pre, comparator, key);
-        else return recur(curr.right, pre, comparator, key);
+        return TraceSol.RECURSIVE_SOLUTION.solve(bst, key, t -> {return;});
       }
 
     };
@@ -389,8 +429,8 @@ public class BST<T> extends Tree<T> {
     @Test
     public void testSearch() {
       // ---------
-      Assert.assertNull(SearchSol.ITERATIVE_SOLUTION.solve(bst, 0));
-      Assert.assertNull(SearchSol.RECURSIVE_SOLUTION.solve(bst, 0));
+      Assert.assertNull(SearchSol.ITERATIVE_SOLUTION.solve(bst, 0).a);
+      Assert.assertNull(SearchSol.RECURSIVE_SOLUTION.solve(bst, 0).a);
       Assert.assertEquals(new Integer(5), SearchSol.ITERATIVE_SOLUTION.solve(bst, 5).a.val);
       Assert.assertEquals(new Integer(5), SearchSol.RECURSIVE_SOLUTION.solve(bst, 5).a.val);
       // ---------

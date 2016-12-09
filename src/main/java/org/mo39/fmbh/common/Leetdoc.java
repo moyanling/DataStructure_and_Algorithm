@@ -43,8 +43,10 @@ public class Leetdoc {
     char[] charArr = name.toCharArray();
     List<Character> charList = new ArrayList<>();
     for (int i = 0; i < charArr.length; i++) {
-      if (i != 0 && Character.isUpperCase(charArr[i]) && (charArr[i - 1] != 'I'
-          || i < charArr.length - 1 && Character.isLowerCase(charArr[i + 1]))) {
+      if (i != 0 && Character.isUpperCase(charArr[i])
+          && (charArr[i - 1] != 'I'
+              || i < charArr.length - 1 && Character.isLowerCase(charArr[i + 1]))
+          || !Character.isLetter(charArr[i])) {
         charList.add('-');
       }
       charList.add(Character.toLowerCase(charArr[i]));
@@ -56,8 +58,10 @@ public class Leetdoc {
     char[] charArr = name.toCharArray();
     List<Character> charList = new ArrayList<>();
     for (int i = 0; i < charArr.length; i++) {
-      if (i != 0 && Character.isUpperCase(charArr[i]) && (charArr[i - 1] != 'I'
-          || i < charArr.length - 1 && Character.isLowerCase(charArr[i + 1]))) {
+      if (i != 0 && Character.isUpperCase(charArr[i])
+          && (charArr[i - 1] != 'I'
+              || i < charArr.length - 1 && Character.isLowerCase(charArr[i + 1]))
+          || !Character.isLetter(charArr[i])) {
         charList.add(' ');
       }
       charList.add(charArr[i]);

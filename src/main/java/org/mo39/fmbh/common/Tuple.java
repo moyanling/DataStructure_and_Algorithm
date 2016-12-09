@@ -33,7 +33,7 @@ public class Tuple<T, K> {
 
   @Override
   public String toString() {
-    return String.format("<%d,%d>", a, b);
+    return String.format("<%s,%s>", String.valueOf(a), String.valueOf(b));
   }
 
 }

@@ -2,6 +2,10 @@ package org.mo39.fmbh.algorithm.math;
 
 import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.LEETCODE;
 
+import java.util.Arrays;
+
+import org.junit.Assert;
+import org.junit.Test;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
 /**
@@ -23,21 +27,49 @@ import org.mo39.fmbh.common.annotation.ProblemSource;
 @ProblemSource(LEETCODE)
 public enum MinimumMovesToEqualArrayElements {
 
-  SOLUTION {
+  SOLUTION_0 {
 
     @Override
     public int solve(int[] nums) {
-      Integer min = null;
-      Integer max = null;
-      for (int n : nums) {
-        if (min == null || n < min) min = n;
-        if (max == null || n > max) max = n;
+      Arrays.sort(nums);
+      int toRet = 0;
+      for (int i = 1; i < nums.length; i++) {
+        toRet += nums[i] - nums[0];
       }
-      return max == min ? 0 : max - min + 1;
+      return toRet;
+    }
+
+  },
+
+  SOLUTION_1 {
+
+    @Override
+    public int solve(int[] nums) {
+      if (nums.length <= 1) return 0;
+      Integer min = null;
+      int sum = 0;
+      for (int i = 0; i < nums.length; i++) {
+        sum += nums[i];
+        if (min == null || nums[i] < min) min = nums[i];
+      }
+      return sum - nums.length * min;
     }
 
   };
 
   public abstract int solve(int[] nums);
+
+  public static class TestMinimumMovesToEqualArrayElements {
+
+    private int[] nums = {1, 2, 3};
+    private int expected = 3;
+
+    @Test
+    public void testSolutions() {
+      Assert.assertEquals(expected, SOLUTION_0.solve(nums));
+      Assert.assertEquals(expected, SOLUTION_1.solve(nums));
+    }
+
+  }
 
 }

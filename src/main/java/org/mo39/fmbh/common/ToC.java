@@ -59,15 +59,6 @@ public class ToC {
     return sb.toString();
   }
 
-
-  public static void printHtml() throws IOException {
-    Z.print(getToC(null));
-  }
-
-  public static void print() throws IOException {
-    Z.print(getToC(s -> s + ".java"));
-  }
-
   public static void updateReadMe() throws IOException {
     List<String> lines = Files.readAllLines(README);
     int start = lines.indexOf("<div class='tableofcontent'>") + 1;

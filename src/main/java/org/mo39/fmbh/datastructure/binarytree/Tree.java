@@ -1,6 +1,7 @@
 package org.mo39.fmbh.datastructure.binarytree;
 
 import java.util.Comparator;
+import java.util.function.Consumer;
 
 /**
  * An abstract class for a binary search tree.
@@ -42,5 +43,7 @@ public abstract class Tree<T> {
   public abstract TreeNode<T> getMin();
 
   public abstract TreeNode<T> getMax();
+  
+  public abstract TreeNode<T> trace(T key, Consumer<TreeNode<T>> consumer);
 
 }

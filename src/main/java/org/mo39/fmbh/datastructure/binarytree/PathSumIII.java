@@ -76,7 +76,7 @@ public enum PathSumIII {
     TreeNode<Integer> node6 = new TreeNode<>(3);
     TreeNode<Integer> node7 = new TreeNode<>(-2);
     TreeNode<Integer> node8 = new TreeNode<>(1);
-    
+
     private int expected = 3;
 
     @Before

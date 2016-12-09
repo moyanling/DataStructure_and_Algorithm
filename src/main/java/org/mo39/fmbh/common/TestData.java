@@ -133,4 +133,25 @@ public class TestData {
     }
   };
 
+  public TreeNode<Integer> bstRoot = new TreeNode<>(6);
+  public TreeNode<Integer> bstTreeNode1 = new TreeNode<>(2);
+  public TreeNode<Integer> bstTreeNode2 = new TreeNode<>(8);
+  public TreeNode<Integer> bstTreeNode3 = new TreeNode<>(0);
+  public TreeNode<Integer> bstTreeNode4 = new TreeNode<>(4);
+  public TreeNode<Integer> bstTreeNode5 = new TreeNode<>(7);
+  public TreeNode<Integer> bstTreeNode6 = new TreeNode<>(9);
+  public TreeNode<Integer> bstTreeNode7 = new TreeNode<>(3);
+  public TreeNode<Integer> bstTreeNode8 = new TreeNode<>(5);
+
+  {
+    bstRoot.left = bstTreeNode1;
+    bstRoot.right = bstTreeNode2;
+    bstTreeNode1.left = bstTreeNode3;
+    bstTreeNode1.right = bstTreeNode4;
+    bstTreeNode4.left = bstTreeNode7;
+    bstTreeNode1.right = bstTreeNode8;
+    bstTreeNode2.left = bstTreeNode5;
+    bstTreeNode2.right = bstTreeNode6;
+  }
+
 }
