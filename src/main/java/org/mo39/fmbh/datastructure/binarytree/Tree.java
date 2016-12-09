@@ -43,7 +43,7 @@ public abstract class Tree<T> {
   public abstract TreeNode<T> getMin();
 
   public abstract TreeNode<T> getMax();
-  
+
   public abstract TreeNode<T> trace(T key, Consumer<TreeNode<T>> consumer);
 
 }

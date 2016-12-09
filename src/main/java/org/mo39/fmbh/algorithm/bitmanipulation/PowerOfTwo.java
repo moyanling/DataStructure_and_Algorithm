@@ -7,8 +7,11 @@ import org.junit.Test;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
 /**
- * <br/>
- * Given an integer, write a function to determine if it is a power of two.<br/>
+ * <pre>
+ * 
+ * Given an integer, write a function to determine if it is a power of two.
+ * 
+ * </pre>
  * 
  * @see <a href="https://leetcode.com/problems/power-of-two/">Power Of Two</a>
  * @author Jihan Chen

@@ -354,7 +354,9 @@ public class BST<T> extends Tree<T> {
 
       @Override
       public <T> Tuple<TreeNode<T>, TreeNode<T>> handle(Tree<T> bst, T key) {
-        return TraceSol.ITERATIVE_SOLUTION.solve(bst, key, t -> {return;});
+        return TraceSol.ITERATIVE_SOLUTION.solve(bst, key, t -> {
+          return;
+        });
       }
 
     },
@@ -363,7 +365,9 @@ public class BST<T> extends Tree<T> {
 
       @Override
       public <T> Tuple<TreeNode<T>, TreeNode<T>> handle(Tree<T> bst, T key) {
-        return TraceSol.RECURSIVE_SOLUTION.solve(bst, key, t -> {return;});
+        return TraceSol.RECURSIVE_SOLUTION.solve(bst, key, t -> {
+          return;
+        });
       }
 
     };

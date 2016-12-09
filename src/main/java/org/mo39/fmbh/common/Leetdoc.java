@@ -9,10 +9,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -85,13 +88,8 @@ public class Leetdoc {
   public static final Consumer<Path> UPDATE_COMMENTS = path -> {
     String name = getClassName(path);
     String link = linkOf(name);
-    List<String> lines = null;
-    try {
-      lines = Files.readAllLines(path);
-    } catch (IOException e) {
-      log.error("Error reading " + path.toString());
-      return;
-    }
+    List<String> lines = readLines(path);
+    if (lines == null) return;
     int index = -1;
     // First move down, find the line of class definition.
     while (!lines.get(++index).matches(".*(class|enum) " + name + " \\{")) {
@@ -103,19 +101,8 @@ public class Leetdoc {
     // Then move up, skip annotations.
     while (lines.get(--index).trim().length() > 0) {
     }
-    Document doc = null;
-    try {
-      doc = Jsoup.connect(link).get();
-    } catch (Exception e) {
-      log.error("Error getting html for " + link);
-      return;
-    }
-    // Get description from html document. Sometimes this would fetch an unrelated description.
-    String description = doc.select("meta[name=description]").first().attr("content");
-    if (description.contains("LeetCode Online Judge is a platform")) {
-      log.error("Error description for " + link);
-      return;
-    }
+    String description = fetchDescription(path);
+    if (description == null) return;
     String[] arr = description.split("\r\n");
     description = Joiner.on("\r\n").join(Arrays.asList(arr).stream()
         .filter(c -> !c.contains("Credits")).collect(Collectors.toList()));
@@ -140,6 +127,87 @@ public class Leetdoc {
     }
   };
 
+  public static final Consumer<Path> REMOVE_COMMENTS = path -> {
+    String name = getClassName(path);
+    List<String> lines = readLines(path);
+    if (lines == null) return;
+    int index = -1;
+    // First move down, find the line of class definition.
+    while (!lines.get(++index).matches(".*(class|enum) " + name + " \\{")) {
+    }
+    Set<Integer> set = new HashSet<>();
+    for (int i = 0; i < index; i++) {
+      if (lines.get(i).contains("*")) set.add(i);
+    }
+    final List<String> fLines = lines;
+    lines = IntStream.range(0, lines.size()).filter(i -> !set.contains(i))
+        .mapToObj(i -> fLines.get(i)).collect(Collectors.toList());
+    try {
+      com.google.common.io.Files.write(Joiner.on("\n").join(lines).getBytes(), path.toFile());
+      log.info(name + " is updated");
+    } catch (IOException e) {
+      log.error("Error writing " + path.toString());
+      return;
+    }
+  };
+
+  public static final Consumer<Path> UPDATE_PRE_TAG = path -> {
+    String name = getClassName(path);
+    List<String> lines = readLines(path);
+    if (lines == null) return;
+    int index = -1;
+    // First move down, find the line of class definition.
+    while (!lines.get(++index).matches(".*(class|enum) " + name + " \\{")) {
+    }
+    for (int i = 0; i < index; i++) {
+      if (lines.get(i).contains("<pre>")) return;
+    }
+    int start = -1, end = -1;
+    for (int i = 0; i < index; i++) {
+      if (lines.get(i).contains("/**")) start = i + 1;
+      else if (lines.get(i).contains(" * @see <a href=\"https://leetcode.com")) end = i - 1;
+    }
+    lines.add(end, " * </pre>");
+    lines.add(start, " * <pre>");
+    try {
+      com.google.common.io.Files.write(Joiner.on("\n").join(lines).getBytes(), path.toFile());
+      log.info(name + " is updated");
+    } catch (IOException e) {
+      log.error("Error writing " + path.toString());
+      return;
+    }
+  };
+
+  public static String fetchDescription(Path path) {
+    String name = getClassName(path);
+    String link = linkOf(name);
+    Document doc = null;
+    try {
+      doc = Jsoup.connect(link).get();
+    } catch (Exception e) {
+      log.error("Error getting html for " + link);
+      return null;
+    }
+    // Get description from html document. Sometimes this would fetch an unrelated description.
+    String description = doc.select("meta[name=description]").first().attr("content");
+    if (description.contains("LeetCode Online Judge is a platform")) {
+      log.error("Error description for " + link);
+      return null;
+    }
+    return description;
+  }
+
+  public static List<String> readLines(Path path) {
+    List<String> lines = null;
+    try {
+      lines = Files.readAllLines(path);
+    } catch (IOException e) {
+      log.error("Error reading " + path.toString());
+      return null;
+    }
+    return lines;
+  }
+
   public static class LeetcodeDescription extends CommentTemplate.Element {
 
     private String description;
@@ -151,8 +219,7 @@ public class Leetdoc {
 
     @Override
     public String format() {
-      return description.replace("\r\n", "\n").replace("\n\n\n", "\n").replace("\n\n", "\n")
-          .replace("\n", "<br/>");
+      return description;
     }
 
   }

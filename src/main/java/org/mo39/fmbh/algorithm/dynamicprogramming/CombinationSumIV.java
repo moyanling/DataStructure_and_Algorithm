@@ -5,26 +5,27 @@ import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.LEETCODE
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
 /**
+ * <pre>
  * Given an integer array with all positive numbers and no duplicates, find the number of possible
- * combinations that add up to a positive integer target.<br/>
- * Example:<br/>
- * nums = [1, 2, 3]<br/>
- * target = 4<br/>
- * The possible combination ways are:<br/>
- * (1, 1, 1, 1)<br/>
- * (1, 1, 2)<br/>
- * (1, 2, 1)<br/>
- * (1, 3)<br/>
- * (2, 1, 1)<br/>
- * (2, 2)<br/>
- * (3, 1)<br/>
- * Note that different sequences are counted as different combinations.<br/>
- * Therefore the output is 7.<br/>
- * Follow up:<br/>
- * What if negative numbers are allowed in the given array?<br/>
- * How does it change the problem?<br/>
- * What limitation we need to add to the question to allow negative numbers? <br/>
- *
+ * combinations that add up to a positive integer target.
+ * 
+ * Example:
+ * 
+ * nums = [1, 2, 3] target = 4
+ * 
+ * The possible combination ways are: (1, 1, 1, 1) (1, 1, 2) (1, 2, 1) (1, 3) (2, 1, 1) (2, 2) (3,
+ * 1)
+ * 
+ * Note that different sequences are counted as different combinations.
+ * 
+ * Therefore the output is 7.
+ * 
+ * 
+ * 
+ * Follow up: What if negative numbers are allowed in the given array? How does it change the
+ * problem? What limitation we need to add to the question to allow negative numbers?
+ * </pre>
+ * 
  * @see <a href="https://leetcode.com/problems/combination-sum-iv/">Combination Sum IV</a>
  * @author Jihan Chen
  */

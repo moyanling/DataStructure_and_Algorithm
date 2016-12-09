@@ -10,19 +10,20 @@ import org.mo39.fmbh.common.TestData;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
 /**
- * <br/>
+ * <pre>
+ * 
  * Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up
- * all the values along the path equals the given sum.<br/>
- * For example:<br/>
- * Given the below binary tree and sum = 22,<br/>
- * 5<br/>
- * / \<br/>
- * 4 8<br/>
- * / / \<br/>
- * 11 13 4<br/>
- * / \ \<br/>
- * 7 2 1<br/>
+ * all the values along the path equals the given sum.
+ * 
+ * 
+ * For example: Given the below binary tree and sum = 22,
+ * 
+ * 5 / \ 4 8 / / \ 11 13 4 / \ \ 7 2 1
+ * 
+ * 
+ * 
  * return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
+ * </pre>
  * 
  * @see <a href="https://leetcode.com/problems/path-sum/">Path Sum</a>
  * @author Jihan Chen

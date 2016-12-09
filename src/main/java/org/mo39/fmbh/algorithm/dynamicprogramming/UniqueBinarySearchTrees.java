@@ -7,15 +7,19 @@ import org.junit.Test;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
 /**
- * This problem is quite intuitive after drawing the solution for <code>n = 5</code>. The occurrence
- * formula and recursive solution can be easily inferred after that. Symmetric can be used to reduce
- * half of the calculation.
+ * <pre>
+ * Given n, how many structurally unique BST's (binary search trees) that store values 1...n?
+ * 
+ * 
+ * For example, Given n = 3, there are a total of 5 unique BST's.
+ * 
+ * 
+ * 1 3 3 2 1 \ / / / \ \ 3 2 1 1 3 2 / / \ \ 2 1 2 3
+ * </pre>
  * 
  * @see <a href="https://leetcode.com/problems/unique-binary-search-trees/">Unique Binary Search
  *      Trees</a>
- * 
  * @author Jihan Chen
- *
  */
 @ProblemSource(LEETCODE)
 public enum UniqueBinarySearchTrees {

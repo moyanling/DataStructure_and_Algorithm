@@ -8,7 +8,7 @@ import static org.mo39.fmbh.common.Constants.GIT_LINK;
 import static org.mo39.fmbh.common.Constants.IS_PROBLEM;
 import static org.mo39.fmbh.common.Constants.PACKAGE_PREFIX;
 import static org.mo39.fmbh.common.Constants.README;
-import static org.mo39.fmbh.common.Constants.ROOT;
+import static org.mo39.fmbh.common.Constants.SRC_ROOT;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -40,7 +40,7 @@ public class ToC {
   private static String getToC(Function<String[], String> func) throws IOException {
     StringBuilder sb = new StringBuilder();
     Map<String, List<String[]>> dict =
-        Files.walk(ROOT).filter(IS_PROBLEM).map(TO_STR_ARR).collect(groupingBy(s -> s[0]));
+        Files.walk(SRC_ROOT).filter(IS_PROBLEM).map(TO_STR_ARR).collect(groupingBy(s -> s[0]));
     for (String key : dict.keySet()) {
       if (key.equals("algorithm")) sb.append("Algorithms:\n");
       else sb.append("Data Structures:\n");

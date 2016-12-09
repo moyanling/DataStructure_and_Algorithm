@@ -12,10 +12,14 @@ import org.mo39.fmbh.common.annotation.ProblemSource;
 
 
 /**
- * <br/>
- * Given a linked list, determine if it has a cycle in it.<br/>
- * Follow up:<br/>
- * Can you solve it without using extra space?
+ * <pre>
+ * 
+ * Given a linked list, determine if it has a cycle in it.
+ * 
+ * 
+ * 
+ * Follow up: Can you solve it without using extra space?
+ * </pre>
  * 
  * @see <a href="https://leetcode.com/problems/linked-list-cycle/">Linked List Cycle</a>
  * @author Jihan Chen

@@ -5,16 +5,22 @@ import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.LEETCODE
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
 /**
+ * <pre>
  * Given an integer array nums, find the sum of the elements between indices i and j (i &le; j),
- * inclusive.<br/>
- * Example:<br/>
- * Given nums = [-2, 0, 3, -5, 2, -1]<br/>
- * sumRange(0, 2) -> 1<br/>
- * sumRange(2, 5) -> -1<br/>
- * sumRange(0, 5) -> -3<br/>
- * Note:<br/>
- * You may assume that the array does not change.<br/>
- * There are many calls to sumRange function.
+ * inclusive.
+ * 
+ * Example:
+ * 
+ * Given nums = [-2, 0, 3, -5, 2, -1]
+ * 
+ * sumRange(0, 2) -> 1 sumRange(2, 5) -> -1 sumRange(0, 5) -> -3
+ * 
+ * 
+ * 
+ * Note:
+ * 
+ * You may assume that the array does not change. There are many calls to sumRange function.
+ * </pre>
  * 
  * @see <a href="https://leetcode.com/problems/range-sum-query-immutable/">Range Sum Query
  *      Immutable</a>

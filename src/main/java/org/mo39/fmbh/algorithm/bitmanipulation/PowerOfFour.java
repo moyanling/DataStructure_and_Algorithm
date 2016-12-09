@@ -7,12 +7,15 @@ import org.junit.Test;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
 /**
- * <br/>
- * Given an integer (signed 32 bits), write a function to check whether it is a power of 4.<br/>
- * Example:<br/>
- * Given num = 16, return true.<br/>
- * Given num = 5, return false.<br/>
- * Follow up: Could you solve it without loops/recursion?<br/>
+ * <pre>
+ * 
+ * Given an integer (signed 32 bits), write a function to check whether it is a power of 4.
+ * 
+ * Example: Given num = 16, return true. Given num = 5, return false.
+ * 
+ * 
+ * Follow up: Could you solve it without loops/recursion?
+ * </pre>
  * 
  * @see <a href="https://leetcode.com/problems/power-of-four/">Power Of Four</a>
  * @author Jihan Chen

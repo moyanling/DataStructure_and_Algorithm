@@ -9,16 +9,20 @@ import org.junit.Test;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
 /**
+ * <pre>
  * Given a non-empty integer array of size n, find the minimum number of moves required to make all
- * array elements equal, where a move is incrementing n - 1 elements by 1.<br/>
- * Example:<br/>
- * Input:<br/>
- * [1,2,3]<br/>
- * Output:<br/>
- * 3<br/>
- * Explanation:<br/>
- * Only three moves are needed (remember each move increments two elements):<br/>
+ * array elements equal, where a move is incrementing n - 1 elements by 1.
+ * 
+ * Example:
+ * 
+ * Input: [1,2,3]
+ * 
+ * Output: 3
+ * 
+ * Explanation: Only three moves are needed (remember each move increments two elements):
+ * 
  * [1,2,3] => [2,3,3] => [3,4,3] => [4,4,4]
+ * </pre>
  * 
  * @see <a href="https://leetcode.com/problems/minimum-moves-to-equal-array-elements/">Minimum Moves
  *      To Equal Array Elements</a>

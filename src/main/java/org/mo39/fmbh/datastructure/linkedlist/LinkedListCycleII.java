@@ -6,12 +6,17 @@ import org.junit.Assert;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
 /**
- * <br/>
+ * <pre>
+ * 
  * Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
- * <br/>
- * Note: Do not modify the linked list.<br/>
- * Follow up:<br/>
- * Can you solve it without using extra space?
+ * 
+ * 
+ * 
+ * Note: Do not modify the linked list.
+ * 
+ * 
+ * Follow up: Can you solve it without using extra space?
+ * </pre>
  * 
  * @see <a href="https://leetcode.com/problems/linked-list-cycle-ii/">Linked List Cycle II</a>
  * @author Jihan Chen

@@ -7,20 +7,37 @@ import org.junit.Test;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
 /**
+ * <pre>
  * Given a non-empty string check if it can be constructed by taking a substring of it and appending
  * multiple copies of the substring together. You may assume the given string consists of lowercase
- * English letters only and its length will not exceed 10000. <br/>
- * Example 1:<br/>
- * Input: "abab"<br/>
- * Output: True<br/>
- * Explanation: It's the substring "ab" twice.<br/>
- * Example 2:<br/>
- * Input: "aba"<br/>
- * Output: False<br/>
- * Example 3:<br/>
- * Input: "abcabcabcabc"<br/>
- * Output: True<br/>
+ * English letters only and its length will not exceed 10000.
+ * 
+ * Example 1:
+ * 
+ * Input: "abab"
+ * 
+ * Output: True
+ * 
+ * Explanation: It's the substring "ab" twice.
+ * 
+ * 
+ * 
+ * Example 2:
+ * 
+ * Input: "aba"
+ * 
+ * Output: False
+ * 
+ * 
+ * 
+ * Example 3:
+ * 
+ * Input: "abcabcabcabc"
+ * 
+ * Output: True
+ * 
  * Explanation: It's the substring "abc" four times. (And the substring "abcabc" twice.)
+ * </pre>
  * 
  * @see <a href="https://leetcode.com/problems/repeated-substring-pattern/">Repeated Substring
  *      Pattern</a>
@@ -63,6 +80,16 @@ public enum RepeatedSubstringPattern {
     @Override
     public boolean solve(String str) {
       return str.matches("^(.+)\\1+$");
+    }
+
+  },
+
+  KMP {
+
+    @Override
+    public boolean solve(String str) {
+      // TODO Auto-generated method stub
+      return false;
     }
 
   };
