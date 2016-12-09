@@ -73,7 +73,7 @@ public class TreeNode<T> {
    * @return depth
    */
   public int depth() {
-    return depth(this);
+    return depthOf(this);
   }
 
   /**
@@ -92,15 +92,54 @@ public class TreeNode<T> {
    * @param root
    * @return
    */
-  private int depth(TreeNode<T> root) {
-    return root == null ? 0 : Math.max(depth(root.left), depth(root.right)) + 1;
+  public static <T> int depthOf(TreeNode<T> root) {
+    return root == null ? 0 : Math.max(depthOf(root.left), depthOf(root.right)) + 1;
   }
 
   private boolean isBalanced(TreeNode<T> root) {
-    return root == null || Math.abs(depth(root.left) - depth(root.right)) <= 1 //
+    return root == null || Math.abs(depthOf(root.left) - depthOf(root.right)) <= 1
         && isBalanced(root.left) && isBalanced(root.right);
   }
 
+  public enum IsBalancedSol {
+
+    /**
+     * Time complexity is <b>O(nlog(n))</b>.
+     */
+    TOP_DOWN_METHOD {
+
+      @Override
+      public <T> boolean solve(TreeNode<T> root) {
+        return root == null || Math.abs(depthOf(root.left) - depthOf(root.right)) <= 1
+            && solve(root.left) && solve(root.right);
+      }
+
+    },
+
+    BOTTOM_UP_METHOD {
+
+      private boolean result;
+
+      @Override
+      public <T> boolean solve(TreeNode<T> root) {
+        result = true;
+        recur(root);
+        return result;
+      }
+
+      public <T> int recur(TreeNode<T> root) {
+        if (root == null || !result) return 0;
+        int l = recur(root.left);
+        int r = recur(root.right);
+        if (Math.abs(l - r) > 1) result = false;
+        return 1 + Math.max(l, r);
+      }
+
+    };
+
+    public abstract <T> boolean solve(TreeNode<T> root);
+
+  }
 
 
   public enum LevelOrderSol {
