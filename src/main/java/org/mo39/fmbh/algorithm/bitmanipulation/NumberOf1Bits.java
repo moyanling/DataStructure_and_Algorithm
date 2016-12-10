@@ -7,10 +7,10 @@ import org.junit.Test;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
 /**
- * Write a function that takes an unsigned integer and returns the number of ’1' bits it has (also
+ * Write a function that takes an unsigned integer and returns the number of 1 bits it has (also
  * known as the Hamming weight).
  * 
- * For example, the 32-bit integer ’11' has binary representation 00000000000000000000000000001011,
+ * For example, the 32-bit integer ï¿½11' has binary representation 00000000000000000000000000001011,
  * so the function should return 3.
  * 
  * @see <a href="https://leetcode.com/problems/number-of-1-bits/">Number Of 1 Bits</a>
@@ -32,7 +32,7 @@ public enum NumberOf1Bits {
 
     @Override
     public int solve(int n) {
-      return n == 0 ? 0 : 1 + solve(n & (n - 1));
+      return n == 0 ? 0 : 1 + solve(n & n - 1);
     }
 
   },

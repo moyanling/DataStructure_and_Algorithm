@@ -2,13 +2,13 @@ package org.mo39.fmbh.algorithm.bitmanipulation;
 
 import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.LEETCODE;
 
+import org.junit.Assert;
 import org.junit.Test;
-import org.mo39.fmbh.common.Z;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
 /**
  * <pre>
- * Given an integer, write an algorithm to convert it to hexadecimal. For negative integer, two’s
+ * Given an integer, write an algorithm to convert it to hexadecimal. For negative integer, twoï¿½s
  * complement method is used.
  *
  *
@@ -49,20 +49,18 @@ public enum ConvertANumberToHexadecimal {
 
     @Override
     public String solve(int num) {
+      StringBuilder sb = new StringBuilder();
       for (int i = 0; i < 32; i = i + 4) {
-        Z.print((num << i + 0 & 0xa0000000) >>> 31);
         int sum = 0;
-        sum += (num << i + 0 & 0xa0000000) >>> 31 * 1;
-        sum += (num << i + 1 & 0xa0000000) >>> 31 * 2;
-        sum += (num << i + 2 & 0xa0000000) >>> 31 * 4;
-        sum += (num << i + 3 & 0xa0000000) >>> 31 * 8;
-        // if (i == 0 && sum == 0) continue;
-        char c;
-        if (sum >= 10) c = (char) (sum - 10 + 'a');
-        else c = (char) (sum + '0');
-//        Z.print(c);
+        sum += ((num << i + 0 & 0xa0000000) >>> 31) * 8;
+        sum += ((num << i + 1 & 0xa0000000) >>> 31) * 4;
+        sum += ((num << i + 2 & 0xa0000000) >>> 31) * 2;
+        sum += ((num << i + 3 & 0xa0000000) >>> 31) * 1;
+        if (sb.length() == 0 && sum == 0) continue;
+        if (sum >= 10) sb.append((char) (sum - 10 + 'a'));
+        else sb.append((char) (sum + '0'));
       }
-      return null;
+      return sb.length() == 0 ? "0" : sb.toString();
     }
 
   };
@@ -71,14 +69,12 @@ public enum ConvertANumberToHexadecimal {
 
   public static class TestConvertANumberToHexadecimal {
 
-    private int num0 = -1;
-    private int num1 = 26;
+    private int num = 26;
+    private String expected = "1a";
 
     @Test
     public void testSolutions() {
-      BIT_MANPULATION.solve(num0);
-      Z.print("");
-      BIT_MANPULATION.solve(num1);
+      Assert.assertEquals(expected, BIT_MANPULATION.solve(num));
     }
 
   }

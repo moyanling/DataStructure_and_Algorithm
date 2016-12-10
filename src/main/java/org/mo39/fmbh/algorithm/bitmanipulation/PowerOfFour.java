@@ -40,6 +40,15 @@ public enum PowerOfFour {
     }
 
   },
+  
+  ONE_LINER {
+
+    @Override
+    public boolean solve(int num) {
+      return Integer.toString(num, 4).matches("10*");
+    }
+
+  },
 
   /**
    * power of 4 numbers have those 3 common features.First,greater than 0.Second,only have one '1'
@@ -48,7 +57,7 @@ public enum PowerOfFour {
    * location,for example,16.It's binary is 00010000.So we can use '0x55555555' to check if the '1'
    * bit is in the right place.
    */
-  ONE_LINER_0 {
+  SOLUTION {
 
     @Override
     public boolean solve(int num) {
@@ -56,17 +65,8 @@ public enum PowerOfFour {
     }
 
 
-  },
-
-  ONE_LINER_1 {
-
-    @Override
-    public boolean solve(int num) {
-      return Integer.toString(num, 4).matches("10*");
-    }
-
-
   };
+  
   public abstract boolean solve(int num);
 
   public static class TestPowerOfFour {
@@ -79,11 +79,11 @@ public enum PowerOfFour {
       Assert.assertTrue(BIT_MANIPULATION.solve(isTrue));
       Assert.assertFalse(BIT_MANIPULATION.solve(isFalse));
       // ---------
-      Assert.assertTrue(ONE_LINER_0.solve(isTrue));
-      Assert.assertFalse(ONE_LINER_0.solve(isFalse));
+      Assert.assertTrue(SOLUTION.solve(isTrue));
+      Assert.assertFalse(SOLUTION.solve(isFalse));
       // ---------
-      Assert.assertTrue(ONE_LINER_1.solve(isTrue));
-      Assert.assertFalse(ONE_LINER_1.solve(isFalse));
+      Assert.assertTrue(ONE_LINER.solve(isTrue));
+      Assert.assertFalse(ONE_LINER.solve(isFalse));
     }
 
   }

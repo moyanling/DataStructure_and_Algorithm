@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
 /**
+ * <pre>
  * You have a total of n coins that you want to form in a staircase shape, where every k-th row must
  * have exactly k coins.
  * 
@@ -18,19 +19,27 @@ import org.mo39.fmbh.common.annotation.ProblemSource;
  * 
  * n = 5
  * 
- * The coins can form the following rows: ¤ ¤ ¤ ¤ ¤
+ * The coins can form the following rows: 
+ * Â¤
+ * Â¤ Â¤
+ * Â¤ Â¤
  * 
  * Because the 3rd row is incomplete, we return 2.
  * 
  * 
  * 
  * Example 2:
+ * Â¤
+ * Â¤ Â¤
+ * Â¤ Â¤ Â¤
+ * Â¤ Â¤
  * 
  * n = 8
  * 
- * The coins can form the following rows: ¤ ¤ ¤ ¤ ¤ ¤ ¤ ¤
+ * The coins can form the following rows: 
  * 
  * Because the 4th row is incomplete, we return 3.
+ * </pre>
  * 
  * @see <a href="https://leetcode.com/problems/arranging-coins/">Arranging Coins</a>
  * @author Jihan Chen

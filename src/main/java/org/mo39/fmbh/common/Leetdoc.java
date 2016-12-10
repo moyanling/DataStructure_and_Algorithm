@@ -92,7 +92,7 @@ public class Leetdoc {
     if (lines == null) return;
     int index = -1;
     // First move down, find the line of class definition.
-    while (!lines.get(++index).matches(".*(class|enum) " + name + " \\{")) {
+    while (!lines.get(++index).matches(".*(class|enum) " + name + ".* \\{")) {
     }
     // Already has a comment. Skipped.
     for (int i = 0; i < index; i++) {
@@ -202,7 +202,7 @@ public class Leetdoc {
     try {
       lines = Files.readAllLines(path);
     } catch (IOException e) {
-      log.error("Error reading " + path.toString());
+      log.error("Error reading " + path.toString() + ". The message is: " + e.getMessage());
       return null;
     }
     return lines;

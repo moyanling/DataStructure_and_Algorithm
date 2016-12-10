@@ -116,6 +116,9 @@ public class TreeNode<T> {
 
     },
 
+    /**
+     * Time complexity is <b>O(n)</b>.
+     */
     BOTTOM_UP_METHOD {
 
       private boolean result;
