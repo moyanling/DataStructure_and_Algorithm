@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -102,18 +103,15 @@ public class Leetdoc {
     while (lines.get(--index).trim().length() > 0) {
     }
     String description = fetchDescription(path);
-    if (description == null) return;
-    String[] arr = description.split("\r\n");
-    description = Joiner.on("\r\n").join(Arrays.asList(arr).stream()
-        .filter(c -> !c.contains("Credits")).collect(Collectors.toList()));
     // Build comment
     CommentTemplate.Builder ctBuilder = new CommentTemplate.Builder();
     CommentTemplate ct = ctBuilder//
-        .addElement(new LeetcodeDescription(description, 0))
-        .addElement(new LeetcodeLink(link, aliasOf(name), 1))
-        .addElement(new CommentTemplate.Author("Jihan Chen", 2)).build();
+        .addElement(() -> " * <pre>")//
+        .addElement(new LeetcodeDescription(description))//
+        .addElement(() -> " * </pre>")//
+        .addElement(new LeetcodeLink(link, aliasOf(name)))
+        .addElement(new CommentTemplate.Author("Jihan Chen")).build();
     List<String> comments = ct.toComment();
-    comments.stream().filter(c -> !c.matches(".*Credits.*")).collect(Collectors.toList());
     // Insert to file.
     for (int i = comments.size() - 1; i >= 0; i--) {
       lines.add(index + 1, comments.get(i));
@@ -142,33 +140,6 @@ public class Leetdoc {
     final List<String> fLines = lines;
     lines = IntStream.range(0, lines.size()).filter(i -> !set.contains(i))
         .mapToObj(i -> fLines.get(i)).collect(Collectors.toList());
-    try {
-      com.google.common.io.Files.write(Joiner.on("\n").join(lines).getBytes(), path.toFile());
-      log.info(name + " is updated");
-    } catch (IOException e) {
-      log.error("Error writing " + path.toString());
-      return;
-    }
-  };
-
-  public static final Consumer<Path> UPDATE_PRE_TAG = path -> {
-    String name = getClassName(path);
-    List<String> lines = readLines(path);
-    if (lines == null) return;
-    int index = -1;
-    // First move down, find the line of class definition.
-    while (!lines.get(++index).matches(".*(class|enum) " + name + " \\{")) {
-    }
-    for (int i = 0; i < index; i++) {
-      if (lines.get(i).contains("<pre>")) return;
-    }
-    int start = -1, end = -1;
-    for (int i = 0; i < index; i++) {
-      if (lines.get(i).contains("/**")) start = i + 1;
-      else if (lines.get(i).contains(" * @see <a href=\"https://leetcode.com")) end = i - 1;
-    }
-    lines.add(end, " * </pre>");
-    lines.add(start, " * <pre>");
     try {
       com.google.common.io.Files.write(Joiner.on("\n").join(lines).getBytes(), path.toFile());
       log.info(name + " is updated");
@@ -208,36 +179,52 @@ public class Leetdoc {
     return lines;
   }
 
-  public static class LeetcodeDescription extends CommentTemplate.Element {
+  public static class LeetcodeDescription implements CommentTemplate.Element {
 
     private String description;
 
-    public LeetcodeDescription(String description, int sequence) {
-      super(sequence);
+    public LeetcodeDescription(String description) {
       this.description = description;
     }
 
+    public static final int LENGTH_BOUND = 75;
+
+    private static Function<String, String> mapper = str -> {
+      if (str.length() < LENGTH_BOUND) return " * " + str;
+      char[] arr = str.toCharArray();
+      StringBuilder sb = new StringBuilder(" * ");
+      int i = -1, len = 0;
+      while (++i < arr.length) {
+        if (++len >= LENGTH_BOUND && Character.isSpaceChar(arr[i])) {
+          len = 0;
+          sb.append("\r\n * ");
+        } else sb.append(arr[i]);
+      }
+      return sb.toString();
+    };
+
     @Override
     public String format() {
-      return description;
+      return this.description == null ? ""
+          : Joiner.on("\r\n").join(Arrays.asList(description.split("\r\n")).stream()
+              .filter(c -> !c.contains("Credits")).map(mapper).iterator());
     }
 
   }
 
-  public static class LeetcodeLink extends CommentTemplate.Element {
+  public static class LeetcodeLink implements CommentTemplate.Element {
 
     private String link;
     private String name;
 
-    public LeetcodeLink(String link, String name, int sequence) {
-      super(sequence);
+    public LeetcodeLink(String link, String name) {
       this.link = link;
       this.name = name;
     }
 
     @Override
     public String format() {
-      return String.format("@see <a href=\"%s\">%s</a>", link, name);
+      return String.format(" * @see <a href=\"%s\">%s</a>", link, name);
     }
 
   }

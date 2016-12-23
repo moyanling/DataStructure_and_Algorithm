@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mo39.fmbh.common.TestData;
+import org.mo39.fmbh.common.Value;
 import org.mo39.fmbh.common.Z;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
@@ -25,8 +26,7 @@ import org.mo39.fmbh.common.annotation.ProblemSource;
 public enum ArrayShuffle {
 
   /**
-   * This is using a randomly generated number as a comparator. Not sure if all elements have equal
-   * possibility.//TODO
+   * This is using a randomly generated number as a comparator.
    * 
    */
   PERMUTE_BY_SORTING() {
@@ -34,16 +34,28 @@ public enum ArrayShuffle {
     @Override
     public <T> void shuffle(T[] arr) {
       int bound = (int) Math.pow(arr.length, 3);
+      @SuppressWarnings("unchecked")
+      Value<T>[] newArr = new Value[arr.length];
+      for (int i = 0; i < arr.length; i++) {
+        newArr[i] = new Value<T>(arr[i], rand.nextInt(bound));
+      }
+      Arrays.sort(newArr);
+      for (int i = 0; i < arr.length; i++) {
+        arr[i] = newArr[i].value;
+      }
+    }
+
+  },
+
+  /**
+   * Not sure if all elements have equal possibility.//TODO
+   */
+  SORT_BY_RANDOM_COMPARATOR {
+
+    @Override
+    public <T> void shuffle(T[] arr) {
+      int bound = (int) Math.pow(arr.length, 3);
       Arrays.sort(arr, (o1, o2) -> rand.nextInt(bound) - rand.nextInt(bound));
-      // @SuppressWarnings("unchecked")
-      // Value<T>[] newArr = new Value[arr.length];
-      // for (int i = 0; i < arr.length; i++) {
-      // newArr[i] = new Value<T>(arr[i], rand.nextInt(bound));
-      // }
-      // Arrays.sort(newArr);
-      // for (int i = 0; i < arr.length; i++) {
-      // arr[i] = newArr[i].value;
-      // }
     }
 
   },
@@ -77,6 +89,13 @@ public enum ArrayShuffle {
     @Test
     public void testPermuteBySorting() {
       ArrayShuffle.PERMUTE_BY_SORTING.shuffle(arr);
+      Arrays.sort(arr);
+      Assert.assertArrayEquals(sortedArr, arr);
+    }
+
+    @Test
+    public void testSortByComparator() {
+      ArrayShuffle.SORT_BY_RANDOM_COMPARATOR.shuffle(arr);
       Arrays.sort(arr);
       Assert.assertArrayEquals(sortedArr, arr);
     }

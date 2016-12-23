@@ -23,7 +23,7 @@ import org.mo39.fmbh.common.annotation.ProblemSource;
 @ProblemSource(LEETCODE)
 public enum PowerOfFour {
 
-  BIT_MANIPULATION {
+  BRUTE_FORCE {
 
     @Override
     public boolean solve(int num) {
@@ -76,8 +76,8 @@ public enum PowerOfFour {
 
     @Test
     public void testSolutions() {
-      Assert.assertTrue(BIT_MANIPULATION.solve(isTrue));
-      Assert.assertFalse(BIT_MANIPULATION.solve(isFalse));
+      Assert.assertTrue(BRUTE_FORCE.solve(isTrue));
+      Assert.assertFalse(BRUTE_FORCE.solve(isFalse));
       // ---------
       Assert.assertTrue(SOLUTION.solve(isTrue));
       Assert.assertFalse(SOLUTION.solve(isFalse));
