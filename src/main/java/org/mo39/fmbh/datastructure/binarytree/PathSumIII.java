@@ -16,20 +16,30 @@ import org.mo39.fmbh.common.annotation.ProblemSource;
  * 
  * Find the number of paths that sum to a given value.
  * 
- * The path does not need to start or end at the root or a leaf, but it must go downwards (traveling
- * only from parent nodes to child nodes).
+ * The path does not need to start or end at the root or a leaf, but it must go
+ * downwards
+ * (traveling only from parent nodes to child nodes).
  * 
- * The tree has no more than 1,000 nodes and the values are in the range -1,000,000 to 1,000,000.
+ * The tree has no more than 1,000 nodes and the values are in the range -1,000,000
+ * to 1,000,000.
  * 
  * Example:
  * 
  * root = [10,5,-3,3,2,null,11,3,-2,null,1], sum = 8
  * 
- * 10 / \ 5 -3 / \ \ 3 2 11 / \ \ 3 -2 1
+ *       10
+ *      /  \
+ *     5   -3
+ *    / \    \
+ *   3   2   11
+ *  / \   \
+ * 3  -2   1
  * 
  * Return 3. The paths that sum to 8 are:
  * 
- * 1. 5 -> 3 2. 5 -> 2 -> 1 3. -3 -> 11
+ * 1.  5 -> 3
+ * 2.  5 -> 2 -> 1
+ * 3. -3 -> 11
  * </pre>
  * 
  * @see <a href="https://leetcode.com/problems/path-sum-iii/">Path Sum III</a>
@@ -48,18 +58,17 @@ public enum PathSumIII {
       return count;
     }
 
-    private void recur(TreeNode<Integer> root, int sum, List<Integer> path) {
+    private void recur(TreeNode<Integer> root, int target, List<Integer> path) {
       List<Integer> right = new ArrayList<>();
       List<Integer> left = new ArrayList<>();
       left.addAll(path);
-      if (left.size() != 0) left.add(left.get(left.size() - 1) + root.val);
+      if (left.size() != 0) left.add(root.val);
       else left.add(root.val);
       right.addAll(left);
-      for (Integer i : left) {
-        if (left.get(left.size() - 1) - i == sum) count++;
+      if (root.left != null) recur(root.left, target, left);
+      if (root.right != null) recur(root.right, target, right);
+      if (root.left == null && root.right == null) {
       }
-      if (root.left != null) recur(root.left, sum, left);
-      if (root.right != null) recur(root.right, sum, right);
     }
 
   };

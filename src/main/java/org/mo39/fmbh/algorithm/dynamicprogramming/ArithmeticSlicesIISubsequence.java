@@ -45,7 +45,6 @@ import org.mo39.fmbh.common.annotation.ProblemSource;
 public enum ArithmeticSlicesIISubsequence {
 
   /**
-   * Map<Tuple<difference, lastIndex>, len>
    *
    */
   SOLUTION {

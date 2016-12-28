@@ -6,11 +6,11 @@ import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.LEETCODE
 import java.util.Arrays;
 import java.util.Random;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mo39.fmbh.common.TestData;
-import org.mo39.fmbh.common.Value;
 import org.mo39.fmbh.common.Z;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
@@ -35,13 +35,13 @@ public enum ArrayShuffle {
     public <T> void shuffle(T[] arr) {
       int bound = (int) Math.pow(arr.length, 3);
       @SuppressWarnings("unchecked")
-      Value<T>[] newArr = new Value[arr.length];
+      ImmutablePair<T, Integer>[] newArr = new ImmutablePair[arr.length];
       for (int i = 0; i < arr.length; i++) {
-        newArr[i] = new Value<T>(arr[i], rand.nextInt(bound));
+        newArr[i] = ImmutablePair.of(arr[i], rand.nextInt(bound));
       }
       Arrays.sort(newArr);
       for (int i = 0; i < arr.length; i++) {
-        arr[i] = newArr[i].value;
+        arr[i] = newArr[i].left;
       }
     }
 

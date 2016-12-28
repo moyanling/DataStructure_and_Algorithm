@@ -53,7 +53,7 @@ public enum LinkedListPartition {
 
     @Test
     public void testPartition() {
-      Z.verifyListNodes(expected, SOLUTION.solve(head, node -> node.val < 5));
+      Z.verify(expected, SOLUTION.solve(head, node -> node.val < 5));
     }
 
   }

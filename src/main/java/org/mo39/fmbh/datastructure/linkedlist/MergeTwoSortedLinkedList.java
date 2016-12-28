@@ -43,7 +43,7 @@ public enum MergeTwoSortedLinkedList {
 
     @Test
     public void testLinearSolution() {
-      Z.verifyListNodes(expected, LINEAR_SOLUTION.solve(head0, head1));
+      Z.verify(expected, LINEAR_SOLUTION.solve(head0, head1));
     }
 
   }

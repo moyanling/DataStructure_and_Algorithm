@@ -11,9 +11,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.junit.Assert;
 import org.junit.Test;
-import org.mo39.fmbh.common.Tuple;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -191,13 +191,13 @@ public enum LongestCommonSubstring {
 
     @Override
     public List<String> solve(String s1, String s2) {
-      Map<Tuple<Integer, Integer>, Integer> map = new HashMap<>();
+      Map<ImmutablePair<Integer, Integer>, Integer> map = new HashMap<>();
       Result result = new Result(s1);
       for (int i = 0; i < s1.length(); i++) {
         for (int j = 0; j < s2.length(); j++) {
           if (s1.charAt(i) == s2.charAt(j)) {
-            int len = map.getOrDefault(Tuple.valueOf(i - 1, j - 1), 0) + 1;
-            map.put(Tuple.valueOf(i, j), len);
+            int len = map.getOrDefault(ImmutablePair.of(i - 1, j - 1), 0) + 1;
+            map.put(ImmutablePair.of(i, j), len);
             result.update(len, i - len + 1);
           }
         }

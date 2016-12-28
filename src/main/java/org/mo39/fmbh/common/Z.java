@@ -18,6 +18,10 @@ public class Z {
     System.out.print(obj);
   }
 
+  public static void print() {
+    System.out.println();
+  }
+
   public static void print(Object obj) {
     System.out.println(String.valueOf(obj));
   }
@@ -97,7 +101,7 @@ public class Z {
    * @param expected
    * @param head
    */
-  public static <T> void verifyListNodes(T[] expected, ListNode<T> head) {
+  public static <T> void verify(T[] expected, ListNode<T> head) {
     for (int i = 0; i < expected.length; i++) {
       Assert.assertEquals(expected[i], head.val);
       head = head.next;
@@ -117,14 +121,14 @@ public class Z {
    * @param root1
    * @param root2
    */
-  public static <T> void verifyTreeNodes(TreeNode<T> p, TreeNode<T> q) {
+  public static <T> void verify(TreeNode<T> p, TreeNode<T> q) {
     if (p == null || q == null) {
       Assert.assertEquals(p, q);
       return;
     }
     Assert.assertEquals(p.val, q.val);
-    verifyTreeNodes(p.left, q.left);
-    verifyTreeNodes(p.right, q.right);
+    verify(p.left, q.left);
+    verify(p.right, q.right);
   }
 
 }

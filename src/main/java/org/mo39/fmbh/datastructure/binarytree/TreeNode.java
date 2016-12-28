@@ -1,7 +1,6 @@
 package org.mo39.fmbh.datastructure.binarytree;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -10,6 +9,8 @@ import java.util.Stack;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mo39.fmbh.common.TestData;
+
+import com.google.common.collect.Lists;
 
 
 public class TreeNode<T> {
@@ -433,40 +434,25 @@ public class TreeNode<T> {
 
     private List<List<Integer>> levelOrder = new ArrayList<List<Integer>>() {
       {
-        add(Arrays.asList(new Integer[] {0}));
-        add(Arrays.asList(new Integer[] {1, 2}));
-        add(Arrays.asList(new Integer[] {3, 4}));
-        add(Arrays.asList(new Integer[] {5, 6, 7}));
+        add(Lists.newArrayList(0));
+        add(Lists.newArrayList(1, 2));
+        add(Lists.newArrayList(3, 4));
+        add(Lists.newArrayList(5, 6, 7));
       }
     };
 
     private List<List<Integer>> levelOrderWithNull = new ArrayList<List<Integer>>() {
       {
-        add(Arrays.asList(new Integer[] {0}));
-        add(Arrays.asList(new Integer[] {1, 2}));
-        add(Arrays.asList(new Integer[] {null, 3, null, 4}));
-        add(Arrays.asList(new Integer[] {null, null, 5, 6, null, null, null, 7}));
+        add(Lists.newArrayList(0));
+        add(Lists.newArrayList(1, 2));
+        add(Lists.newArrayList(null, 3, null, 4));
+        add(Lists.newArrayList(null, null, 5, 6, null, null, null, 7));
       }
     };
 
-    private List<Integer> preOrder = new ArrayList<Integer>() {
-      {
-        addAll(Arrays.asList(new Integer[] {0, 1, 3, 5, 6, 2, 4, 7}));
-      }
-    };
-
-    private List<Integer> inOrder = new ArrayList<Integer>() {
-      {
-        addAll(Arrays.asList(new Integer[] {1, 5, 3, 6, 0, 2, 4, 7}));
-      }
-    };
-
-    private List<Integer> postOrder = new ArrayList<Integer>() {
-      {
-        addAll(Arrays.asList(new Integer[] {5, 6, 3, 1, 7, 4, 2, 0}));
-      }
-    };
-
+    private List<Integer> preOrder = Lists.newArrayList(0, 1, 3, 5, 6, 2, 4, 7);
+    private List<Integer> inOrder = Lists.newArrayList(1, 5, 3, 6, 0, 2, 4, 7);
+    private List<Integer> postOrder = Lists.newArrayList(5, 6, 3, 1, 7, 4, 2, 0);
 
     @Test
     public void testLevelOrder() {

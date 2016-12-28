@@ -7,11 +7,11 @@ import java.util.Comparator;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mo39.fmbh.common.TestData;
-import org.mo39.fmbh.common.Tuple;
 import org.mo39.fmbh.common.Z;
 
 /**
@@ -99,13 +99,14 @@ public class BST<T> extends Tree<T> {
    */
   @Override
   public TreeNode<T> search(T key) {
-    return SearchSol.ITERATIVE_SOLUTION.solve(this, key).a;
+    return SearchSol.ITERATIVE_SOLUTION.solve(this, key).left;
   }
 
   @Override
   public TreeNode<T> trace(T key, Consumer<TreeNode<T>> consumer) {
-    Tuple<TreeNode<T>, TreeNode<T>> tuple = TraceSol.ITERATIVE_SOLUTION.solve(this, key, consumer);
-    return tuple.a == null ? tuple.b : tuple.a;
+    ImmutablePair<TreeNode<T>, TreeNode<T>> tuple =
+        TraceSol.ITERATIVE_SOLUTION.solve(this, key, consumer);
+    return tuple.left == null ? tuple.right : tuple.left;
   }
 
   /**
@@ -116,8 +117,8 @@ public class BST<T> extends Tree<T> {
    * @return
    */
   public TreeNode<T> search(T key, SearchSol sol) {
-    Tuple<TreeNode<T>, TreeNode<T>> tuple = sol.solve(this, key);
-    return tuple == null ? null : tuple.a;
+    ImmutablePair<TreeNode<T>, TreeNode<T>> tuple = sol.solve(this, key);
+    return tuple == null ? null : tuple.left;
   }
 
   /**
@@ -144,34 +145,35 @@ public class BST<T> extends Tree<T> {
    * @return true if the key is found and deleted. false if the key is not found.
    */
   public boolean delete(T key, SearchSol sol) {
-    Tuple<TreeNode<T>, TreeNode<T>> tuple = sol.solve(this, key);
+    ImmutablePair<TreeNode<T>, TreeNode<T>> tuple = sol.solve(this, key);
     if (tuple == null) return false;
     // If node is found but parent is null, then it's the root. Create a dummy node.
-    if (tuple.b == null) {
+    if (tuple.right == null) {
       TreeNode<T> dummyRoot = new TreeNode<>(null);
       dummyRoot.right = root;
-      tuple = Tuple.valueOf(tuple.a, dummyRoot);
+      tuple = ImmutablePair.of(tuple.left, dummyRoot);
     }
     // The node to be deleted has no child.
-    if (tuple.a.left == null && tuple.a.right == null) transplant(tuple.b, tuple.a, null);
+    if (tuple.left.left == null && tuple.left.right == null)
+      transplant(tuple.right, tuple.left, null);
     // The node to be deleted has one child.
-    else if (tuple.a.left == null || tuple.a.right == null)
-      transplant(tuple.b, tuple.a, tuple.a.left == null ? tuple.a.right : tuple.a.left);
+    else if (tuple.left.left == null || tuple.left.right == null) transplant(tuple.right,
+        tuple.left, tuple.left.left == null ? tuple.left.right : tuple.left.left);
     // The node to be deleted has two children.
     else {
-      if (tuple.a.right.left == null) {
-        transplant(tuple.b, tuple.a, tuple.a.right);
-        tuple.a.right.left = tuple.a.left;
+      if (tuple.left.right.left == null) {
+        transplant(tuple.right, tuple.left, tuple.left.right);
+        tuple.left.right.left = tuple.left.left;
       } else {
-        Tuple<TreeNode<T>, TreeNode<T>> p = getPeakNode(tuple.a.right, o -> o.left);
-        transplant(p.b, p.a, null);
-        p.a.left = tuple.a.left;
-        p.a.right = tuple.a.right;
-        transplant(tuple.b, tuple.a, p.a);
+        ImmutablePair<TreeNode<T>, TreeNode<T>> p = getPeakNode(tuple.left.right, o -> o.left);
+        transplant(p.right, p.left, null);
+        p.left.left = tuple.left.left;
+        p.left.right = tuple.left.right;
+        transplant(tuple.right, tuple.left, p.left);
       }
     }
     // If using dummyRoot, replace the new root.
-    if (tuple.b.val == null) root = tuple.a.right;
+    if (tuple.right.val == null) root = tuple.left.right;
     return true;
   }
 
@@ -196,7 +198,7 @@ public class BST<T> extends Tree<T> {
    */
   @Override
   public TreeNode<T> getMax() {
-    return getPeakNode(root, o -> o.right).a;
+    return getPeakNode(root, o -> o.right).left;
   }
 
   /**
@@ -206,7 +208,7 @@ public class BST<T> extends Tree<T> {
    */
   @Override
   public TreeNode<T> getMin() {
-    return getPeakNode(root, o -> o.left).a;
+    return getPeakNode(root, o -> o.left).left;
   }
 
 
@@ -217,7 +219,7 @@ public class BST<T> extends Tree<T> {
    * @param translator
    * @return
    */
-  private Tuple<TreeNode<T>, TreeNode<T>> getPeakNode(TreeNode<T> root,
+  private ImmutablePair<TreeNode<T>, TreeNode<T>> getPeakNode(TreeNode<T> root,
       Function<TreeNode<T>, TreeNode<T>> f) {
     checkArgument(root != null);
     TreeNode<T> pre = null;
@@ -225,7 +227,7 @@ public class BST<T> extends Tree<T> {
       pre = root;
       root = f.apply(root);
     }
-    return Tuple.valueOf(root, pre);
+    return ImmutablePair.of(root, pre);
   }
 
   public enum InsertSol {
@@ -300,19 +302,19 @@ public class BST<T> extends Tree<T> {
     ITERATIVE_SOLUTION {
 
       @Override
-      public <T> Tuple<TreeNode<T>, TreeNode<T>> handle(Tree<T> bst, T key,
+      public <T> ImmutablePair<TreeNode<T>, TreeNode<T>> handle(Tree<T> bst, T key,
           Consumer<TreeNode<T>> consumer) {
         TreeNode<T> curr = bst.root;
         TreeNode<T> pre = null;
         while (curr != null) {
           consumer.accept(curr);
           int compareResult = bst.comparator.compare(key, curr.val);
-          if (compareResult == 0) return Tuple.valueOf(curr, pre);
+          if (compareResult == 0) return ImmutablePair.of(curr, pre);
           pre = curr;
           if (compareResult < 0) curr = curr.left;
           else curr = curr.right;
         }
-        return Tuple.valueOf(null, pre);
+        return ImmutablePair.of(null, pre);
       }
 
     },
@@ -320,17 +322,17 @@ public class BST<T> extends Tree<T> {
     RECURSIVE_SOLUTION {
 
       @Override
-      public <T> Tuple<TreeNode<T>, TreeNode<T>> handle(Tree<T> bst, T key,
+      public <T> ImmutablePair<TreeNode<T>, TreeNode<T>> handle(Tree<T> bst, T key,
           Consumer<TreeNode<T>> consumer) {
         return recur(bst.root, null, bst.comparator, key, consumer);
       }
 
-      private <T> Tuple<TreeNode<T>, TreeNode<T>> recur(TreeNode<T> curr, TreeNode<T> pre,
+      private <T> ImmutablePair<TreeNode<T>, TreeNode<T>> recur(TreeNode<T> curr, TreeNode<T> pre,
           Comparator<T> comparator, T key, Consumer<TreeNode<T>> consumer) {
-        if (curr == null) return Tuple.valueOf(null, pre);
+        if (curr == null) return ImmutablePair.of(null, pre);
         consumer.accept(curr);
         int compareResult = comparator.compare(key, curr.val);
-        if (compareResult == 0) return Tuple.valueOf(curr, pre);
+        if (compareResult == 0) return ImmutablePair.of(curr, pre);
         pre = curr;
         if (compareResult < 0) return recur(curr.left, pre, comparator, key, consumer);
         return recur(curr.right, pre, comparator, key, consumer);
@@ -338,10 +340,10 @@ public class BST<T> extends Tree<T> {
 
     };
 
-    protected abstract <T> Tuple<TreeNode<T>, TreeNode<T>> handle(Tree<T> bst, T key,
+    protected abstract <T> ImmutablePair<TreeNode<T>, TreeNode<T>> handle(Tree<T> bst, T key,
         Consumer<TreeNode<T>> consumer);
 
-    public <T> Tuple<TreeNode<T>, TreeNode<T>> solve(Tree<T> bst, T key,
+    public <T> ImmutablePair<TreeNode<T>, TreeNode<T>> solve(Tree<T> bst, T key,
         Consumer<TreeNode<T>> consumer) {
       checkArgument(key != null);
       return handle(bst, key, consumer);
@@ -353,7 +355,7 @@ public class BST<T> extends Tree<T> {
     ITERATIVE_SOLUTION() {
 
       @Override
-      public <T> Tuple<TreeNode<T>, TreeNode<T>> handle(Tree<T> bst, T key) {
+      public <T> ImmutablePair<TreeNode<T>, TreeNode<T>> handle(Tree<T> bst, T key) {
         return TraceSol.ITERATIVE_SOLUTION.solve(bst, key, t -> {
           return;
         });
@@ -364,7 +366,7 @@ public class BST<T> extends Tree<T> {
     RECURSIVE_SOLUTION() {
 
       @Override
-      public <T> Tuple<TreeNode<T>, TreeNode<T>> handle(Tree<T> bst, T key) {
+      public <T> ImmutablePair<TreeNode<T>, TreeNode<T>> handle(Tree<T> bst, T key) {
         return TraceSol.RECURSIVE_SOLUTION.solve(bst, key, t -> {
           return;
         });
@@ -372,9 +374,9 @@ public class BST<T> extends Tree<T> {
 
     };
 
-    protected abstract <T> Tuple<TreeNode<T>, TreeNode<T>> handle(Tree<T> bst, T key);
+    protected abstract <T> ImmutablePair<TreeNode<T>, TreeNode<T>> handle(Tree<T> bst, T key);
 
-    public <T> Tuple<TreeNode<T>, TreeNode<T>> solve(Tree<T> bst, T key) {
+    public <T> ImmutablePair<TreeNode<T>, TreeNode<T>> solve(Tree<T> bst, T key) {
       checkArgument(key != null);
       return handle(bst, key);
     }
@@ -411,13 +413,13 @@ public class BST<T> extends Tree<T> {
       for (Integer data : datas) {
         InsertSol.RECURSIVE_SOLUTION.solve(recursive, data);
       }
-      Z.verifyTreeNodes(bst.root, recursive.root);
+      Z.verify(bst.root, recursive.root);
       // ---------
       Tree<Integer> iterative = BST.init();
       for (Integer data : datas) {
         InsertSol.ITERATIVE_SOLUTION.solve(iterative, data);
       }
-      Z.verifyTreeNodes(bst.root, iterative.root);
+      Z.verify(bst.root, iterative.root);
     }
 
     @Test
@@ -433,15 +435,15 @@ public class BST<T> extends Tree<T> {
     @Test
     public void testSearch() {
       // ---------
-      Assert.assertNull(SearchSol.ITERATIVE_SOLUTION.solve(bst, 0).a);
-      Assert.assertNull(SearchSol.RECURSIVE_SOLUTION.solve(bst, 0).a);
-      Assert.assertEquals(new Integer(5), SearchSol.ITERATIVE_SOLUTION.solve(bst, 5).a.val);
-      Assert.assertEquals(new Integer(5), SearchSol.RECURSIVE_SOLUTION.solve(bst, 5).a.val);
+      Assert.assertNull(SearchSol.ITERATIVE_SOLUTION.solve(bst, 0).left);
+      Assert.assertNull(SearchSol.RECURSIVE_SOLUTION.solve(bst, 0).left);
+      Assert.assertEquals(new Integer(5), SearchSol.ITERATIVE_SOLUTION.solve(bst, 5).left.val);
+      Assert.assertEquals(new Integer(5), SearchSol.RECURSIVE_SOLUTION.solve(bst, 5).left.val);
       // ---------
-      Assert.assertEquals(new Integer(7), SearchSol.ITERATIVE_SOLUTION.solve(bst, 9).b.val);
-      Assert.assertEquals(new Integer(7), SearchSol.ITERATIVE_SOLUTION.solve(bst, 3).b.val);
-      Assert.assertEquals(new Integer(7), SearchSol.RECURSIVE_SOLUTION.solve(bst, 9).b.val);
-      Assert.assertEquals(new Integer(7), SearchSol.RECURSIVE_SOLUTION.solve(bst, 3).b.val);
+      Assert.assertEquals(new Integer(7), SearchSol.ITERATIVE_SOLUTION.solve(bst, 9).right.val);
+      Assert.assertEquals(new Integer(7), SearchSol.ITERATIVE_SOLUTION.solve(bst, 3).right.val);
+      Assert.assertEquals(new Integer(7), SearchSol.RECURSIVE_SOLUTION.solve(bst, 9).right.val);
+      Assert.assertEquals(new Integer(7), SearchSol.RECURSIVE_SOLUTION.solve(bst, 3).right.val);
     }
 
     @Test
@@ -459,7 +461,7 @@ public class BST<T> extends Tree<T> {
       treeNode3.right = treeNode4;
       // ---------
       bst.delete(7);
-      Z.verifyTreeNodes(root, bst.root);
+      Z.verify(root, bst.root);
     }
 
     @Test
@@ -476,7 +478,7 @@ public class BST<T> extends Tree<T> {
       treeNode3.right = treeNode4;
       // ---------
       bst.delete(3);
-      Z.verifyTreeNodes(root, bst.root);
+      Z.verify(root, bst.root);
     }
 
     @Test
@@ -493,7 +495,7 @@ public class BST<T> extends Tree<T> {
       treeNode1.right = treeNode4;
       // ---------
       bst.delete(4);
-      Z.verifyTreeNodes(root, bst.root);
+      Z.verify(root, bst.root);
     }
 
   }
