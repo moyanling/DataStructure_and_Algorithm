@@ -61,7 +61,7 @@ public enum DesignHitCounter {
     List<TimeAndCount> list;
 
     @Override
-    public void HitCounter() {
+    public void init() {
       list = new ArrayList<>();
     }
 
@@ -102,7 +102,7 @@ public enum DesignHitCounter {
     Queue<Integer> q = null;
 
     @Override
-    public void HitCounter() {
+    public void init() {
       q = new LinkedList<Integer>();
     }
 
@@ -125,7 +125,7 @@ public enum DesignHitCounter {
   ARRAY_SOLUTION {
 
     @Override
-    public void HitCounter() {
+    public void init() {
       // TODO Auto-generated method stub
 
     }
@@ -167,7 +167,7 @@ public enum DesignHitCounter {
   }
 
   /** Initialize your data structure here. */
-  public abstract void HitCounter();
+  public abstract void init();
 
   /**
    * Record a hit.
@@ -188,7 +188,7 @@ public enum DesignHitCounter {
   public static class TestDesignHitCounter {
 
     public void verify(DesignHitCounter sol) {
-      sol.HitCounter();
+      sol.init();
       sol.hit(2);
       sol.hit(3);
       sol.hit(4);

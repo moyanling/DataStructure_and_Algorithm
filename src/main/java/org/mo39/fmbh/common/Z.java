@@ -18,10 +18,6 @@ public class Z {
     System.out.print(obj);
   }
 
-  public static void print() {
-    System.out.println();
-  }
-
   public static void print(Object obj) {
     System.out.println(String.valueOf(obj));
   }

@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.mo39.fmbh.common.TestData;
 import org.mo39.fmbh.datastructure.array.ArrayPartition;
 import org.mo39.fmbh.datastructure.heap.ArrayHeap;
+import org.mo39.fmbh.datastructure.heap.Heap;
 
 /**
  * Loop Invariant is used to proof the algorithm.
@@ -227,7 +228,7 @@ public enum ComparisonSort {
 
     @Override
     protected <T extends Comparable<T>> void sortArr(T[] arr) {
-      ArrayHeap<T> maxHeap = ArrayHeap.newMaxHeap(arr);
+      Heap<T> maxHeap = ArrayHeap.newMaxHeap(arr);
       for (int i = arr.length - 1; i > 0; i--) {
         swap(arr, 0, i);
         maxHeap.setSize(maxHeap.getSize() - 1);
@@ -281,7 +282,7 @@ public enum ComparisonSort {
      * @return
      */
     private <T extends Comparable<T>> int partition(T[] arr, int p, int r) {
-      return ArrayPartition.LINEAR_SOLUTION.solve(arr, num -> num.compareTo(arr[r]) <= 0, p, r + 1);
+      return ArrayPartition.SOLUTION.solve(arr, num -> num.compareTo(arr[r]) <= 0, p, r + 1);
     }
 
   };

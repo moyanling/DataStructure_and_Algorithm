@@ -16,7 +16,7 @@ import org.mo39.fmbh.common.Z;
  */
 public enum ArrayPartition {
 
-  LINEAR_SOLUTION() {
+  SOLUTION() {
 
     @Override
     public <T> int solve(T[] arr, Predicate<T> predicate, int start, int end) {
@@ -60,14 +60,14 @@ public enum ArrayPartition {
     @Test
     public void testEvenOddPartition() {
       Predicate<Integer> predicate = num -> num % 2 == 0;
-      ArrayPartition.LINEAR_SOLUTION.solve(arr, predicate);
+      ArrayPartition.SOLUTION.solve(arr, predicate);
       verify(arr, predicate);
     }
 
     @Test
     public void testOddEvenPartition() {
       Predicate<Integer> predicate = num -> num % 2 == 1;
-      ArrayPartition.LINEAR_SOLUTION.solve(arr, predicate);
+      ArrayPartition.SOLUTION.solve(arr, predicate);
       verify(arr, predicate);
     }
 
@@ -75,7 +75,7 @@ public enum ArrayPartition {
     public void testPivotPartition() {
       int pivot = arr[arr.length - 1];
       Predicate<Integer> predicate = num -> num.compareTo(pivot) <= 0;
-      ArrayPartition.LINEAR_SOLUTION.solve(arr, predicate);
+      ArrayPartition.SOLUTION.solve(arr, predicate);
       verify(arr, predicate);
     }
 

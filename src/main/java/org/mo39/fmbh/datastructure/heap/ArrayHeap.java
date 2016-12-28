@@ -16,7 +16,7 @@ import org.mo39.fmbh.common.Z;
  *
  * @param <T>
  */
-public class ArrayHeap<T> {
+public class ArrayHeap<T> extends Heap<T> {
 
   protected T[] arr;
 
@@ -29,16 +29,6 @@ public class ArrayHeap<T> {
   }
 
   private Comparator<T> c;
-
-  private int size;
-
-  public int getSize() {
-    return size;
-  }
-
-  public void setSize(int size) {
-    this.size = size;
-  }
 
   /**
    * Take an array to build a new Heap and heapify from the parent of the last leaf node. No need to
@@ -54,6 +44,7 @@ public class ArrayHeap<T> {
     }
   }
 
+  @Override
   public void heapify(int i) {
     iterativeHeapify(i);
   }
@@ -81,6 +72,11 @@ public class ArrayHeap<T> {
       if (right < getSize() && c.compare(arr[right], arr[largest]) > 0) largest = right;
       if (i != largest) Z.swap(arr, i, largest);
     } while (i != largest);
+  }
+
+  @Override
+  public void insert(T t) {
+    throw new UnsupportedOperationException();
   }
 
 }

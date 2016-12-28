@@ -2,6 +2,9 @@ package org.mo39.fmbh.datastructure.linkedlist;
 
 import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.LEETCODE;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Assert;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
@@ -24,25 +27,46 @@ import org.mo39.fmbh.common.annotation.ProblemSource;
 @ProblemSource(LEETCODE)
 public enum LinkedListCycleII {
 
+  SET_SOLUTION {
+
+    @Override
+    public <T> ListNode<T> handle(ListNode<T> head) {
+      Set<ListNode<T>> set = new HashSet<>();
+      while (head != null) {
+        if (!set.add(head)) return head;
+        head = head.next;
+      }
+      return null;
+    }
+
+  },
+
+
   RUNNER_TECHNIQUE {
 
     @Override
-    public <T> boolean handle(ListNode<T> node) {
-      ListNode<T> slowRunner = node;
-      ListNode<T> fastRunner = node;
+    public <T> ListNode<T> handle(ListNode<T> head) {
+      ListNode<T> slowRunner = head;
+      ListNode<T> fastRunner = head;
       while (fastRunner != null && fastRunner.next != null) {
         slowRunner = slowRunner.next;
         fastRunner = fastRunner.next.next;
-        if (slowRunner == fastRunner) ; // TODO
+        if (slowRunner == fastRunner) {
+          while (slowRunner != head) {
+            slowRunner = slowRunner.next;
+            head = head.next;
+          }
+          return slowRunner;
+        }
       }
-      return false;
+      return null;
     }
 
   };
 
-  protected abstract <T> boolean handle(ListNode<T> node);
+  protected abstract <T> ListNode<T> handle(ListNode<T> head);
 
-  public <T> boolean solve(ListNode<T> node) {
+  public <T> ListNode<T> solve(ListNode<T> node) {
     Assert.assertNotNull(node);
     return handle(node);
   }

@@ -2,6 +2,10 @@ package org.mo39.fmbh.algorithm.greedy;
 
 import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.LEETCODE;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.mo39.fmbh.common.Z;
@@ -36,7 +40,14 @@ import org.mo39.fmbh.common.annotation.ProblemSource;
 public enum QueueReconstructionByHeight {
 
   /**
-   * Time Limit Exceeded. Time complexity is <b>O(n^3)</b>.
+   * Time Limit Exceeded. Time complexity is <b>O(n^3)</b>.</br>
+   * This one looks like a brute force selection sort. Except the greedy step that it choosing the
+   * one from candidate. The step choose the one with lowest height so that it won't affect other
+   * candidates' position. For example, at the second time of loop, [5,0], [7,0] are sorted and thus
+   * the candidates are [5,2], [6,1] and [7,1]. Then [5,2] is choose to be the next one and the
+   * sorted array becomes [5,0], [7,0], [5,2]. Ohterwise, if [6,1] is choosed from candidates, [5,2]
+   * has to be changed to [5,3] to satisfy the rule.
+   * 
    */
   TLE_SOLUTION {
 
@@ -61,19 +72,39 @@ public enum QueueReconstructionByHeight {
       return count == people[j][1];
     }
 
+  },
+
+  SOLUTION {
+
+    @Override
+    public int[][] solve(int[][] people) {
+      Arrays.sort(people, (o1, o2) -> o2[0] - o1[0] == 0 ? o1[1] - o2[1] : o2[0] - o1[0]);
+      List<int[]> list = new LinkedList<>();
+      for (int[] p : people) {
+        list.add(p[1], p);
+      }
+      int[][] toRet = new int[people.length][];
+      list.toArray(toRet);
+      return toRet;
+    }
+
   };
 
   public abstract int[][] solve(int[][] people);
 
   public static class TestQueueReconstructionByHeight {
 
-    private int[][] people = {{7, 0}, {4, 4}, {7, 1}, {5, 0}, {6, 1}, {5, 2}};
+    private int[][] people = {{7, 1}, {4, 4}, {7, 0}, {5, 0}, {6, 1}, {5, 2}};
     private int[][] expecteds = {{5, 0}, {7, 0}, {5, 2}, {6, 1}, {4, 4}, {7, 1}};
 
     @Test
     public void testTLESolution() {
-      TLE_SOLUTION.solve(people);
-      Assert.assertArrayEquals(expecteds, people);
+      Assert.assertArrayEquals(expecteds, TLE_SOLUTION.solve(people));
+    }
+
+    @Test
+    public void testSolution() {
+      Assert.assertArrayEquals(expecteds, SOLUTION.solve(people));
     }
 
   }
