@@ -7,22 +7,18 @@ import org.mo39.fmbh.datastructure.linkedlist.ListNode;
 
 public class TestData {
 
-  public int[] intArr =
-      new int[] {13, -3, -25, 20, -3, -16, -23, 18, 20, -7, 12, -5, -22, 15, -4, 7};
+  public int[] intArr = {13, -3, -25, 20, -3, -16, -23, 18, 20, -7, 12, -5, -22, 15, -4, 7};
 
-  public Integer[] integerArr =
-      new Integer[] {13, -3, -25, 20, -3, -16, -23, 18, 20, -7, 12, -5, -22, 15, -4, 7};
+  public Integer[] integerArr = {13, -3, -25, 20, -3, -16, -23, 18, 20, -7, 12, -5, -22, 15, -4, 7};
 
-  public Integer[] noDupulicateIntegerArr0 = new Integer[] {7, 3, 2, 4, 5, 9};
+  public Integer[] noDupulicateIntegerArr0 = {7, 3, 2, 4, 5, 9};
 
   public Integer[] noDupulicateIntegerArr1 =
-      new Integer[] {13, -3, -25, 20, -16, -23, 18, -7, 12, -5, -22, 15, -4, 7};
+      {13, -3, -25, 20, -16, -23, 18, -7, 12, -5, -22, 15, -4, 7};
 
-  public int[][] matrix0 =
-      new int[][] {{1, 2, 3, 4}, {12, 13, 14, 5}, {11, 15, 16, 6}, {10, 9, 8, 7}};
+  public int[][] matrix0 = {{1, 2, 3, 4}, {12, 13, 14, 5}, {11, 15, 16, 6}, {10, 9, 8, 7}};
 
-  public int[][] matrix1 =
-      new int[][] {{1, 2, 3, 4}, {12, 0, 14, 5}, {11, 15, 3, 4}, {10, 9, 0, 7}};
+  public int[][] matrix1 = {{1, 2, 3, 4}, {12, 0, 14, 5}, {11, 15, 3, 4}, {10, 9, 0, 7}};
 
   public ListNode<Integer> node0 = new ListNode<>(1);
   public ListNode<Integer> node1 = new ListNode<>(3);

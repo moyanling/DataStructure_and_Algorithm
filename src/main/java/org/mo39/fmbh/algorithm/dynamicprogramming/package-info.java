@@ -12,6 +12,9 @@
  * <p>
  * It's called dynamic because in every step of calculation, either iteration or recursion, it's
  * using the result of previous calculation(s), so it's building up the solution dynamically.
+ * <p>
+ * Sometimes the problem provide a more clear perspectiv of occurence. Sometimes it provides a more
+ * intuitive bottom up perspective.
  * 
  * @author Jihan Chen
  *

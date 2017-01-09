@@ -34,7 +34,7 @@ import org.mo39.fmbh.common.annotation.ProblemSource;
 public enum NumberOfBoomerangs {
 
   /**
-   * I tried a memo to saev half of the calculation, but it seems not that helpful.
+   * I tried a memo to save half of the calculation, but it seems not that helpful.
    */
   HASHMAP_SOLUTION {
 

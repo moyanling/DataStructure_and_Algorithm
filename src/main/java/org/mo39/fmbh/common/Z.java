@@ -14,6 +14,10 @@ import com.google.common.base.Joiner;
 
 public class Z {
 
+  // ----------------------------------------
+  // ------------ Printers ------------------
+  // ----------------------------------------
+
   public static void printnb(Object obj) {
     System.out.print(obj);
   }
@@ -45,11 +49,22 @@ public class Z {
     print("null");
   }
 
+  public static void print(int[][] matrix) {
+    Z.print("[");
+    Arrays.stream(matrix).forEach(arr -> Z.print(" " + Arrays.toString(arr)));
+    Z.print("]");
+  }
+
   public static <T> void printTreeBfs(TreeNode<T> root) {
+    if (root == null) return;
     root.bfs(LevelOrderSol.ITERATIVE_SOLUTION_WITH_NULL).stream()
         .forEach(l -> print(Joiner.on(',').join(l.stream()
             .map(o -> o == null ? '#' : String.valueOf(o)).collect(Collectors.toList()))));
   }
+
+  // ----------------------------------------
+  // ------------ Swappers ------------------
+  // ----------------------------------------
 
   /**
    * Helper function that swaps two elements at position i and j in an array.
@@ -90,6 +105,10 @@ public class Z {
     if (i == j) return;
     list.set(j, list.set(i, list.get(j)));
   }
+
+  // ----------------------------------------
+  // ------------ Verifies ------------------
+  // ----------------------------------------
 
   /**
    * Assert that one linked list is equal to a given array.

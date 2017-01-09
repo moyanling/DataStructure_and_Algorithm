@@ -15,7 +15,7 @@ import com.google.common.collect.Lists;
 
 public class TreeNode<T> {
 
-  public final T val;
+  public T val;
   public TreeNode<T> left;
   public TreeNode<T> right;
 
@@ -183,6 +183,8 @@ public class TreeNode<T> {
      */
     ITERATIVE_SOLUTION_WITH_NULL() {
 
+      private int count = 0;
+
       @Override
       public <T> List<List<T>> solve(TreeNode<T> root) {
         List<List<T>> toRet = new ArrayList<>();
@@ -207,6 +209,7 @@ public class TreeNode<T> {
           }
           if (nullLevel) return toRet;
           toRet.add(level);
+          if (count++ > 20) return toRet;
         }
         return toRet;
       }

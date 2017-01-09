@@ -10,8 +10,8 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mo39.fmbh.common.S;
 import org.mo39.fmbh.common.TestData;
-import org.mo39.fmbh.datastructure.array.ArrayPartition;
 import org.mo39.fmbh.datastructure.heap.ArrayHeap;
 import org.mo39.fmbh.datastructure.heap.Heap;
 
@@ -264,25 +264,9 @@ public enum ComparisonSort {
 
     private <T extends Comparable<T>> void quickSort(T[] arr, int p, int r) {
       if (p >= r) return;
-      int q = partition(arr, p, r);
+      int q = S.partition(arr, num -> num.compareTo(arr[r]) <= 0, p, r);
       quickSort(arr, p, q - 1);
       quickSort(arr, q + 1, r);
-    }
-
-    /**
-     * Part the array around pivot <code>arr[r]</code> so that from index p (inclusive) to r - 1
-     * (inclusive) are smaller than pivot and all the others are larger than pivot.<br>
-     * <p>
-     * Index i is pointing to the last element of the sequence, whose elements are all smaller than
-     * the pivot.
-     *
-     * @param arr
-     * @param p
-     * @param r
-     * @return
-     */
-    private <T extends Comparable<T>> int partition(T[] arr, int p, int r) {
-      return ArrayPartition.SOLUTION.solve(arr, num -> num.compareTo(arr[r]) <= 0, p, r + 1);
     }
 
   };

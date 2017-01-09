@@ -268,7 +268,7 @@ public class BST<T> extends Tree<T> {
 
       private <T> void recur(T data, Comparator<T> c, TreeNode<T> curr) {
         int compareResult = c.compare(data, curr.val);
-        checkArgument(compareResult != 0, "Duplicate node are not allowed.");
+        checkArgument(compareResult != 0, "Duplicate node are not allowed: " + data);
         if (compareResult < 0) {
           if (curr.left == null) {
             curr.left = new TreeNode<>(data);
@@ -496,6 +496,45 @@ public class BST<T> extends Tree<T> {
       // ---------
       bst.delete(4);
       Z.verify(root, bst.root);
+    }
+
+    @Test
+    public void test() {
+      TestData data = new TestData();
+      Z.printTreeBfs(data.bstRoot);
+      Z.print("");
+      TreeNode<Integer> root = deleteNode(data.bstRoot, 2);
+      Z.printTreeBfs(root);
+    }
+
+    // TODO
+    public TreeNode<Integer> deleteNode(TreeNode<Integer> root, int key) {
+      TreeNode<Integer> cur = root;
+      TreeNode<Integer> pre = null;
+      while (cur != null && cur.val != key) {
+        pre = cur;
+        if (key < cur.val) cur = cur.left;
+        else if (key > cur.val) cur = cur.right;
+      }
+      if (pre == null) return deleteRootNode(cur);
+      if (pre.left == cur) pre.left = deleteRootNode(cur);
+      else pre.right = deleteRootNode(cur);
+      return root;
+    }
+
+    private TreeNode<Integer> deleteRootNode(TreeNode<Integer> root) {
+      if (root == null) return null;
+      if (root.left == null) return root.right;
+      if (root.right == null) return root.left;
+      TreeNode<Integer> next = root.right;
+      TreeNode<Integer> pre = null;
+      for (; next.left != null; pre = next, next = next.left);
+      next.left = root.left;
+      if (root.right != next) {
+        pre.left = next.right;
+        next.right = root.right;
+      }
+      return next;
     }
 
   }

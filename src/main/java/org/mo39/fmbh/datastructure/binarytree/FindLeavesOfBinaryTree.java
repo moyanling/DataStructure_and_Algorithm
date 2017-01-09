@@ -2,12 +2,15 @@ package org.mo39.fmbh.datastructure.binarytree;
 
 import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.LEETCODE;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.Stack;
 
+import org.junit.Assert;
+import org.junit.Test;
+import org.mo39.fmbh.common.TestData;
 import org.mo39.fmbh.common.annotation.ProblemSource;
+
+import com.google.common.collect.Lists;
 
 /**
  * <pre>
@@ -66,33 +69,44 @@ public enum FindLeavesOfBinaryTree {
 
   SOLUTION {
 
-    private Set<TreeNode<Integer>> set;
-
     @Override
     public List<List<Integer>> solve(TreeNode<Integer> root) {
-      set = new HashSet<>();
-      while (!isVisited(root, set)) {
-        Stack<TreeNode<Integer>> stack = new Stack<>();
-        stack.push(root);
-        while (!stack.isEmpty()) {
-          root = stack.pop();
-          if (root.right != null) stack.push(root.right);
-          if (root.left != null) stack.push(root.left);
-        }
-      }
-
-      return null;
+      List<List<Integer>> res = new ArrayList<>();
+      recur(root, res);
+      return res;
     }
 
-    public boolean isVisited(TreeNode<Integer> node, Set<TreeNode<Integer>> set) {
-      return node == null || set.contains(node);
+    private int recur(TreeNode<Integer> node, List<List<Integer>> res) {
+      if (null == node) return -1;
+      int level = 1 + Math.max(recur(node.left, res), recur(node.right, res));
+      if (res.size() < level + 1) res.add(new ArrayList<>());
+      res.get(level).add(node.val);
+      return level;
     }
+
 
   };
 
   public abstract List<List<Integer>> solve(TreeNode<Integer> root);
 
   public static class TestFindLeavesOfBinaryTree {
+
+    private TreeNode<Integer> root = new TestData().root;
+
+    @SuppressWarnings("serial")
+    private ArrayList<ArrayList<Integer>> expected = new ArrayList<ArrayList<Integer>>() {
+      {
+        add(Lists.newArrayList(5, 6, 7));
+        add(Lists.newArrayList(3, 4));
+        add(Lists.newArrayList(1, 2));
+        add(Lists.newArrayList(0));
+      }
+    };
+
+    @Test
+    public void testSolutions() {
+      Assert.assertEquals(expected, SOLUTION.solve(root));
+    }
 
   }
 

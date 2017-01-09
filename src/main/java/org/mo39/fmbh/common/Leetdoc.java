@@ -9,14 +9,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -124,30 +120,6 @@ public class Leetdoc {
     }
   };
 
-  public static final Consumer<Path> REMOVE_COMMENTS = path -> {
-    String name = getClassName(path);
-    List<String> lines = readLines(path);
-    if (lines == null) return;
-    int index = -1;
-    // First move down, find the line of class definition.
-    while (!lines.get(++index).matches(".*(class|enum) " + name + " \\{")) {
-    }
-    Set<Integer> set = new HashSet<>();
-    for (int i = 0; i < index; i++) {
-      if (lines.get(i).contains("*")) set.add(i);
-    }
-    final List<String> fLines = lines;
-    lines = IntStream.range(0, lines.size()).filter(i -> !set.contains(i))
-        .mapToObj(i -> fLines.get(i)).collect(Collectors.toList());
-    try {
-      com.google.common.io.Files.write(Joiner.on("\n").join(lines).getBytes(), path.toFile());
-      log.info(name + " is updated");
-    } catch (IOException e) {
-      log.error("Error writing " + path.toString());
-      return;
-    }
-  };
-
   public static String fetchDescription(Path path) {
     String name = getClassName(path);
     String link = linkOf(name);
@@ -178,7 +150,7 @@ public class Leetdoc {
     return lines;
   }
 
-  public static class LeetcodeDescription implements CommentTemplate.Element {
+  public static class LeetcodeDescription implements CommentTemplate.CommentElement {
 
     private String description;
 
@@ -211,7 +183,7 @@ public class Leetdoc {
 
   }
 
-  public static class LeetcodeLink implements CommentTemplate.Element {
+  public static class LeetcodeLink implements CommentTemplate.CommentElement {
 
     private String link;
     private String name;

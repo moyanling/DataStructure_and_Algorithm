@@ -7,7 +7,6 @@
  * Nice usages: <lo>
  * <li>{@link org.mo39.fmbh.datastructure.design.DesignHitCounter#QUEUE_SOLUTION}</li>
  * 
- * 
  * @author Jihan Chen
  *
  */

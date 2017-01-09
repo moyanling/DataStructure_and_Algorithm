@@ -5,13 +5,13 @@ import java.util.List;
 
 public class CommentTemplate {
 
-  private List<Element> elements = new ArrayList<>();
+  private List<CommentElement> elements = new ArrayList<>();
 
   public static class Builder {
 
     private CommentTemplate ct = new CommentTemplate();
 
-    public Builder addElement(Element e) {
+    public Builder addElement(CommentElement e) {
       ct.elements.add(e);
       return this;
     }
@@ -30,13 +30,13 @@ public class CommentTemplate {
     return toRet;
   }
 
-  public static interface Element {
+  public static interface CommentElement {
 
     public abstract String format();
 
   }
 
-  public static class Author implements Element {
+  public static class Author implements CommentElement {
 
     private String name;
 
