@@ -9,8 +9,8 @@ import java.util.TreeMap;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mo39.fmbh.common.Interval;
 import org.mo39.fmbh.common.annotation.ProblemSource;
+import org.mo39.fmbh.common.classes.Interval;
 
 /**
  * <pre>

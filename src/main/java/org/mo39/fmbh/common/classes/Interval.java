@@ -1,4 +1,4 @@
-package org.mo39.fmbh.common;
+package org.mo39.fmbh.common.classes;
 
 public class Interval {
   public int start;
