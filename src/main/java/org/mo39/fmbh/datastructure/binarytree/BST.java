@@ -211,7 +211,6 @@ public class BST<T> extends Tree<T> {
     return getPeakNode(root, o -> o.left).left;
   }
 
-
   /**
    * Use a translator to walk along the tree path to find the TreeNode with peak value. Return a
    * node with its parent.
@@ -498,15 +497,6 @@ public class BST<T> extends Tree<T> {
       Z.verify(root, bst.root);
     }
 
-    @Test
-    public void test() {
-      TestData data = new TestData();
-      Z.printTreeBfs(data.bstRoot);
-      Z.print("");
-      TreeNode<Integer> root = deleteNode(data.bstRoot, 2);
-      Z.printTreeBfs(root);
-    }
-
     // TODO
     public TreeNode<Integer> deleteNode(TreeNode<Integer> root, int key) {
       TreeNode<Integer> cur = root;
@@ -538,6 +528,5 @@ public class BST<T> extends Tree<T> {
     }
 
   }
-
 
 }

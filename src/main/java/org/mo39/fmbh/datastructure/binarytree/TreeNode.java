@@ -23,11 +23,6 @@ public class TreeNode<T> {
     this.val = val;
   }
 
-  @Override
-  public String toString() {
-    return String.valueOf(val);
-  }
-
   /**
    * Breadth-first search traversal taking this TreeNode as root.
    *

@@ -2,6 +2,11 @@ package org.mo39.fmbh.algorithm.dynamicprogramming;
 
 import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.LEETCODE;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.Assert;
+import org.junit.Test;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
 /**
@@ -32,27 +37,81 @@ import org.mo39.fmbh.common.annotation.ProblemSource;
 @ProblemSource(LEETCODE)
 public enum CombinationSumIV {
 
-  /**
-   * <pre>
-   * Thinking in recursive solution:
-   * - If I find a combination of n length, then the number for this cannot be determined
-   *   because I don't know how many times one number is used.
-   * - Suppose I had a solve function to solve the nums[0, n], then there are two cases:
-   *    1. The last one is not contributing to the total count.
-   *       e.g. it is larger than target. Then simply solve nums[0, n-1]. But how to tell if it's contributing.
-   *    2.
-   * </pre>
-   */
   RECURSIVE_SOLUTION {
 
     @Override
     public int solve(int[] nums, int target) {
+      if (target == 0) return 1;
+      if (target < 0) return 0;
+      int count = 0;
+      for (int i = 0; i < nums.length; i++) {
+        count += solve(nums, target - nums[i]);
+      }
+      return count;
+    }
 
-      return 0;
+  },
+
+  TOP_DOWN_WITH_MEMO {
+
+    private Map<Integer, Integer> memo;
+
+    @Override
+    public int solve(int[] nums, int target) {
+      memo = new HashMap<>();
+      return recur(nums, target);
+    }
+
+    public int recur(int[] nums, int target) {
+      if (target == 0) return 1;
+      int count = 0;
+      for (int i = 0; i < nums.length; i++) {
+        if (target >= nums[i]) {
+          count += memo.getOrDefault(target - nums[i], recur(nums, target - nums[i]));
+        }
+      }
+      memo.put(target, count);
+      return count;
+    }
+
+  },
+
+  /**
+   * //TODO
+   */
+  BOTTOM_UP_METHOD {
+
+    @Override
+    public int solve(int[] nums, int target) {
+      int[] memo = new int[target + 1];
+      memo[0] = 1;
+      for (int i = 1; i < memo.length; i++) {
+        for (int j = 0; j < nums.length; j++) {
+          if (i - nums[j] >= 0) {
+            memo[i] += memo[i - nums[j]];
+          }
+        }
+      }
+      return memo[target];
     }
 
   };
 
   public abstract int solve(int[] nums, int target);
+
+  public static class TestCombinationSumIV {
+
+    private int[] nums = {1, 2, 3};
+    private int target = 32;
+    private int expected = 181997601;
+
+    @Test
+    public void testSolutions() {
+      Assert.assertEquals(expected, RECURSIVE_SOLUTION.solve(nums, target));
+      Assert.assertEquals(expected, TOP_DOWN_WITH_MEMO.solve(nums, target));
+      Assert.assertEquals(expected, BOTTOM_UP_METHOD.solve(nums, target));
+    }
+
+  }
 
 }

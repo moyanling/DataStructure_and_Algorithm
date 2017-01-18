@@ -9,8 +9,8 @@ import org.mo39.fmbh.common.TestData;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
 /**
- * Find the contiguous subarray within a one-dimensional array of numbers which has the largest sum.
- * Return a 3 length arr with first two as indexes and the third element as the maximum sum.
+ * Find the contiguous subnumsay within a one-dimensional numsay of numbers which has the largest
+ * sum. Return a 3 length nums with first two as indexes and the third element as the maximum sum.
  *
  * @author Jihan Chen
  *
@@ -19,16 +19,16 @@ import org.mo39.fmbh.common.annotation.ProblemSource;
 public enum MaximumSubArray {
 
   /**
-   * This is a way to solve maximum sub array using brute force. It's converted to problem
+   * This is a way to solve maximum sub numsay using brute force. It's converted to problem
    * "Best time to buy and sell stock". This problem is cited as below
    * <p>
-   * Given an int arr presenting the price of a stock. Find a day to buy the stock and a day to sell
-   * the stock so that one can earn most money (the difference is the largest).
+   * Given an int nums presenting the price of a stock. Find a day to buy the stock and a day to
+   * sell the stock so that one can earn most money (the difference is the largest).
    * <p>
    * This problem can be converted to MaximumSubArray:<br>
    * Consider the difference between each day, then find the MaximumSubArray of these differences.
    * <p>
-   * Take the combination of two elements in arr and take the largest diff. <br>
+   * Take the combination of two elements in nums and take the largest diff. <br>
    * The time complexity is <b>O(n^2)</b>
    *
    * @author Jihan Chen
@@ -37,25 +37,23 @@ public enum MaximumSubArray {
   BRUTE_FORCE() {
 
     private Integer largestDiff;
-    private int[] result = new int[3];
+    private int result;
 
     @Override
-    public int[] solve(int[] arr) {
-      int[] newArr = new int[arr.length];
-      for (int i = 0; i < arr.length; i++) {
-        newArr[i] = (i == 0 ? 0 : newArr[i - 1]) + arr[i];
+    public int solve(int[] nums) {
+      result = Integer.MIN_VALUE;
+      int[] newArr = new int[nums.length];
+      for (int i = 0; i < nums.length; i++) {
+        newArr[i] = (i == 0 ? 0 : newArr[i - 1]) + nums[i];
       }
       for (int i = 0; i < newArr.length - 1; i++) {
         for (int j = i + 1; j < newArr.length; j++) {
           if (largestDiff == null || newArr[j] - newArr[i] > largestDiff) {
             largestDiff = newArr[j] - newArr[i];
-            result[0] = i;
-            result[1] = j;
-            result[2] = largestDiff;
+            result = largestDiff;
           }
         }
       }
-      result[0]++;
       return result;
     }
 
@@ -79,18 +77,18 @@ public enum MaximumSubArray {
   DIVIDE_AND_CONQUER() {
 
     @Override
-    public int[] solve(int[] stockDiff) {
-      return findMaximumSubArr(stockDiff, 0, stockDiff.length - 1);
+    public int solve(int[] nums) {
+      return findMaximumSubArr(nums, 0, nums.length - 1);
     }
 
-    private int[] findMaximumSubArr(int[] arr, int low, int high) {
-      if (low == high) return new int[] {low, high, arr[low]};
+    private int findMaximumSubArr(int[] nums, int low, int high) {
+      if (low == high) return nums[low];
       int mid = (low + high) / 2;
-      int[] cross = findMaximumSubArrCrossMid(arr, low, mid, high);
-      int[] left = findMaximumSubArr(arr, low, mid);
-      int[] right = findMaximumSubArr(arr, mid + 1, high);
-      if (cross[2] >= left[2] && cross[2] >= right[2]) return cross;
-      else if (left[2] >= cross[2] && left[2] >= right[2]) return left;
+      int cross = findMaximumSubArrCrossMid(nums, low, mid, high);
+      int left = findMaximumSubArr(nums, low, mid);
+      int right = findMaximumSubArr(nums, mid + 1, high);
+      if (cross >= left && cross >= right) return cross;
+      else if (left >= cross && left >= right) return left;
       return right;
     }
 
@@ -104,45 +102,59 @@ public enum MaximumSubArray {
      * @param high
      * @return
      */
-    private int[] findMaximumSubArrCrossMid(int[] arr, int low, int mid, int high) {
-      int left = 0;
+    private int findMaximumSubArrCrossMid(int[] nums, int low, int mid, int high) {
       int currLeftSum = 0;
       Integer leftSum = null;
       for (int i = mid; i >= low; i--) {
-        currLeftSum += arr[i];
+        currLeftSum += nums[i];
         if (leftSum == null || leftSum < currLeftSum) {
-          left = i;
           leftSum = currLeftSum;
         }
       }
-      int right = -1;
       int currRightSum = 0;
       Integer rightSum = null;
       for (int i = mid + 1; i <= high; i++) {
-        currRightSum += arr[i];
+        currRightSum += nums[i];
         if (rightSum == null || rightSum < currRightSum) {
-          right = i;
           rightSum = currRightSum;
         }
       }
-      return new int[] {left, right, leftSum + rightSum};
+      return leftSum + rightSum;
     }
 
   },
 
-  // TODO
-  BOTTOM_UP_METHOD() {
+  /**
+   * Think it generously.
+   */
+  BOTTOM_UP_METHOD_0 {
 
     @Override
-    public int[] solve(int[] arr) {
-      int[] sum = new int[] {0, 0, arr[0]}, max = new int[] {0, 0, arr[0]};
-      for (int i = 1; i < arr.length; i++) {
-        sum[1] = i;
-        if (sum[2] < 0) {
-          sum[2] = arr[i];
-          sum[0] = i;
-        } else sum[2] = sum[2] + arr[i];
-        if (sum[2] > max[2]) System.arraycopy(sum, 0, max, 0, 3);
+    public int solve(int[] nums) {
+      int max = Integer.MIN_VALUE, used = 0, notUsed = 0;
+      for (int n : nums) {
+        used = Math.max(used + n, n);
+        notUsed = n;
+        max = Math.max(max, used);
+        max = Math.max(max, notUsed);
+      }
+      return max;
+    }
+
+  },
+
+  /**
+   * Implement it greedily, only 1 line is saved though.
+   */
+  BOTTOM_UP_METHOD_1() {
+
+    @Override
+    public int solve(int[] nums) {
+      int sum = nums[0], max = nums[0];
+      for (int i = 1; i < nums.length; i++) {
+        if (sum < 0) sum = nums[i];
+        else sum = sum + nums[i];
+        max = Math.max(max, sum);
       }
       return max;
     }
@@ -155,7 +167,7 @@ public enum MaximumSubArray {
    * @param stock
    * @return
    */
-  public abstract int[] solve(int[] arr);
+  public abstract int solve(int[] nums);
 
   /**
    * Helper class used to test solutions.
@@ -165,14 +177,14 @@ public enum MaximumSubArray {
    */
   public static class TestMaximumSubArray {
 
-    private int[] arr = new TestData().intArr;
-    private int[] solution = new int[] {7, 10, 43};
+    private int[] nums = new TestData().intArr;
+    private int solution = 43;
 
     @Test
     public void testSolutions() {
-      Assert.assertArrayEquals(solution, BRUTE_FORCE.solve(arr));
-      Assert.assertArrayEquals(solution, DIVIDE_AND_CONQUER.solve(arr));
-      Assert.assertArrayEquals(solution, BOTTOM_UP_METHOD.solve(arr));
+      Assert.assertEquals(solution, BRUTE_FORCE.solve(nums));
+      Assert.assertEquals(solution, DIVIDE_AND_CONQUER.solve(nums));
+      Assert.assertEquals(solution, BOTTOM_UP_METHOD_1.solve(nums));
     }
 
   }

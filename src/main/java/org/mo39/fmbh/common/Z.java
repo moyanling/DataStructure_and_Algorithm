@@ -2,7 +2,6 @@ package org.mo39.fmbh.common;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Stack;
 import java.util.stream.Collectors;
 
 import org.junit.Assert;
@@ -42,12 +41,16 @@ public class Z {
     print("null");
   }
 
-  public static <T> void print(Stack<T> stack) {
-    while (!stack.isEmpty()) {
-      printnb(stack.pop() + " -> ");
-    }
-    print("null");
+  public static <T> void print(TreeNode<T> root) {
+    if (root == null) return;
+    root.bfs(LevelOrderSol.ITERATIVE_SOLUTION_WITH_NULL).stream()
+        .forEach(l -> print(Joiner.on(',').join(l.stream()
+            .map(o -> o == null ? '#' : String.valueOf(o)).collect(Collectors.toList()))));
   }
+
+  // ----------------------------------------
+  // --------- Matrix Printers --------------
+  // ----------------------------------------
 
   public static void print(int[][] matrix) {
     Z.print("[");
@@ -55,11 +58,10 @@ public class Z {
     Z.print("]");
   }
 
-  public static <T> void printTreeBfs(TreeNode<T> root) {
-    if (root == null) return;
-    root.bfs(LevelOrderSol.ITERATIVE_SOLUTION_WITH_NULL).stream()
-        .forEach(l -> print(Joiner.on(',').join(l.stream()
-            .map(o -> o == null ? '#' : String.valueOf(o)).collect(Collectors.toList()))));
+  public static void print(List<List<Integer>> matrix) {
+    Z.print("[");
+    matrix.stream().forEach(list -> Z.print(" " + list + ","));
+    Z.print("]");
   }
 
   // ----------------------------------------
