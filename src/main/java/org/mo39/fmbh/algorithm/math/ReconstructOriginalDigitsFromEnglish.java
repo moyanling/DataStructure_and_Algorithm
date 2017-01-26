@@ -33,12 +33,12 @@ import org.mo39.fmbh.common.annotation.ProblemSource;
  * 
  * </pre>
  * 
- * @see <a href="https://leetcode.com/problems/reconstruct-original-digitsrom-english/">Reconstruct
- *      Original Digitsrom English</a>
+ * @see <a href="https://leetcode.com/problems/reconstruct-original-digits-from-english/">
+ *      Reconstruct Original Digitsrom English</a>
  * @author Jihan Chen
  */
 @ProblemSource(LEETCODE)
-public enum ReconstructOriginalDigitsromEnglish {
+public enum ReconstructOriginalDigitsFromEnglish {
 
   SOLUTION {
 

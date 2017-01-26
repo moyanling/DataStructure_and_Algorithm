@@ -54,7 +54,13 @@ public class Z {
 
   public static void print(int[][] matrix) {
     Z.print("[");
-    Arrays.stream(matrix).forEach(arr -> Z.print(" " + Arrays.toString(arr)));
+    Arrays.stream(matrix).forEach(arr -> Z.print(" " + Arrays.toString(arr) + ","));
+    Z.print("]");
+  }
+
+  public static void print(boolean[][] matrix) {
+    Z.print("[");
+    Arrays.stream(matrix).forEach(arr -> Z.print(" " + Arrays.toString(arr) + ","));
     Z.print("]");
   }
 

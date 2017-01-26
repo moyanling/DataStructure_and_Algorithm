@@ -102,7 +102,7 @@ public enum CuttingRod {
 
   public static class TestCuttingRod {
 
-    private void verifySolution(CuttingRod sol) {
+    private void verify(CuttingRod sol) {
       int[] expected = {1, 5, 8, 10, 13, 17, 18, 22, 25, 30};
       for (int i = 0; i < sol.price.length; i++) {
         Assert.assertEquals(expected[i], sol.solve(i + 1));
@@ -111,9 +111,9 @@ public enum CuttingRod {
 
     @Test
     public void testSolution() {
-      verifySolution(CuttingRod.RECURSIVE_SOLUTION);
-      verifySolution(CuttingRod.TOP_DOWN_WITH_MEMO);
-      verifySolution(CuttingRod.BOTTOM_UP_METHOD);
+      verify(CuttingRod.RECURSIVE_SOLUTION);
+      verify(CuttingRod.TOP_DOWN_WITH_MEMO);
+      verify(CuttingRod.BOTTOM_UP_METHOD);
     }
 
   }

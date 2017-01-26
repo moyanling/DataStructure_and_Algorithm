@@ -328,7 +328,7 @@ public class TreeNode<T> {
 
       @Override
       public <T> List<T> solve(TreeNode<T> root) {
-        List<T> toRet = new ArrayList<>();
+        List<T> result = new ArrayList<>();
         Stack<TreeNode<T>> stack = new Stack<>();
         do {
           while (root != null) {
@@ -336,10 +336,10 @@ public class TreeNode<T> {
             root = root.left;
           }
           root = stack.pop();
-          toRet.add(root.val);
+          result.add(root.val);
           root = root.right;
         } while (stack.size() != 0 || root != null);
-        return toRet;
+        return result;
       }
 
     };

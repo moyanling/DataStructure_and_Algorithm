@@ -23,7 +23,9 @@ import org.mo39.fmbh.common.annotation.ProblemSource;
  * You may assume k is always valid, 1 ≤ k ≤ array's length.
  * 
  * </pre>
- * @see <a href="https://leetcode.com/problems/kth-largest-element-in-an-array/">Kth Largest Element In An Array</a>
+ * 
+ * @see <a href="https://leetcode.com/problems/kth-largest-element-in-an-array/">Kth Largest Element
+ *      In An Array</a>
  * @author Jihan Chen
  */
 @ProblemSource(LEETCODE)
