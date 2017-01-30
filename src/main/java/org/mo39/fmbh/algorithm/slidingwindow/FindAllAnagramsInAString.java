@@ -1,4 +1,4 @@
-package org.mo39.fmbh.datastructure.string;
+package org.mo39.fmbh.algorithm.slidingwindow;
 
 import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.LEETCODE;
 
@@ -53,7 +53,7 @@ import com.google.common.collect.Lists;
 @ProblemSource(LEETCODE)
 public enum FindAllAnagramsInAString {
 
-  SOLUTION {
+  SOLUTION_0 {
 
     @Override
     public List<Integer> solve(String s, String p) {
@@ -67,8 +67,8 @@ public enum FindAllAnagramsInAString {
       }
       for (int i = 0; i < p.length(); i++) {
         Character c;
-        if (set.contains((c = s.charAt(i))))
-          map.compute(c, (k, v) -> v == null ? Integer.valueOf(-1) : (v != 1) ? (v - 1) : null);
+        if (set.contains(c = s.charAt(i)))
+          map.compute(c, (k, v) -> v == null ? Integer.valueOf(-1) : v != 1 ? v - 1 : null);
       }
       if (map.size() == 0) toRet.add(0);
       boolean wasAdded = map.size() == 0;
@@ -80,12 +80,23 @@ public enum FindAllAnagramsInAString {
           continue;
         }
         if (set.contains(oldC))
-          map.compute(oldC, (k, v) -> v == null ? Integer.valueOf(1) : (v != -1) ? (v + 1) : null);
+          map.compute(oldC, (k, v) -> v == null ? Integer.valueOf(1) : v != -1 ? v + 1 : null);
         if (set.contains(newC))
-          map.compute(newC, (k, v) -> v == null ? Integer.valueOf(-1) : (v != 1) ? (v - 1) : null);
+          map.compute(newC, (k, v) -> v == null ? Integer.valueOf(-1) : v != 1 ? v - 1 : null);
         if (wasAdded = map.size() == 0) toRet.add(i);
       }
       return toRet;
+    }
+
+  },
+
+  SOLUTION_1 {
+
+    @Override
+    public List<Integer> solve(String s, String p) {
+      // TODO
+      // https://discuss.leetcode.com/topic/64434/shortest-concise-java-o-n-sliding-window-solution
+      return null;
     }
 
   };
@@ -100,7 +111,7 @@ public enum FindAllAnagramsInAString {
 
     @Test
     public void testSolutions() {
-      Assert.assertEquals(expected, SOLUTION.solve(s, p));
+      Assert.assertEquals(expected, SOLUTION_0.solve(s, p));
     }
 
   }

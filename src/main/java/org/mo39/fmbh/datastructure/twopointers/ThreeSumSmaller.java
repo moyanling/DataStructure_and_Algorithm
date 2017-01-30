@@ -1,4 +1,4 @@
-package org.mo39.fmbh.datastructure.array;
+package org.mo39.fmbh.datastructure.twopointers;
 
 import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.LEETCODE;
 

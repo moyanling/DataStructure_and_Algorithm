@@ -64,6 +64,12 @@ public class Z {
     Z.print("]");
   }
 
+  public static void print(char[][] matrix) {
+    Z.print("[");
+    Arrays.stream(matrix).forEach(arr -> Z.print(" " + Arrays.toString(arr) + ","));
+    Z.print("]");
+  }
+
   public static void print(List<List<Integer>> matrix) {
     Z.print("[");
     matrix.stream().forEach(list -> Z.print(" " + list + ","));

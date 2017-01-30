@@ -1,4 +1,4 @@
-package org.mo39.fmbh.datastructure.array;
+package org.mo39.fmbh.algorithm.greedy;
 
 import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.LEETCODE;
 
@@ -58,7 +58,7 @@ public enum Heaters {
    * Find the closest heater to each house and take maximum of the closest distances.<br/>
    * Take care of the index.
    */
-  BINARY_SEARCH {
+  SOLUTION {
 
     @Override
     public int solve(int[] houses, int[] heaters) {
@@ -89,7 +89,7 @@ public enum Heaters {
 
     @Test
     public void testSolutions() {
-      Assert.assertEquals(expected, BINARY_SEARCH.solve(houses, heaters));
+      Assert.assertEquals(expected, SOLUTION.solve(houses, heaters));
     }
 
   }
