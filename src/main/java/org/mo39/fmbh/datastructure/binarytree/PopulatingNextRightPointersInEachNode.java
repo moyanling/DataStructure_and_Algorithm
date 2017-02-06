@@ -48,11 +48,11 @@ import org.mo39.fmbh.common.annotation.ProblemSource;
  * 
  * After calling your function, the tree should look like:
  * 
- *          1 -> NULL
+ *          1 . NULL
  *        /  \
- *       2 -> 3 -> NULL
+ *       2 . 3 . NULL
  *      / \  / \
- *     4->5->6->7 -> NULL
+ *     4.5.6.7 . NULL
  * </pre>
  * 
  * @see <a href="https://leetcode.com/problems/populating-next-right-pointers-in-each-node/">
@@ -62,16 +62,19 @@ import org.mo39.fmbh.common.annotation.ProblemSource;
 @ProblemSource(LEETCODE)
 public enum PopulatingNextRightPointersInEachNode {
 
-  SOLUTION {
+  /**
+   * Well, this one will always work for any binary tree.
+   */
+  SOLUTION_0 {
 
     @Override
-    public <T> void solve(TreeLinkNode<T> root) {
+    public void solve(TreeLinkNode root) {
       if (root == null) return;
-      Queue<TreeLinkNode<T>> queue = new LinkedList<>();
+      Queue<TreeLinkNode> queue = new LinkedList<>();
       queue.add(root);
       while (!queue.isEmpty()) {
         int size = queue.size();
-        TreeLinkNode<T> pre = null, cur = null;
+        TreeLinkNode pre = null, cur = null;
         for (int i = 0; i < size; i++) {
           cur = queue.poll();
           if (pre != null) pre.next = cur;
@@ -82,9 +85,39 @@ public enum PopulatingNextRightPointersInEachNode {
       }
     }
 
+  },
+
+  SOLUTION_1 {
+
+    @Override
+    public void solve(TreeLinkNode root) {
+      if (root == null) return;
+      if (root.left != null) root.left.next = root.right;
+      if (root.next != null && root.right != null) root.right.next = root.next.left;
+      solve(root.left);
+      solve(root.right);
+    }
+
+  },
+
+  SOLUTION_2 {
+
+    @Override
+    public void solve(TreeLinkNode root) {
+      if (root == null) return;
+      TreeLinkNode pre = root, cur = null;
+      for (; pre != null; pre = pre.left) {
+        cur = pre;
+        for (; cur != null; cur = cur.next) {
+          if (cur.left != null) cur.left.next = cur.right;
+          if (cur.next != null && cur.right != null) cur.right.next = cur.next.left;
+        }
+      }
+    }
+
   };
 
-  public abstract <T> void solve(TreeLinkNode<T> root);
+  public abstract void solve(TreeLinkNode root);
 
 
 }

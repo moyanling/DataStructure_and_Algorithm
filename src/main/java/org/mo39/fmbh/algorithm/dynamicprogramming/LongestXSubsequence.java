@@ -8,7 +8,6 @@ import java.util.function.BiPredicate;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.mo39.fmbh.common.Z;
 
 /**
  *
@@ -17,26 +16,33 @@ import org.mo39.fmbh.common.Z;
  */
 public enum LongestXSubsequence {
 
+  /**
+   * //TODO urgent, dp
+   */
   SOLUTION {
 
     @Override
-    public <T> List<T> solve(T[] arr, BiPredicate<T, T> p) {
-      List<LinkedList<T>> memo = new ArrayList<>();
-      for (T t : arr) {
-        memo.add(new LinkedList<>(Arrays.asList(t)));
-      }
-      int max = -1;
-      for (int i = 1; i < arr.length; i++) {
-        for (int j = 0; j < i; j++) {
-          T last = memo.get(j).getLast();
-          if (p.test(last, arr[i])) {
-            memo.get(j).add(arr[i]);
-            if (max == -1 || memo.get(j).size() > memo.get(max).size()) max = j;
+    public <T> List<T> solve(T[] nums, BiPredicate<T, T> p) {
+      int[] count = new int[nums.length], pre = new int[nums.length];
+      int max = 0, index = -1;
+      for (int i = 0; i < nums.length; i++) {
+        count[i] = 1;
+        pre[i] = -1;
+        for (int j = i - 1; j >= 0; j--) {
+          if (p.test(nums[j], nums[i]) && 1 + count[j] > count[i]) {
+            count[i] = count[j] + 1;
+            pre[i] = j;
           }
         }
+        if (count[i] > max) {
+          max = count[i];
+          index = i;
+        }
       }
-      Z.print(memo);
-      return memo.get(max);
+      LinkedList<T> result = new LinkedList<>();
+      for (; index != -1; result.add(0, nums[index]), index = pre[index]) {
+      }
+      return result;
     }
 
   };
@@ -63,11 +69,26 @@ public enum LongestXSubsequence {
       lis.p = (i1, i2) -> i1 - i2 <= 0;
     }
 
+    /**
+     * Longest divisible subsequence.
+     */
+    TestSuite<Integer> lds;
+
+    {
+      lds = new TestSuite<>();
+      lds.arr = new Integer[] {9, 54, 108, 90, 180, 1, 360, 4, 2, 720};
+      lds.expected = new ArrayList<>(Arrays.asList(9, 90, 180, 360, 720));
+      lds.p = (i1, i2) -> i2 % i1 == 0;
+    }
+
     @Test
     public void testLongestIncreasingSubsequence() {
-      for (LongestXSubsequence sol : LongestXSubsequence.values()) {
-        Assert.assertEquals(lis.expected, sol.solve(lis.arr, lis.p));
-      }
+      Assert.assertEquals(lis.expected, SOLUTION.solve(lis.arr, lis.p));
+    }
+
+    @Test
+    public void testLongestDivisibleSubsequence() {
+      Assert.assertEquals(lds.expected, SOLUTION.solve(lds.arr, lds.p));
     }
 
   }

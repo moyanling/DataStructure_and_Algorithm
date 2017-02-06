@@ -1,12 +1,12 @@
 package org.mo39.fmbh.datastructure.binarytree;
 
-public class TreeLinkNode<T> {
+public class TreeLinkNode {
 
-  public final T val;
+  public final int val;
 
-  TreeLinkNode<T> left, right, next;
+  TreeLinkNode left, right, next;
 
-  TreeLinkNode(T val) {
+  TreeLinkNode(int val) {
     this.val = val;
   }
 

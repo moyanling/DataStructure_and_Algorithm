@@ -1,12 +1,35 @@
 package org.mo39.fmbh.datastructure.linkedlist;
 
+import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.LEETCODE;
+
 import java.util.function.Predicate;
 
 import org.junit.Test;
 import org.mo39.fmbh.common.TestData;
 import org.mo39.fmbh.common.Z;
+import org.mo39.fmbh.common.annotation.ProblemSource;
 
-public enum LinkedListPartition {
+
+/**
+ * <pre>
+ * Given a linked list and a value x, partition it such that all nodes less than
+ * x come before nodes greater than or equal to x.
+ * 
+ * 
+ * You should preserve the original relative order of the nodes in each of the
+ * two partitions.
+ * 
+ * 
+ * For example,
+ * Given 1->4->3->2->5->2 and x = 3,
+ * return 1->2->2->4->3->5.
+ * </pre>
+ * 
+ * @see <a href="https://leetcode.com/problems/partition-list/">Partition List</a>
+ * @author Jihan Chen
+ */
+@ProblemSource(LEETCODE)
+public enum PartitionList {
 
   /**
    * Given a Predicate, take this ListNode as the head and make all nodes that satisfied this
@@ -22,11 +45,8 @@ public enum LinkedListPartition {
 
     @Override
     public <T> ListNode<T> solve(ListNode<T> node, Predicate<ListNode<T>> p) {
-      ListNode<T> head = node;
-      ListNode<T> head1 = new ListNode<T>();
-      ListNode<T> head2 = new ListNode<T>();
-      ListNode<T> head1Copy = head1;
-      ListNode<T> head2Copy = head2;
+      ListNode<T> head = node, head1 = new ListNode<T>(), head2 = new ListNode<T>(),
+          head1Copy = head1, head2Copy = head2;
       while (head != null) {
         if (p.test(head)) {
           head1.next = head;

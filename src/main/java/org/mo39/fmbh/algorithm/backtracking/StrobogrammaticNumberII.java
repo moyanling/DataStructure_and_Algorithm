@@ -46,7 +46,7 @@ public enum StrobogrammaticNumberII {
       return result;
     }
 
-    private void recur(List<String> result, StringBuilder cur, int n, boolean isOdd) {
+    void recur(List<String> result, StringBuilder cur, int n, boolean isOdd) {
       if (n == 0) {
         if (cur.length() > 0 && cur.charAt(0) == '0') return;
         int i = cur.length() - 1, length = cur.length();

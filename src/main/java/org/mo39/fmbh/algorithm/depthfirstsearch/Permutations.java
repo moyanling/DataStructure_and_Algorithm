@@ -65,7 +65,7 @@ public enum Permutations {
   },
 
   /**
-   * //TODO
+   * This is doing insertion at all possible positions. note i <= r.size().
    */
   ITERATIVE_SOLUTION {
 
