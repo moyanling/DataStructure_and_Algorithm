@@ -69,14 +69,10 @@ public enum Utf8Validation {
 
     @Override
     public boolean solve(int[] data) {
-      // Arrays.stream(data).mapToObj(i -> Integer.toBinaryString(i)).forEach(s -> Z.print(s));
       Integer len = 0;
       for (int i = 0; i < data.length;) {
         len = getLength(data[i++]);
-        if (len == null) {
-          // Z.print(data[i - 1]);
-          return false;
-        }
+        if (len == null) return false;
         for (; len > 0; i++, len--) {
           if (i >= data.length || (data[i] & 128) != 128) return false;
         }
