@@ -49,11 +49,11 @@ public enum ValidateBinarySearchTree {
   SOLUTION {
 
     @Override
-    public boolean solve(TreeNode<Integer> root) {
+    public boolean solve(TreeNode root) {
       return recur(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }
 
-    public boolean recur(TreeNode<Integer> root, long minVal, long maxVal) {
+    public boolean recur(TreeNode root, long minVal, long maxVal) {
       if (root == null) return true;
       if (root.val >= maxVal || root.val <= minVal) return false;
       return recur(root.left, minVal, root.val) && recur(root.right, root.val, maxVal);
@@ -61,6 +61,6 @@ public enum ValidateBinarySearchTree {
 
   };
 
-  public abstract boolean solve(TreeNode<Integer> root);
+  public abstract boolean solve(TreeNode root);
 
 }

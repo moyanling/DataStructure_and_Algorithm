@@ -43,9 +43,8 @@ public enum LowestCommonAncestorOfABinarySearchTree {
   BAD_SOLUTION {
 
     @Override
-    public TreeNode<Integer> solve(TreeNode<Integer> root, TreeNode<Integer> p,
-        TreeNode<Integer> q) {
-      Stack<TreeNode<Integer>> stack = new Stack<>();
+    public TreeNode solve(TreeNode root, TreeNode p, TreeNode q) {
+      Stack<TreeNode> stack = new Stack<>();
       trace(root, p, t -> {
         stack.push(t);
       });
@@ -57,9 +56,8 @@ public enum LowestCommonAncestorOfABinarySearchTree {
       return null;
     }
 
-    public TreeNode<Integer> trace(TreeNode<Integer> root, TreeNode<Integer> target,
-        Consumer<TreeNode<Integer>> consumer) {
-      TreeNode<Integer> curr = root;
+    public TreeNode trace(TreeNode root, TreeNode target, Consumer<TreeNode> consumer) {
+      TreeNode curr = root;
       while (curr != null) {
         consumer.accept(curr);
         int compareResult = target.val - curr.val;
@@ -75,8 +73,7 @@ public enum LowestCommonAncestorOfABinarySearchTree {
   SOLUTION {
 
     @Override
-    public TreeNode<Integer> solve(TreeNode<Integer> root, TreeNode<Integer> p,
-        TreeNode<Integer> q) {
+    public TreeNode solve(TreeNode root, TreeNode p, TreeNode q) {
       if (p.val < root.val && q.val < root.val) return solve(root.left, p, q);
       if (p.val > root.val && q.val > root.val) return solve(root.right, p, q);
       return root;
@@ -87,22 +84,20 @@ public enum LowestCommonAncestorOfABinarySearchTree {
   ONE_LINER {
 
     @Override
-    public TreeNode<Integer> solve(TreeNode<Integer> root, TreeNode<Integer> p,
-        TreeNode<Integer> q) {
+    public TreeNode solve(TreeNode root, TreeNode p, TreeNode q) {
       return (root.val - p.val) * (root.val - q.val) < 1 ? root
           : solve(p.val < root.val ? root.left : root.right, p, q);
     }
 
   };
 
-  public abstract TreeNode<Integer> solve(TreeNode<Integer> root, TreeNode<Integer> p,
-      TreeNode<Integer> q);
+  public abstract TreeNode solve(TreeNode root, TreeNode p, TreeNode q);
 
 
   public static class TestLowestCommonAncestorOfABinarySearchTree {
 
     private TestData td = new TestData();
-    private TreeNode<Integer> root = td.bstRoot;
+    private TreeNode root = td.bstRoot;
 
     @Test
     public void testSolutions() {

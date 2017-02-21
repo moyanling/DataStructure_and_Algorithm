@@ -46,7 +46,7 @@ public enum BinaryTreeRightSideView {
   SOLUTION {
 
     @Override
-    public List<Integer> solve(TreeNode<Integer> root) {
+    public List<Integer> solve(TreeNode root) {
       List<Integer> result = new ArrayList<>();
       recur(result, root, 0, -1);
       return result;
@@ -59,7 +59,7 @@ public enum BinaryTreeRightSideView {
      * @param depth - the depth of current node
      * @param threshold - the threshold for a node to be seen
      */
-    private int recur(List<Integer> result, TreeNode<Integer> root, int depth, int threshold) {
+    private int recur(List<Integer> result, TreeNode root, int depth, int threshold) {
       if (root == null) return threshold;
       if (depth > threshold) {
         result.add(root.val);
@@ -73,18 +73,18 @@ public enum BinaryTreeRightSideView {
 
   };
 
-  public abstract List<Integer> solve(TreeNode<Integer> root);
+  public abstract List<Integer> solve(TreeNode root);
 
   public static class TestBinaryTreeRightSideView {
 
-    private TreeNode<Integer> root = new TreeNode<>(1);
+    private TreeNode root = new TreeNode(1);
     private List<Integer> expected = new ArrayList<>(Arrays.asList(1, 3, 6));
 
     {
-      root.right = new TreeNode<>(3);
-      root.right.left = new TreeNode<>(6);
-      root.left = new TreeNode<>(2);
-      root.left.right = new TreeNode<>(5);
+      root.right = new TreeNode(3);
+      root.right.left = new TreeNode(6);
+      root.left = new TreeNode(2);
+      root.left.right = new TreeNode(5);
     }
 
     @Test

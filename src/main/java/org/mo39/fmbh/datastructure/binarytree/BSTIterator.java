@@ -31,11 +31,11 @@ public enum BSTIterator {
 
   SOLUTION {
 
-    TreeNode<Integer> cur;
-    Deque<TreeNode<Integer>> stack = new ArrayDeque<>();
+    TreeNode cur;
+    Deque<TreeNode> stack = new ArrayDeque<>();
 
     @Override
-    public void init(TreeNode<Integer> root) {
+    public void init(TreeNode root) {
       this.cur = root;
     }
 
@@ -62,7 +62,7 @@ public enum BSTIterator {
 
   };
 
-  public abstract void init(TreeNode<Integer> root);
+  public abstract void init(TreeNode root);
 
   public abstract boolean hasNext();
 
@@ -70,11 +70,11 @@ public enum BSTIterator {
 
   public static class TestBSTIterator {
 
-    private TreeNode<Integer> root = new TreeNode<>(1);
+    private TreeNode root = new TreeNode(1);
     private List<Integer> expected = new ArrayList<>(Arrays.asList(1, 2));
 
     {
-      root.right = new TreeNode<>(2);
+      root.right = new TreeNode(2);
     }
 
     private void verify(BSTIterator sol) {

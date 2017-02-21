@@ -105,7 +105,7 @@ public enum BinaryTreeVerticalOrderTraversal {
   SOLUTION {
 
     @Override
-    public List<List<Integer>> solve(TreeNode<Integer> root) {
+    public List<List<Integer>> solve(TreeNode root) {
       List<List<Integer>> result = new ArrayList<>();
       if (root == null) return result;
       TreeMap<Integer, List<Integer>> map = new TreeMap<>();
@@ -130,10 +130,10 @@ public enum BinaryTreeVerticalOrderTraversal {
 
   static class Wapper {
 
-    TreeNode<Integer> node;
+    TreeNode node;
     int index;
 
-    public static Wapper of(TreeNode<Integer> node, int index) {
+    public static Wapper of(TreeNode node, int index) {
       Wapper wapper = new Wapper();
       wapper.index = index;
       wapper.node = node;
@@ -142,18 +142,18 @@ public enum BinaryTreeVerticalOrderTraversal {
 
   }
 
-  public abstract List<List<Integer>> solve(TreeNode<Integer> root);
+  public abstract List<List<Integer>> solve(TreeNode root);
 
   public static class TestBinaryTreeVerticalOrderTraversal {
 
-    TreeNode<Integer> root = new TreeNode<>(3);
+    TreeNode root = new TreeNode(3);
     List<List<Integer>> expected = new ArrayList<>();
 
     {
-      root.left = new TreeNode<>(9);
-      root.right = new TreeNode<>(20);
-      root.right.left = new TreeNode<>(15);
-      root.right.right = new TreeNode<>(7);
+      root.left = new TreeNode(9);
+      root.right = new TreeNode(20);
+      root.right.left = new TreeNode(15);
+      root.right.right = new TreeNode(7);
       expected.add(Lists.newArrayList(9));
       expected.add(Lists.newArrayList(3, 15));
       expected.add(Lists.newArrayList(20));

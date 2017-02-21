@@ -41,7 +41,7 @@ public class Z {
     print("null");
   }
 
-  public static <T> void print(TreeNode<T> root) {
+  public static void print(TreeNode root) {
     if (root == null) return;
     root.bfs(LevelOrderSol.ITERATIVE_SOLUTION_WITH_NULL).stream()
         .forEach(l -> print(Joiner.on(',').join(l.stream()
@@ -150,7 +150,7 @@ public class Z {
    * @param root1
    * @param root2
    */
-  public static <T> void verify(TreeNode<T> p, TreeNode<T> q) {
+  public static <T> void verify(TreeNode p, TreeNode q) {
     if (p == null || q == null) {
       Assert.assertEquals(p, q);
       return;

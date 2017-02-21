@@ -59,7 +59,7 @@ public enum FindModeInBinarySearchTree {
   SOLUTION_0 {
 
     @Override
-    public int[] solve(TreeNode<Integer> root) {
+    public int[] solve(TreeNode root) {
       Map<Integer, Integer> map = new HashMap<>();
       int count = recur(root, map);
       List<Integer> list = new ArrayList<>();
@@ -73,7 +73,7 @@ public enum FindModeInBinarySearchTree {
       return result;
     }
 
-    int recur(TreeNode<Integer> root, Map<Integer, Integer> map) {
+    int recur(TreeNode root, Map<Integer, Integer> map) {
       if (root == null) return 0;
       int max = 0;
       map.put(root.val, map.getOrDefault(root.val, 0) + 1);
@@ -88,13 +88,13 @@ public enum FindModeInBinarySearchTree {
   SOLUTION_1 {
 
     @Override
-    public int[] solve(TreeNode<Integer> root) {
+    public int[] solve(TreeNode root) {
       // TODO Follow up
       return null;
     }
 
   };
 
-  public abstract int[] solve(TreeNode<Integer> root);
+  public abstract int[] solve(TreeNode root);
 
 }

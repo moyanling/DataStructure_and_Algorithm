@@ -36,15 +36,15 @@ import org.mo39.fmbh.common.Z;
  * @author Jihan Chen
  *
  */
-public class BST<T> extends Tree<T> {
+public class BST extends Tree {
 
   /**
    * Create a new BST with a {@link Comparable} generic type.
    *
    * @return a new BST.
    */
-  public static <T extends Comparable<T>> BST<T> init() {
-    return new BST<T>((o1, o2) -> o1.compareTo(o2));
+  public static BST init() {
+    return new BST((o1, o2) -> o1.compareTo(o2));
   }
 
   /**
@@ -52,8 +52,8 @@ public class BST<T> extends Tree<T> {
    *
    * @return a new BST.
    */
-  public static <T> BST<T> init(Comparator<T> comparator) {
-    return new BST<T>(comparator);
+  public static BST init(Comparator<Integer> comparator) {
+    return new BST(comparator);
   }
 
   /**
@@ -61,7 +61,7 @@ public class BST<T> extends Tree<T> {
    *
    * @param comparator
    */
-  protected BST(Comparator<T> comparator) {
+  protected BST(Comparator<Integer> comparator) {
     this.comparator = comparator;
   }
 
@@ -73,7 +73,7 @@ public class BST<T> extends Tree<T> {
    * @param data
    */
   @Override
-  public void insert(T data) {
+  public void insert(int data) {
     insert(data, InsertSol.ITERATIVE_SOLUTION);
   }
 
@@ -83,7 +83,7 @@ public class BST<T> extends Tree<T> {
    * @param data
    * @param sol
    */
-  public void insert(T data, InsertSol sol) {
+  public void insert(int data, InsertSol sol) {
     size++;
     sol.solve(this, data);
   }
@@ -98,13 +98,13 @@ public class BST<T> extends Tree<T> {
    * @return
    */
   @Override
-  public TreeNode<T> search(T key) {
+  public TreeNode search(int key) {
     return SearchSol.ITERATIVE_SOLUTION.solve(this, key).left;
   }
 
   @Override
-  public TreeNode<T> trace(T key, Consumer<TreeNode<T>> consumer) {
-    ImmutablePair<TreeNode<T>, TreeNode<T>> tuple =
+  public TreeNode trace(int key, Consumer<TreeNode> consumer) {
+    ImmutablePair<TreeNode, TreeNode> tuple =
         TraceSol.ITERATIVE_SOLUTION.solve(this, key, consumer);
     return tuple.left == null ? tuple.right : tuple.left;
   }
@@ -116,8 +116,8 @@ public class BST<T> extends Tree<T> {
    * @param sol
    * @return
    */
-  public TreeNode<T> search(T key, SearchSol sol) {
-    ImmutablePair<TreeNode<T>, TreeNode<T>> tuple = sol.solve(this, key);
+  public TreeNode search(int key, SearchSol sol) {
+    ImmutablePair<TreeNode, TreeNode> tuple = sol.solve(this, key);
     return tuple == null ? null : tuple.left;
   }
 
@@ -130,7 +130,7 @@ public class BST<T> extends Tree<T> {
    * @return true if the key is found and deleted. false if the key is not found.
    */
   @Override
-  public boolean delete(T key) {
+  public boolean delete(int key) {
     if (delete(key, SearchSol.ITERATIVE_SOLUTION)) {
       size--;
       return true;
@@ -144,12 +144,13 @@ public class BST<T> extends Tree<T> {
    * @param sol
    * @return true if the key is found and deleted. false if the key is not found.
    */
-  public boolean delete(T key, SearchSol sol) {
-    ImmutablePair<TreeNode<T>, TreeNode<T>> tuple = sol.solve(this, key);
+  public boolean delete(int key, SearchSol sol) {
+    ImmutablePair<TreeNode, TreeNode> tuple = sol.solve(this, key);
     if (tuple == null) return false;
     // If node is found but parent is null, then it's the root. Create a dummy node.
+    TreeNode dummyRoot = null;
     if (tuple.right == null) {
-      TreeNode<T> dummyRoot = new TreeNode<>(null);
+      dummyRoot = new TreeNode(-1);
       dummyRoot.right = root;
       tuple = ImmutablePair.of(tuple.left, dummyRoot);
     }
@@ -165,7 +166,7 @@ public class BST<T> extends Tree<T> {
         transplant(tuple.right, tuple.left, tuple.left.right);
         tuple.left.right.left = tuple.left.left;
       } else {
-        ImmutablePair<TreeNode<T>, TreeNode<T>> p = getPeakNode(tuple.left.right, o -> o.left);
+        ImmutablePair<TreeNode, TreeNode> p = getPeakNode(tuple.left.right, o -> o.left);
         transplant(p.right, p.left, null);
         p.left.left = tuple.left.left;
         p.left.right = tuple.left.right;
@@ -173,7 +174,7 @@ public class BST<T> extends Tree<T> {
       }
     }
     // If using dummyRoot, replace the new root.
-    if (tuple.right.val == null) root = tuple.left.right;
+    if (tuple.right != null) root = tuple.left.right;
     return true;
   }
 
@@ -184,7 +185,7 @@ public class BST<T> extends Tree<T> {
    * @param searchResult
    * @param newNode
    */
-  private void transplant(TreeNode<T> parent, TreeNode<T> child, TreeNode<T> newNode) {
+  private void transplant(TreeNode parent, TreeNode child, TreeNode newNode) {
     if (parent.left == child) {
       parent.left = newNode;
     } else if (parent.right == child) parent.right = newNode;
@@ -197,7 +198,7 @@ public class BST<T> extends Tree<T> {
    * @return
    */
   @Override
-  public TreeNode<T> getMax() {
+  public TreeNode getMax() {
     return getPeakNode(root, o -> o.right).left;
   }
 
@@ -207,7 +208,7 @@ public class BST<T> extends Tree<T> {
    * @return
    */
   @Override
-  public TreeNode<T> getMin() {
+  public TreeNode getMin() {
     return getPeakNode(root, o -> o.left).left;
   }
 
@@ -218,10 +219,10 @@ public class BST<T> extends Tree<T> {
    * @param translator
    * @return
    */
-  private ImmutablePair<TreeNode<T>, TreeNode<T>> getPeakNode(TreeNode<T> root,
-      Function<TreeNode<T>, TreeNode<T>> f) {
+  private ImmutablePair<TreeNode, TreeNode> getPeakNode(TreeNode root,
+      Function<TreeNode, TreeNode> f) {
     checkArgument(root != null);
-    TreeNode<T> pre = null;
+    TreeNode pre = null;
     while (f.apply(root) != null) {
       pre = root;
       root = f.apply(root);
@@ -238,9 +239,9 @@ public class BST<T> extends Tree<T> {
     ITERATIVE_SOLUTION() {
 
       @Override
-      public <T> void handle(Tree<T> bst, T data) {
-        TreeNode<T> pre = null;
-        TreeNode<T> curr = bst.root;
+      public void handle(Tree bst, int data) {
+        TreeNode pre = null;
+        TreeNode curr = bst.root;
         while (curr != null) {
           pre = curr;
           int compareResult = bst.comparator.compare(data, curr.val);
@@ -248,8 +249,8 @@ public class BST<T> extends Tree<T> {
           if (compareResult < 0) curr = curr.left;
           else curr = curr.right;
         }
-        if (bst.comparator.compare(data, pre.val) < 0) pre.left = new TreeNode<>(data);
-        else pre.right = new TreeNode<>(data);
+        if (bst.comparator.compare(data, pre.val) < 0) pre.left = new TreeNode(data);
+        else pre.right = new TreeNode(data);
       }
 
     },
@@ -261,22 +262,22 @@ public class BST<T> extends Tree<T> {
     RECURSIVE_SOLUTION {
 
       @Override
-      public <T> void handle(Tree<T> bst, T data) {
+      public void handle(Tree bst, int data) {
         recur(data, bst.comparator, bst.root);
       }
 
-      private <T> void recur(T data, Comparator<T> c, TreeNode<T> curr) {
+      private void recur(int data, Comparator<Integer> c, TreeNode curr) {
         int compareResult = c.compare(data, curr.val);
         checkArgument(compareResult != 0, "Duplicate node are not allowed: " + data);
         if (compareResult < 0) {
           if (curr.left == null) {
-            curr.left = new TreeNode<>(data);
+            curr.left = new TreeNode(data);
             return;
           }
           recur(data, c, curr.left);
         } else {
           if (curr.right == null) {
-            curr.right = new TreeNode<>(data);
+            curr.right = new TreeNode(data);
             return;
           }
           recur(data, c, curr.right);
@@ -284,16 +285,15 @@ public class BST<T> extends Tree<T> {
       }
     };
 
-    public <T> void solve(Tree<T> bst, T data) {
-      checkArgument(data != null);
+    public void solve(Tree bst, int data) {
       if (bst.root == null) {
-        bst.root = new TreeNode<>(data);
+        bst.root = new TreeNode(data);
         return;
       }
       handle(bst, data);
     };
 
-    public abstract <T> void handle(Tree<T> bst, T data);
+    public abstract void handle(Tree bst, int data);
   }
 
   public enum TraceSol {
@@ -301,10 +301,10 @@ public class BST<T> extends Tree<T> {
     ITERATIVE_SOLUTION {
 
       @Override
-      public <T> ImmutablePair<TreeNode<T>, TreeNode<T>> handle(Tree<T> bst, T key,
-          Consumer<TreeNode<T>> consumer) {
-        TreeNode<T> curr = bst.root;
-        TreeNode<T> pre = null;
+      public ImmutablePair<TreeNode, TreeNode> handle(Tree bst, int key,
+          Consumer<TreeNode> consumer) {
+        TreeNode curr = bst.root;
+        TreeNode pre = null;
         while (curr != null) {
           consumer.accept(curr);
           int compareResult = bst.comparator.compare(key, curr.val);
@@ -321,13 +321,13 @@ public class BST<T> extends Tree<T> {
     RECURSIVE_SOLUTION {
 
       @Override
-      public <T> ImmutablePair<TreeNode<T>, TreeNode<T>> handle(Tree<T> bst, T key,
-          Consumer<TreeNode<T>> consumer) {
+      public ImmutablePair<TreeNode, TreeNode> handle(Tree bst, int key,
+          Consumer<TreeNode> consumer) {
         return recur(bst.root, null, bst.comparator, key, consumer);
       }
 
-      private <T> ImmutablePair<TreeNode<T>, TreeNode<T>> recur(TreeNode<T> curr, TreeNode<T> pre,
-          Comparator<T> comparator, T key, Consumer<TreeNode<T>> consumer) {
+      private ImmutablePair<TreeNode, TreeNode> recur(TreeNode curr, TreeNode pre,
+          Comparator<Integer> comparator, int key, Consumer<TreeNode> consumer) {
         if (curr == null) return ImmutablePair.of(null, pre);
         consumer.accept(curr);
         int compareResult = comparator.compare(key, curr.val);
@@ -339,12 +339,10 @@ public class BST<T> extends Tree<T> {
 
     };
 
-    protected abstract <T> ImmutablePair<TreeNode<T>, TreeNode<T>> handle(Tree<T> bst, T key,
-        Consumer<TreeNode<T>> consumer);
+    protected abstract ImmutablePair<TreeNode, TreeNode> handle(Tree bst, int key,
+        Consumer<TreeNode> consumer);
 
-    public <T> ImmutablePair<TreeNode<T>, TreeNode<T>> solve(Tree<T> bst, T key,
-        Consumer<TreeNode<T>> consumer) {
-      checkArgument(key != null);
+    public ImmutablePair<TreeNode, TreeNode> solve(Tree bst, int key, Consumer<TreeNode> consumer) {
       return handle(bst, key, consumer);
     }
   }
@@ -354,7 +352,7 @@ public class BST<T> extends Tree<T> {
     ITERATIVE_SOLUTION() {
 
       @Override
-      public <T> ImmutablePair<TreeNode<T>, TreeNode<T>> handle(Tree<T> bst, T key) {
+      public ImmutablePair<TreeNode, TreeNode> handle(Tree bst, int key) {
         return TraceSol.ITERATIVE_SOLUTION.solve(bst, key, t -> {
           return;
         });
@@ -365,7 +363,7 @@ public class BST<T> extends Tree<T> {
     RECURSIVE_SOLUTION() {
 
       @Override
-      public <T> ImmutablePair<TreeNode<T>, TreeNode<T>> handle(Tree<T> bst, T key) {
+      public ImmutablePair<TreeNode, TreeNode> handle(Tree bst, int key) {
         return TraceSol.RECURSIVE_SOLUTION.solve(bst, key, t -> {
           return;
         });
@@ -373,10 +371,9 @@ public class BST<T> extends Tree<T> {
 
     };
 
-    protected abstract <T> ImmutablePair<TreeNode<T>, TreeNode<T>> handle(Tree<T> bst, T key);
+    protected abstract ImmutablePair<TreeNode, TreeNode> handle(Tree bst, int key);
 
-    public <T> ImmutablePair<TreeNode<T>, TreeNode<T>> solve(Tree<T> bst, T key) {
-      checkArgument(key != null);
+    public ImmutablePair<TreeNode, TreeNode> solve(Tree bst, int key) {
       return handle(bst, key);
     }
 
@@ -385,16 +382,16 @@ public class BST<T> extends Tree<T> {
   public static class TestBST {
 
     private Integer[] datas = new TestData().noDupulicateIntegerArr0;
-    private Tree<Integer> bst = BST.init();
+    private Tree bst = BST.init();
 
     @Before
     public void before() throws IOException {
-      TreeNode<Integer> root = new TreeNode<>(7);
-      TreeNode<Integer> treeNode1 = new TreeNode<>(3);
-      TreeNode<Integer> treeNode2 = new TreeNode<>(2);
-      TreeNode<Integer> treeNode3 = new TreeNode<>(4);
-      TreeNode<Integer> treeNode4 = new TreeNode<>(5);
-      TreeNode<Integer> treeNode5 = new TreeNode<>(9);
+      TreeNode root = new TreeNode(7);
+      TreeNode treeNode1 = new TreeNode(3);
+      TreeNode treeNode2 = new TreeNode(2);
+      TreeNode treeNode3 = new TreeNode(4);
+      TreeNode treeNode4 = new TreeNode(5);
+      TreeNode treeNode5 = new TreeNode(9);
       // Construct a bst structure manually.
       root.left = treeNode1;
       root.right = treeNode5;
@@ -408,13 +405,13 @@ public class BST<T> extends Tree<T> {
     @Test
     public void testInsertSol() {
       // ---------
-      Tree<Integer> recursive = BST.init();
+      Tree recursive = BST.init();
       for (Integer data : datas) {
         InsertSol.RECURSIVE_SOLUTION.solve(recursive, data);
       }
       Z.verify(bst.root, recursive.root);
       // ---------
-      Tree<Integer> iterative = BST.init();
+      Tree iterative = BST.init();
       for (Integer data : datas) {
         InsertSol.ITERATIVE_SOLUTION.solve(iterative, data);
       }
@@ -423,12 +420,12 @@ public class BST<T> extends Tree<T> {
 
     @Test
     public void testGetMax() {
-      Assert.assertEquals(new Integer(9), bst.getMax().val);
+      Assert.assertEquals(9, bst.getMax().val);
     }
 
     @Test
     public void testGetMin() {
-      Assert.assertEquals(new Integer(2), bst.getMin().val);
+      Assert.assertEquals(2, bst.getMin().val);
     }
 
     @Test
@@ -436,23 +433,23 @@ public class BST<T> extends Tree<T> {
       // ---------
       Assert.assertNull(SearchSol.ITERATIVE_SOLUTION.solve(bst, 0).left);
       Assert.assertNull(SearchSol.RECURSIVE_SOLUTION.solve(bst, 0).left);
-      Assert.assertEquals(new Integer(5), SearchSol.ITERATIVE_SOLUTION.solve(bst, 5).left.val);
-      Assert.assertEquals(new Integer(5), SearchSol.RECURSIVE_SOLUTION.solve(bst, 5).left.val);
+      Assert.assertEquals(5, SearchSol.ITERATIVE_SOLUTION.solve(bst, 5).left.val);
+      Assert.assertEquals(5, SearchSol.RECURSIVE_SOLUTION.solve(bst, 5).left.val);
       // ---------
-      Assert.assertEquals(new Integer(7), SearchSol.ITERATIVE_SOLUTION.solve(bst, 9).right.val);
-      Assert.assertEquals(new Integer(7), SearchSol.ITERATIVE_SOLUTION.solve(bst, 3).right.val);
-      Assert.assertEquals(new Integer(7), SearchSol.RECURSIVE_SOLUTION.solve(bst, 9).right.val);
-      Assert.assertEquals(new Integer(7), SearchSol.RECURSIVE_SOLUTION.solve(bst, 3).right.val);
+      Assert.assertEquals(7, SearchSol.ITERATIVE_SOLUTION.solve(bst, 9).right.val);
+      Assert.assertEquals(7, SearchSol.ITERATIVE_SOLUTION.solve(bst, 3).right.val);
+      Assert.assertEquals(7, SearchSol.RECURSIVE_SOLUTION.solve(bst, 9).right.val);
+      Assert.assertEquals(7, SearchSol.RECURSIVE_SOLUTION.solve(bst, 3).right.val);
     }
 
     @Test
     public void testDeleteRoot() {
       // ---------
-      TreeNode<Integer> root = new TreeNode<>(9);
-      TreeNode<Integer> treeNode1 = new TreeNode<>(3);
-      TreeNode<Integer> treeNode2 = new TreeNode<>(2);
-      TreeNode<Integer> treeNode3 = new TreeNode<>(4);
-      TreeNode<Integer> treeNode4 = new TreeNode<>(5);
+      TreeNode root = new TreeNode(9);
+      TreeNode treeNode1 = new TreeNode(3);
+      TreeNode treeNode2 = new TreeNode(2);
+      TreeNode treeNode3 = new TreeNode(4);
+      TreeNode treeNode4 = new TreeNode(5);
       // Construct a bst structure manually.
       root.left = treeNode1;
       treeNode1.left = treeNode2;
@@ -466,11 +463,11 @@ public class BST<T> extends Tree<T> {
     @Test
     public void testDeleteTreeNode3() {
       // Construct a bst structure manually.
-      TreeNode<Integer> root = new TreeNode<>(7);
-      TreeNode<Integer> treeNode2 = new TreeNode<>(2);
-      TreeNode<Integer> treeNode3 = new TreeNode<>(4);
-      TreeNode<Integer> treeNode4 = new TreeNode<>(5);
-      TreeNode<Integer> treeNode5 = new TreeNode<>(9);
+      TreeNode root = new TreeNode(7);
+      TreeNode treeNode2 = new TreeNode(2);
+      TreeNode treeNode3 = new TreeNode(4);
+      TreeNode treeNode4 = new TreeNode(5);
+      TreeNode treeNode5 = new TreeNode(9);
       root.left = treeNode3;
       root.right = treeNode5;
       treeNode3.left = treeNode2;
@@ -483,11 +480,11 @@ public class BST<T> extends Tree<T> {
     @Test
     public void testDeleteTreeNode4() {
       // Construct a bst structure manually.
-      TreeNode<Integer> root = new TreeNode<>(7);
-      TreeNode<Integer> treeNode1 = new TreeNode<>(3);
-      TreeNode<Integer> treeNode2 = new TreeNode<>(2);
-      TreeNode<Integer> treeNode4 = new TreeNode<>(5);
-      TreeNode<Integer> treeNode5 = new TreeNode<>(9);
+      TreeNode root = new TreeNode(7);
+      TreeNode treeNode1 = new TreeNode(3);
+      TreeNode treeNode2 = new TreeNode(2);
+      TreeNode treeNode4 = new TreeNode(5);
+      TreeNode treeNode5 = new TreeNode(9);
       root.left = treeNode1;
       root.right = treeNode5;
       treeNode1.left = treeNode2;
@@ -498,9 +495,9 @@ public class BST<T> extends Tree<T> {
     }
 
     // TODO
-    public TreeNode<Integer> deleteNode(TreeNode<Integer> root, int key) {
-      TreeNode<Integer> cur = root;
-      TreeNode<Integer> pre = null;
+    public TreeNode deleteNode(TreeNode root, int key) {
+      TreeNode cur = root;
+      TreeNode pre = null;
       while (cur != null && cur.val != key) {
         pre = cur;
         if (key < cur.val) cur = cur.left;
@@ -512,12 +509,12 @@ public class BST<T> extends Tree<T> {
       return root;
     }
 
-    private TreeNode<Integer> deleteRootNode(TreeNode<Integer> root) {
+    private TreeNode deleteRootNode(TreeNode root) {
       if (root == null) return null;
       if (root.left == null) return root.right;
       if (root.right == null) return root.left;
-      TreeNode<Integer> next = root.right;
-      TreeNode<Integer> pre = null;
+      TreeNode next = root.right;
+      TreeNode pre = null;
       for (; next.left != null; pre = next, next = next.left);
       next.left = root.left;
       if (root.right != next) {

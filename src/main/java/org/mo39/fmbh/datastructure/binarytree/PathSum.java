@@ -43,14 +43,14 @@ public enum PathSum {
     private boolean result;
 
     @Override
-    public boolean solve(TreeNode<Integer> root, int target) {
+    public boolean solve(TreeNode root, int target) {
       if (root == null) return false;
       result = false;
       recur(root, 0, target);
       return result;
     }
 
-    private void recur(TreeNode<Integer> root, int currSum, int target) {
+    private void recur(TreeNode root, int currSum, int target) {
       if (root == null) return;
       if (root.left == null && root.right == null && currSum + root.val == target) result = true;
       else {
@@ -64,12 +64,12 @@ public enum PathSum {
   RECURSIVE_SOLUTION_1 {
 
     @Override
-    public boolean solve(TreeNode<Integer> root, int target) {
+    public boolean solve(TreeNode root, int target) {
       if (root == null) return false;
       return recur(root, 0, target);
     }
 
-    private boolean recur(TreeNode<Integer> root, int currSum, int target) {
+    private boolean recur(TreeNode root, int currSum, int target) {
       if (root == null) return false;
       if (root.left == null && root.right == null && currSum + root.val == target) return true;
       return recur(root.left, currSum + root.val, target)
@@ -81,7 +81,7 @@ public enum PathSum {
   ITERATIVE_SOLUTION {
 
     @Override
-    public boolean solve(TreeNode<Integer> root, int target) {
+    public boolean solve(TreeNode root, int target) {
       if (root == null) return false;
       Stack<MyNode> stack = new Stack<>();
       stack.push(MyNode.valueOf(root));
@@ -100,31 +100,31 @@ public enum PathSum {
 
   private static class MyNode {
 
-    public final TreeNode<Integer> node;
+    public final TreeNode node;
     public final Integer sum;
 
-    private MyNode(TreeNode<Integer> node, int val) {
+    private MyNode(TreeNode node, int val) {
       this.node = node;
       this.sum = val;
     }
 
-    public static MyNode valueOf(TreeNode<Integer> node) {
+    public static MyNode valueOf(TreeNode node) {
       return new MyNode(node, node.val);
     }
 
-    public MyNode update(TreeNode<Integer> node) {
+    public MyNode update(TreeNode node) {
       return new MyNode(node, this.sum + node.val);
     }
 
   }
 
-  public abstract boolean solve(TreeNode<Integer> root, int target);
+  public abstract boolean solve(TreeNode root, int target);
 
   public static class TestPathSum {
 
     private int expected = 13;
     private int unexpected = 20;
-    private TreeNode<Integer> root = new TestData().root;
+    private TreeNode root = new TestData().root;
 
     @Test
     public void testSolutions() {

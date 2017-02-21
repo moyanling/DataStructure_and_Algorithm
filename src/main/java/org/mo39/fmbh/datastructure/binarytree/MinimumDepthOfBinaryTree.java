@@ -25,7 +25,7 @@ public enum MinimumDepthOfBinaryTree {
   SOLUTION_0 {
 
     @Override
-    public <T> int solve(TreeNode<T> root) {
+    public <T> int solve(TreeNode root) {
       if (root == null) return 0;
       int leftDepth = Integer.MAX_VALUE, rightDepth = Integer.MAX_VALUE;
       if (root.left == null && root.right == null) return 1;
@@ -42,7 +42,7 @@ public enum MinimumDepthOfBinaryTree {
   SOLUTION_1 {
 
     @Override
-    public <T> int solve(TreeNode<T> root) {
+    public <T> int solve(TreeNode root) {
       if (root == null) return 0;
       int leftDepth = solve(root.left), rightDepth = solve(root.right);
       return 1 + (Math.min(leftDepth, rightDepth) > 0 ? Math.min(leftDepth, rightDepth)
@@ -51,18 +51,18 @@ public enum MinimumDepthOfBinaryTree {
 
   };
 
-  public abstract <T> int solve(TreeNode<T> root);
+  public abstract <T> int solve(TreeNode root);
 
   public static class TestMinimumDepthOfBinaryTree {
 
-    private TreeNode<Integer> root = new TreeNode<Integer>(0);
+    private TreeNode root = new TreeNode(0);
     private int expected = 2;
 
     @Before
     public void before() {
-      root.left = new TreeNode<Integer>(1);
-      root.left.left = new TreeNode<Integer>(2);
-      root.right = new TreeNode<Integer>(3);
+      root.left = new TreeNode(1);
+      root.left.left = new TreeNode(2);
+      root.right = new TreeNode(3);
     }
 
     @Test

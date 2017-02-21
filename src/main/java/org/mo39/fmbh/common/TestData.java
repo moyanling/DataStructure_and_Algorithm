@@ -67,14 +67,14 @@ public class TestData {
     stack.push(5);
   }
 
-  public TreeNode<Integer> root = new TreeNode<>(0);
-  public TreeNode<Integer> treeNode1 = new TreeNode<>(1);
-  public TreeNode<Integer> treeNode2 = new TreeNode<>(2);
-  public TreeNode<Integer> treeNode3 = new TreeNode<>(3);
-  public TreeNode<Integer> treeNode4 = new TreeNode<>(4);
-  public TreeNode<Integer> treeNode5 = new TreeNode<>(5);
-  public TreeNode<Integer> treeNode6 = new TreeNode<>(6);
-  public TreeNode<Integer> treeNode7 = new TreeNode<>(7);
+  public TreeNode root = new TreeNode(0);
+  public TreeNode treeNode1 = new TreeNode(1);
+  public TreeNode treeNode2 = new TreeNode(2);
+  public TreeNode treeNode3 = new TreeNode(3);
+  public TreeNode treeNode4 = new TreeNode(4);
+  public TreeNode treeNode5 = new TreeNode(5);
+  public TreeNode treeNode6 = new TreeNode(6);
+  public TreeNode treeNode7 = new TreeNode(7);
 
   {
     root.left = treeNode1;
@@ -86,7 +86,7 @@ public class TestData {
     treeNode4.right = treeNode7;
   }
 
-  public TreeNode<Integer> getCompleteTree() {
+  public TreeNode getCompleteTree() {
     root.left = treeNode1;
     root.right = treeNode2;
     treeNode1.left = treeNode3;
@@ -129,15 +129,15 @@ public class TestData {
     }
   };
 
-  public TreeNode<Integer> bstRoot = new TreeNode<>(6);
-  public TreeNode<Integer> bstTreeNode1 = new TreeNode<>(2);
-  public TreeNode<Integer> bstTreeNode2 = new TreeNode<>(8);
-  public TreeNode<Integer> bstTreeNode3 = new TreeNode<>(0);
-  public TreeNode<Integer> bstTreeNode4 = new TreeNode<>(4);
-  public TreeNode<Integer> bstTreeNode5 = new TreeNode<>(7);
-  public TreeNode<Integer> bstTreeNode6 = new TreeNode<>(9);
-  public TreeNode<Integer> bstTreeNode7 = new TreeNode<>(3);
-  public TreeNode<Integer> bstTreeNode8 = new TreeNode<>(5);
+  public TreeNode bstRoot = new TreeNode(6);
+  public TreeNode bstTreeNode1 = new TreeNode(2);
+  public TreeNode bstTreeNode2 = new TreeNode(8);
+  public TreeNode bstTreeNode3 = new TreeNode(0);
+  public TreeNode bstTreeNode4 = new TreeNode(4);
+  public TreeNode bstTreeNode5 = new TreeNode(7);
+  public TreeNode bstTreeNode6 = new TreeNode(9);
+  public TreeNode bstTreeNode7 = new TreeNode(3);
+  public TreeNode bstTreeNode8 = new TreeNode(5);
 
   {
     bstRoot.left = bstTreeNode1;

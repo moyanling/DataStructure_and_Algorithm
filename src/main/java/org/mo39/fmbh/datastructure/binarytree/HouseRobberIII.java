@@ -48,6 +48,7 @@ import org.mo39.fmbh.common.annotation.ProblemSource;
  * 
  * 
  * </pre>
+ * 
  * @see <a href="https://leetcode.com/problems/house-robber-iii/">House Robber III</a>
  * @author Jihan Chen
  */
@@ -57,7 +58,7 @@ public enum HouseRobberIII {
   RECURSIVE_SOLUTION {
 
     @Override
-    public int solve(TreeNode<Integer> root) {
+    public int solve(TreeNode root) {
       if (root == null) return 0;
       int parent = root.val//
           + (root.left == null ? 0 : solve(root.left.left) + solve(root.left.right))
@@ -70,15 +71,15 @@ public enum HouseRobberIII {
 
   TOP_DOWN_WITH_MEMO {
 
-    Map<TreeNode<Integer>, Integer> memo;
+    Map<TreeNode, Integer> memo;
 
     @Override
-    public int solve(TreeNode<Integer> root) {
+    public int solve(TreeNode root) {
       memo = new HashMap<>();
       return recur(root);
     }
 
-    private int recur(TreeNode<Integer> root) {
+    private int recur(TreeNode root) {
       if (root == null) return 0;
       int parent = root.val//
           + (root.left == null ? 0 : tryMemo(root.left.left) + tryMemo(root.left.right))
@@ -87,7 +88,7 @@ public enum HouseRobberIII {
       return Math.max(parent, child);
     }
 
-    private int tryMemo(TreeNode<Integer> node) {
+    private int tryMemo(TreeNode node) {
       if (memo.containsKey(node)) return memo.get(node);
       int toRet = recur(node);
       memo.put(node, toRet);
@@ -99,12 +100,12 @@ public enum HouseRobberIII {
   SOLUTION {
 
     @Override
-    public int solve(TreeNode<Integer> root) {
+    public int solve(TreeNode root) {
       int[] res = recur(root);
       return Math.max(res[0], res[1]);
     }
 
-    private int[] recur(TreeNode<Integer> root) {
+    private int[] recur(TreeNode root) {
       if (root == null) return new int[2];
 
       int[] left = recur(root.left);
@@ -121,20 +122,20 @@ public enum HouseRobberIII {
 
 
 
-  public abstract int solve(TreeNode<Integer> root);
+  public abstract int solve(TreeNode root);
 
   public static class TestHouseRobberIII {
 
-    private TreeNode<Integer> root = new TreeNode<>(0);
+    private TreeNode root = new TreeNode(0);
     private int expected = 200;
 
     @Before
     public void before() {
-      root.left = new TreeNode<>(1);
-      root.right = new TreeNode<>(100);
-      root.left.left = new TreeNode<>(100);
-      root.right.left = new TreeNode<>(2);
-      root.right.right = new TreeNode<>(3);
+      root.left = new TreeNode(1);
+      root.right = new TreeNode(100);
+      root.left.left = new TreeNode(100);
+      root.right.left = new TreeNode(2);
+      root.right.right = new TreeNode(3);
     }
 
     @Test

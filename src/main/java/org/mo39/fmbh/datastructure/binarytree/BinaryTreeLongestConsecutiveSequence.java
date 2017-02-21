@@ -52,14 +52,14 @@ public enum BinaryTreeLongestConsecutiveSequence {
     int max;
 
     @Override
-    public int solve(TreeNode<Integer> root) {
+    public int solve(TreeNode root) {
       if (root == null) return 0;
       max = 1;
       recur(root);
       return max;
     }
 
-    private int recur(TreeNode<Integer> root) {
+    private int recur(TreeNode root) {
       if (root.left == null && root.right == null) return 1;
       int left = 1, right = 1;
       if (root.left != null) {
@@ -80,12 +80,12 @@ public enum BinaryTreeLongestConsecutiveSequence {
   SOLUTION_1 {
 
     @Override
-    public int solve(TreeNode<Integer> root) {
+    public int solve(TreeNode root) {
       if (root == null) { return 0; }
       return recur(root, root.val + 1, 1, 1);
     }
 
-    private int recur(TreeNode<Integer> node, int target, int curr, int max) {
+    private int recur(TreeNode node, int target, int curr, int max) {
       if (node == null) return max;
       if (node.val == target) {
         curr++;
@@ -97,18 +97,18 @@ public enum BinaryTreeLongestConsecutiveSequence {
 
   };
 
-  public abstract int solve(TreeNode<Integer> root);
+  public abstract int solve(TreeNode root);
 
   public static class TestBinaryTreeLongestConsecutiveSequence {
 
-    private TreeNode<Integer> root = new TreeNode<>(1);
+    private TreeNode root = new TreeNode(1);
     private int expected = 3;
 
     {
-      root.right = new TreeNode<>(3);
-      root.right.right = new TreeNode<>(4);
-      root.right.right.right = new TreeNode<>(5);
-      root.right.left = new TreeNode<>(2);
+      root.right = new TreeNode(3);
+      root.right.right = new TreeNode(4);
+      root.right.right.right = new TreeNode(5);
+      root.right.left = new TreeNode(2);
     }
 
     @Test

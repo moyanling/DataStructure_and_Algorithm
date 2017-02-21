@@ -45,32 +45,30 @@ public enum LowestCommonAncestorOfABinaryTree {
   SOLUTION {
 
     @Override
-    public TreeNode<Integer> solve(TreeNode<Integer> root, TreeNode<Integer> p,
-        TreeNode<Integer> q) {
+    public TreeNode solve(TreeNode root, TreeNode p, TreeNode q) {
       if (root == null || root == p || root == q) return root;
-      TreeNode<Integer> left = solve(root.left, p, q);
-      TreeNode<Integer> right = solve(root.right, p, q);
+      TreeNode left = solve(root.left, p, q);
+      TreeNode right = solve(root.right, p, q);
       return left == null ? right : right == null ? left : root;
     }
 
   };
 
-  public abstract TreeNode<Integer> solve(TreeNode<Integer> root, TreeNode<Integer> p,
-      TreeNode<Integer> q);
+  public abstract TreeNode solve(TreeNode root, TreeNode p, TreeNode q);
 
 
   public static class TestLowestCommonAncestorOfABinaryTree {
 
-    TreeNode<Integer> root = new TreeNode<Integer>(0);
+    TreeNode root = new TreeNode(0);
 
     {
-      root.left = new TreeNode<>(1);
-      root.right = new TreeNode<>(2);
-      root.left.left = new TreeNode<>(3);
-      root.left.left.left = new TreeNode<>(4);
+      root.left = new TreeNode(1);
+      root.right = new TreeNode(2);
+      root.left.left = new TreeNode(3);
+      root.left.left.left = new TreeNode(4);
     }
 
-    TreeNode<Integer> expected = root.left.left;
+    TreeNode expected = root.left.left;
 
     @Test
     public void testSolutions() {

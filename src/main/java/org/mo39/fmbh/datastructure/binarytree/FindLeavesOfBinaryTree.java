@@ -70,13 +70,13 @@ public enum FindLeavesOfBinaryTree {
   SOLUTION {
 
     @Override
-    public List<List<Integer>> solve(TreeNode<Integer> root) {
+    public List<List<Integer>> solve(TreeNode root) {
       List<List<Integer>> res = new ArrayList<>();
       recur(root, res);
       return res;
     }
 
-    private int recur(TreeNode<Integer> node, List<List<Integer>> res) {
+    private int recur(TreeNode node, List<List<Integer>> res) {
       if (null == node) return -1;
       int level = 1 + Math.max(recur(node.left, res), recur(node.right, res));
       if (res.size() < level + 1) res.add(new ArrayList<>());
@@ -87,11 +87,11 @@ public enum FindLeavesOfBinaryTree {
 
   };
 
-  public abstract List<List<Integer>> solve(TreeNode<Integer> root);
+  public abstract List<List<Integer>> solve(TreeNode root);
 
   public static class TestFindLeavesOfBinaryTree {
 
-    private TreeNode<Integer> root = new TestData().root;
+    private TreeNode root = new TestData().root;
 
     @SuppressWarnings("serial")
     private ArrayList<ArrayList<Integer>> expected = new ArrayList<ArrayList<Integer>>() {

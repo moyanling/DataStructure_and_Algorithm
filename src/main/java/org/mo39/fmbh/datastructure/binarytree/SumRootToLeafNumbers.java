@@ -39,14 +39,14 @@ public enum SumRootToLeafNumbers {
   SOLUTION_0 {
 
     @Override
-    public int solve(TreeNode<Integer> root) {
+    public int solve(TreeNode root) {
       recur(root, 0);
       return sum;
     }
 
     int sum = 0;
 
-    void recur(TreeNode<Integer> root, int pre) {
+    void recur(TreeNode root, int pre) {
       if (root == null) return;
       int cur = pre * 10 + root.val;
       if (root.left == null && root.right == null) sum += cur;
@@ -59,12 +59,12 @@ public enum SumRootToLeafNumbers {
   SOLUTION_1 {
 
     @Override
-    public int solve(TreeNode<Integer> root) {
+    public int solve(TreeNode root) {
       return recur(root, 0);
     }
 
 
-    int recur(TreeNode<Integer> root, int pre) {
+    int recur(TreeNode root, int pre) {
       if (root == null) return 0;
       int cur = pre * 10 + root.val;
       if (root.left == null && root.right == null) return cur;
@@ -73,16 +73,16 @@ public enum SumRootToLeafNumbers {
 
   };
 
-  public abstract int solve(TreeNode<Integer> root);
+  public abstract int solve(TreeNode root);
 
   public static class TestSumRootToLeafNumbers {
 
-    TreeNode<Integer> root = new TreeNode<>(1);
+    TreeNode root = new TreeNode(1);
     int expected = 25;
 
     {
-      root.left = new TreeNode<>(2);
-      root.right = new TreeNode<>(3);
+      root.left = new TreeNode(2);
+      root.right = new TreeNode(3);
     }
 
     @Test

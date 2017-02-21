@@ -13,13 +13,13 @@ import org.mo39.fmbh.common.TestData;
 import com.google.common.collect.Lists;
 
 
-public class TreeNode<T> {
+public class TreeNode {
 
-  public T val;
-  public TreeNode<T> left;
-  public TreeNode<T> right;
+  public int val;
+  public TreeNode left;
+  public TreeNode right;
 
-  public TreeNode(T val) {
+  public TreeNode(int val) {
     this.val = val;
   }
 
@@ -29,7 +29,7 @@ public class TreeNode<T> {
    * @param sol
    * @return
    */
-  public List<List<T>> bfs(LevelOrderSol sol) {
+  public List<List<Integer>> bfs(LevelOrderSol sol) {
     return sol.solve(this);
   }
 
@@ -39,7 +39,7 @@ public class TreeNode<T> {
    * @param sol
    * @return
    */
-  public List<T> dfs(PreOrderSol sol) {
+  public List<Integer> dfs(PreOrderSol sol) {
     return sol.solve(this);
   }
 
@@ -49,7 +49,7 @@ public class TreeNode<T> {
    * @param sol
    * @return
    */
-  public List<T> dfs(InOrderSol sol) {
+  public List<Integer> dfs(InOrderSol sol) {
     return sol.solve(this);
   }
 
@@ -59,7 +59,7 @@ public class TreeNode<T> {
    * @param sol
    * @return
    */
-  public List<T> dfs(PostOrderSol sol) {
+  public List<Integer> dfs(PostOrderSol sol) {
     return sol.solve(this);
   }
 
@@ -88,11 +88,11 @@ public class TreeNode<T> {
    * @param root
    * @return
    */
-  public static <T> int depthOf(TreeNode<T> root) {
+  public static int depthOf(TreeNode root) {
     return root == null ? 0 : Math.max(depthOf(root.left), depthOf(root.right)) + 1;
   }
 
-  private boolean isBalanced(TreeNode<T> root) {
+  private boolean isBalanced(TreeNode root) {
     return root == null || Math.abs(depthOf(root.left) - depthOf(root.right)) <= 1
         && isBalanced(root.left) && isBalanced(root.right);
   }
@@ -105,7 +105,7 @@ public class TreeNode<T> {
     TOP_DOWN_METHOD {
 
       @Override
-      public <T> boolean solve(TreeNode<T> root) {
+      public boolean solve(TreeNode root) {
         return root == null || Math.abs(depthOf(root.left) - depthOf(root.right)) <= 1
             && solve(root.left) && solve(root.right);
       }
@@ -120,13 +120,13 @@ public class TreeNode<T> {
       private boolean result;
 
       @Override
-      public <T> boolean solve(TreeNode<T> root) {
+      public boolean solve(TreeNode root) {
         result = true;
         recur(root);
         return result;
       }
 
-      public <T> int recur(TreeNode<T> root) {
+      public int recur(TreeNode root) {
         if (root == null || !result) return 0;
         int l = recur(root.left);
         int r = recur(root.right);
@@ -136,7 +136,7 @@ public class TreeNode<T> {
 
     };
 
-    public abstract <T> boolean solve(TreeNode<T> root);
+    public abstract boolean solve(TreeNode root);
 
   }
 
@@ -151,16 +151,16 @@ public class TreeNode<T> {
     ITERATIVE_SOLUTION() {
 
       @Override
-      public <T> List<List<T>> solve(TreeNode<T> root) {
-        List<List<T>> toRet = new ArrayList<>();
+      public List<List<Integer>> solve(TreeNode root) {
+        List<List<Integer>> toRet = new ArrayList<>();
         if (root == null) return toRet;
-        Queue<TreeNode<T>> queue = new LinkedList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
         while (!queue.isEmpty()) {
-          List<T> level = new ArrayList<>();
+          List<Integer> level = new ArrayList<>();
           int size = queue.size();
           for (int i = 0; i < size; i++) {
-            TreeNode<T> node = queue.poll();
+            TreeNode node = queue.poll();
             level.add(node.val);
             if (node.left != null) queue.offer(node.left);
             if (node.right != null) queue.offer(node.right);
@@ -181,17 +181,17 @@ public class TreeNode<T> {
       private int count = 0;
 
       @Override
-      public <T> List<List<T>> solve(TreeNode<T> root) {
-        List<List<T>> toRet = new ArrayList<>();
+      public List<List<Integer>> solve(TreeNode root) {
+        List<List<Integer>> toRet = new ArrayList<>();
         if (root == null) return toRet;
-        Queue<TreeNode<T>> queue = new LinkedList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
         while (!queue.isEmpty()) {
-          List<T> level = new ArrayList<>();
+          List<Integer> level = new ArrayList<>();
           int size = queue.size();
           boolean nullLevel = true;
           for (int i = 0; i < size; i++) {
-            TreeNode<T> node = queue.poll();
+            TreeNode node = queue.poll();
             level.add(node == null ? null : node.val);
             if (node == null) {
               queue.offer(null);
@@ -211,7 +211,7 @@ public class TreeNode<T> {
 
     };
 
-    public abstract <T> List<List<T>> solve(TreeNode<T> root);
+    public abstract List<List<Integer>> solve(TreeNode root);
 
   }
 
@@ -223,8 +223,8 @@ public class TreeNode<T> {
     RECRUSIVE_SOLUTION() {
 
       @Override
-      public <T> List<T> solve(TreeNode<T> root) {
-        List<T> toRet = new ArrayList<>();
+      public List<Integer> solve(TreeNode root) {
+        List<Integer> toRet = new ArrayList<>();
         if (root == null) return toRet;
         toRet.add(root.val);
         toRet.addAll(solve(root.left));
@@ -241,10 +241,10 @@ public class TreeNode<T> {
     ITERATIVE_SOLUTION_WITH_ROOT_STORED() {
 
       @Override
-      public <T> List<T> solve(TreeNode<T> root) {
-        List<T> toRet = new ArrayList<>();
+      public List<Integer> solve(TreeNode root) {
+        List<Integer> toRet = new ArrayList<>();
         if (root == null) return toRet;
-        Stack<TreeNode<T>> stack = new Stack<>();
+        Stack<TreeNode> stack = new Stack<>();
         do {
           while (root != null) {
             toRet.add(root.val);
@@ -264,10 +264,10 @@ public class TreeNode<T> {
     ITERATIVE_SOLUTION_WITH_BOTH_CHILDREN_STORED() {
 
       @Override
-      public <T> List<T> solve(TreeNode<T> root) {
-        List<T> toRet = new ArrayList<>();
+      public List<Integer> solve(TreeNode root) {
+        List<Integer> toRet = new ArrayList<>();
         if (root == null) return toRet;
-        Stack<TreeNode<T>> stack = new Stack<>();
+        Stack<TreeNode> stack = new Stack<>();
         stack.push(root);
         while (!stack.isEmpty()) {
           root = stack.pop();
@@ -287,10 +287,10 @@ public class TreeNode<T> {
     ITERATIVE_SOLUTION_WITH_RIGHT_CHILD_STORED() {
 
       @Override
-      public <T> List<T> solve(TreeNode<T> root) {
-        List<T> toRet = new ArrayList<>();
+      public List<Integer> solve(TreeNode root) {
+        List<Integer> toRet = new ArrayList<>();
         if (root == null) return toRet;
-        Stack<TreeNode<T>> rights = new Stack<>();
+        Stack<TreeNode> rights = new Stack<>();
         while (root != null) {
           if (root.right != null) rights.push(root.right);
           toRet.add(root.val);
@@ -302,7 +302,7 @@ public class TreeNode<T> {
 
     };
 
-    public abstract <T> List<T> solve(TreeNode<T> root);
+    public abstract List<Integer> solve(TreeNode root);
   }
 
   public enum InOrderSol {
@@ -313,8 +313,8 @@ public class TreeNode<T> {
     RECURSIVE_SOLUTION() {
 
       @Override
-      public <T> List<T> solve(TreeNode<T> root) {
-        List<T> toRet = new ArrayList<>();
+      public List<Integer> solve(TreeNode root) {
+        List<Integer> toRet = new ArrayList<>();
         if (root == null) return toRet;
         toRet.addAll(solve(root.left));
         toRet.add(root.val);
@@ -327,9 +327,9 @@ public class TreeNode<T> {
     ITERATIVE_SOLUTION() {
 
       @Override
-      public <T> List<T> solve(TreeNode<T> root) {
-        List<T> result = new ArrayList<>();
-        Stack<TreeNode<T>> stack = new Stack<>();
+      public List<Integer> solve(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
         do {
           while (root != null) {
             stack.push(root);
@@ -344,7 +344,7 @@ public class TreeNode<T> {
 
     };
 
-    public abstract <T> List<T> solve(TreeNode<T> root);
+    public abstract List<Integer> solve(TreeNode root);
 
   }
 
@@ -353,8 +353,8 @@ public class TreeNode<T> {
     RECURSIVE_SOLUTION() {
 
       @Override
-      public <T> List<T> solve(TreeNode<T> root) {
-        List<T> toRet = new ArrayList<>();
+      public List<Integer> solve(TreeNode root) {
+        List<Integer> toRet = new ArrayList<>();
         if (root == null) return toRet;
         toRet.addAll(solve(root.left));
         toRet.addAll(solve(root.right));
@@ -372,11 +372,11 @@ public class TreeNode<T> {
     ITERATIVE_SOLUTION() {
 
       @Override
-      public <T> List<T> solve(TreeNode<T> root) {
-        List<T> toRet = new ArrayList<>();
+      public List<Integer> solve(TreeNode root) {
+        List<Integer> toRet = new ArrayList<>();
         if (root == null) return toRet;
-        Stack<TreeNode<T>> stack = new Stack<>();
-        TreeNode<T> pre = null;
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode pre = null;
         do {
           while (root != null && pre != root) {
             stack.push(root);
@@ -402,9 +402,9 @@ public class TreeNode<T> {
     REVERSED_PREORDER_SOLUTION() {
 
       @Override
-      public <T> List<T> solve(TreeNode<T> root) {
-        LinkedList<T> toRet = new LinkedList<>();
-        Stack<TreeNode<T>> stack = new Stack<>();
+      public List<Integer> solve(TreeNode root) {
+        LinkedList<Integer> toRet = new LinkedList<>();
+        Stack<TreeNode> stack = new Stack<>();
         do {
           if (root != null) {
             stack.push(root);
@@ -420,14 +420,14 @@ public class TreeNode<T> {
 
     };
 
-    public abstract <T> List<T> solve(TreeNode<T> root);
+    public abstract List<Integer> solve(TreeNode root);
 
   }
 
   @SuppressWarnings("serial")
   public static class TestTreeNode {
 
-    private TreeNode<Integer> root = new TestData().root;
+    private TreeNode root = new TestData().root;
     private int depth = 4;
 
     private List<List<Integer>> levelOrder = new ArrayList<List<Integer>>() {

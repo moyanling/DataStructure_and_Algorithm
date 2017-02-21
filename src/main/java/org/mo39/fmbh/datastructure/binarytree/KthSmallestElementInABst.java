@@ -30,13 +30,13 @@ public enum KthSmallestElementInABst {
   HEAP_SOLUTION {
 
     @Override
-    public int solve(TreeNode<Integer> root, int k) {
+    public int solve(TreeNode root, int k) {
       PriorityQueue<Integer> q = new PriorityQueue<>((n1, n2) -> n2 - n1);
       recur(root, q, k);
       return q.poll();
     }
 
-    private void recur(TreeNode<Integer> root, PriorityQueue<Integer> q, int k) {
+    private void recur(TreeNode root, PriorityQueue<Integer> q, int k) {
       if (root == null) return;
       q.add(root.val);
       if (q.size() > k) {
@@ -53,13 +53,13 @@ public enum KthSmallestElementInABst {
     private int count, result;
 
     @Override
-    public int solve(TreeNode<Integer> root, int k) {
+    public int solve(TreeNode root, int k) {
       count = 0;
       recur(root, k);
       return result;
     }
 
-    private void recur(TreeNode<Integer> root, int k) {
+    private void recur(TreeNode root, int k) {
       if (root == null) return;
       recur(root.left, k);
       if (++count == k) result = root.val;
@@ -68,6 +68,6 @@ public enum KthSmallestElementInABst {
 
   };
 
-  public abstract int solve(TreeNode<Integer> root, int k);
+  public abstract int solve(TreeNode root, int k);
 
 }

@@ -89,6 +89,7 @@ Data Structures:
 	design
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/design/DesignHitCounter.java">DesignHitCounter</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/design/DesignTicTacToe.java">DesignTicTacToe</a>
+		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/design/EncodeAndDecodeStrings.java">EncodeAndDecodeStrings</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/design/Flatten2DVector.java">Flatten2DVector</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/design/FlattenNestedListIterator.java">FlattenNestedListIterator</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/design/InsertDeleteGetrandomO1.java">InsertDeleteGetrandomO1</a>
@@ -107,11 +108,14 @@ Data Structures:
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/binarytree/BinaryTreeRightSideView.java">BinaryTreeRightSideView</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/binarytree/BinaryTreeUpsideDown.java">BinaryTreeUpsideDown</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/binarytree/BinaryTreeVerticalOrderTraversal.java">BinaryTreeVerticalOrderTraversal</a>
+		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/binarytree/BinaryTreeZigzagLevelOrderTraversal.java">BinaryTreeZigzagLevelOrderTraversal</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/binarytree/BST.java">BST</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/binarytree/BSTIterator.java">BSTIterator</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/binarytree/ConvertSortedArrayToBinarySearchTree.java">ConvertSortedArrayToBinarySearchTree</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/binarytree/ConvertSortedListToBinarySearchTree.java">ConvertSortedListToBinarySearchTree</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/binarytree/CountUnivalueSubtrees.java">CountUnivalueSubtrees</a>
+		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/binarytree/FindBottomLeftTreeValue.java">FindBottomLeftTreeValue</a>
+		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/binarytree/FindLargestValueInEachTreeRow.java">FindLargestValueInEachTreeRow</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/binarytree/FindLeavesOfBinaryTree.java">FindLeavesOfBinaryTree</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/binarytree/FindModeInBinarySearchTree.java">FindModeInBinarySearchTree</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/binarytree/FlattenBinaryTreeToLinkedList.java">FlattenBinaryTreeToLinkedList</a>
@@ -144,6 +148,7 @@ Data Structures:
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/heap/ListHeap.java">ListHeap</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/heap/TopKFrequentElements.java">TopKFrequentElements</a>
 	hashmap
+		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/hashmap/HIndex.java">HIndex</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/hashmap/KeyboardRow.java">KeyboardRow</a>
 	queue
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/datastructure/queue/ImplementQueueUsingStacks.java">ImplementQueueUsingStacks</a>
@@ -151,7 +156,9 @@ Data Structures:
 
 Algorithms:
 	binarysearch
+		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/binarysearch/HIndexII.java">HIndexII</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/binarysearch/SearchForARange.java">SearchForARange</a>
+		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/binarysearch/SearchInRotatedSortedArray.java">SearchInRotatedSortedArray</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/binarysearch/Sqrtx.java">Sqrtx</a>
 	slidingwindow
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/slidingwindow/FindAllAnagramsInAString.java">FindAllAnagramsInAString</a>
@@ -196,6 +203,7 @@ Algorithms:
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/dynamicprogramming/Triangle.java">Triangle</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/dynamicprogramming/UglyNumberII.java">UglyNumberII</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/dynamicprogramming/UniqueBinarySearchTrees.java">UniqueBinarySearchTrees</a>
+		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/dynamicprogramming/UniqueBinarySearchTreesII.java">UniqueBinarySearchTreesII</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/dynamicprogramming/UniquePaths.java">UniquePaths</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/dynamicprogramming/UniquePathsII.java">UniquePathsII</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/dynamicprogramming/WallsAndGates.java">WallsAndGates</a>
@@ -230,6 +238,7 @@ Algorithms:
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/sort/WiggleSort.java">WiggleSort</a>
 	math
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/math/ArrangingCoins.java">ArrangingCoins</a>
+		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/math/Base7.java">Base7</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/math/ConstructTheRectangle.java">ConstructTheRectangle</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/math/CountPrimes.java">CountPrimes</a>
 		- <a href="https://github.com/chenjihan/DataStructure_and_Algorithm/blob/master/src/main/java/org/mo39/fmbh/algorithm/math/ExcelSheetColumnTitle.java">ExcelSheetColumnTitle</a>

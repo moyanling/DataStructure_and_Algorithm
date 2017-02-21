@@ -55,14 +55,14 @@ public enum MostFrequentSubtreeSum {
     int max;
 
     @Override
-    public int[] solve(TreeNode<Integer> root) {
+    public int[] solve(TreeNode root) {
       max = 0;
       Map<Integer, Integer> map = new HashMap<>();
       recur(root, map);
       return map.keySet().stream().filter(key -> map.get(key) == max).mapToInt(i -> i).toArray();
     }
 
-    int recur(TreeNode<Integer> root, Map<Integer, Integer> map) {
+    int recur(TreeNode root, Map<Integer, Integer> map) {
       if (root == null) return 0;
       int sum = root.val + recur(root.left, map) + recur(root.right, map);
       map.put(sum, map.getOrDefault(sum, 0) + 1);
@@ -72,6 +72,6 @@ public enum MostFrequentSubtreeSum {
 
   };
 
-  public abstract int[] solve(TreeNode<Integer> root);
+  public abstract int[] solve(TreeNode root);
 
 }

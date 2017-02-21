@@ -33,12 +33,12 @@ public enum SumOfLeftLeaves {
     private int sum;
 
     @Override
-    public int solve(TreeNode<Integer> root) {
+    public int solve(TreeNode root) {
       traverse(root);
       return sum;
     }
 
-    private void traverse(TreeNode<Integer> root) {
+    private void traverse(TreeNode root) {
       if (root == null) return;
       if (root.left != null && root.left.left == null && root.left.right == null) {
         sum += root.left.val;
@@ -51,12 +51,12 @@ public enum SumOfLeftLeaves {
 
   };
 
-  public abstract int solve(TreeNode<Integer> root);
+  public abstract int solve(TreeNode root);
 
   public static class TestSumOfLeftLeaves {
 
     private int expected = 5;
-    private TreeNode<Integer> root = new TestData().root;
+    private TreeNode root = new TestData().root;
 
     @Test
     public void testSolutions() {

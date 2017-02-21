@@ -62,10 +62,10 @@ public enum BinaryTreeUpsideDown {
   RECURSIVE_SOLUTION_0 {
 
     @Override
-    public <T> TreeNode<T> solve(TreeNode<T> root) {
+    public TreeNode solve(TreeNode root) {
       if (root == null || root.left == null) return root;
       root.left = solve(root.left);
-      TreeNode<T> rightMost = root.left, left = root.left;
+      TreeNode rightMost = root.left, left = root.left;
       while (rightMost.right != null) {
         rightMost = rightMost.right;
       }
@@ -81,9 +81,9 @@ public enum BinaryTreeUpsideDown {
   RECURSIVE_SOLUTION_1 {
 
     @Override
-    public <T> TreeNode<T> solve(TreeNode<T> root) {
+    public TreeNode solve(TreeNode root) {
       if (root == null || root.left == null) { return root; }
-      TreeNode<T> newRoot = solve(root.left);
+      TreeNode newRoot = solve(root.left);
       root.left.left = root.right; // node 2 left children
       root.left.right = root; // node 2 right children
       root.left = null;
@@ -96,8 +96,8 @@ public enum BinaryTreeUpsideDown {
   ITERATIVE_SOLUTION {
 
     @Override
-    public <T> TreeNode<T> solve(TreeNode<T> root) {
-      TreeNode<T> curr = root, next = null, temp = null, prev = null;
+    public TreeNode solve(TreeNode root) {
+      TreeNode curr = root, next = null, temp = null, prev = null;
       while (curr != null) {
         next = curr.left;
 
@@ -114,24 +114,24 @@ public enum BinaryTreeUpsideDown {
 
   };
 
-  public abstract <T> TreeNode<T> solve(TreeNode<T> root);
+  public abstract TreeNode solve(TreeNode root);
 
   public static class TestBinaryTreeUpsideDown {
 
-    private TreeNode<Integer> root = new TreeNode<>(1);
-    private TreeNode<Integer> expected = new TreeNode<>(4);
+    private TreeNode root = new TreeNode(1);
+    private TreeNode expected = new TreeNode(4);
 
     @Before
     public void before() {
-      root.left = new TreeNode<>(2);
-      root.right = new TreeNode<>(3);
-      root.left.left = new TreeNode<>(4);
-      root.left.right = new TreeNode<>(5);
+      root.left = new TreeNode(2);
+      root.right = new TreeNode(3);
+      root.left.left = new TreeNode(4);
+      root.left.right = new TreeNode(5);
       // ---------
-      expected.left = new TreeNode<>(5);
-      expected.right = new TreeNode<>(2);
-      expected.right.left = new TreeNode<>(3);
-      expected.right.right = new TreeNode<>(1);
+      expected.left = new TreeNode(5);
+      expected.right = new TreeNode(2);
+      expected.right.left = new TreeNode(3);
+      expected.right.right = new TreeNode(1);
     }
 
     @Test

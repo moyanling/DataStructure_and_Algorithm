@@ -52,12 +52,12 @@ public enum PathSumIII {
     private int count = 0;
 
     @Override
-    public int solve(TreeNode<Integer> root, int sum) {
+    public int solve(TreeNode root, int sum) {
       recur(root, sum, new ArrayList<>());
       return count;
     }
 
-    private void recur(TreeNode<Integer> root, int target, List<Integer> path) {
+    private void recur(TreeNode root, int target, List<Integer> path) {
       List<Integer> right = new ArrayList<>();
       List<Integer> left = new ArrayList<>();
       left.addAll(path);
@@ -72,19 +72,19 @@ public enum PathSumIII {
 
   };
 
-  public abstract int solve(TreeNode<Integer> root, int sum);
+  public abstract int solve(TreeNode root, int sum);
 
   public static class TestPathSumIII {
 
-    TreeNode<Integer> root = new TreeNode<>(10);
-    TreeNode<Integer> node1 = new TreeNode<>(5);
-    TreeNode<Integer> node2 = new TreeNode<>(-3);
-    TreeNode<Integer> node3 = new TreeNode<>(3);
-    TreeNode<Integer> node4 = new TreeNode<>(2);
-    TreeNode<Integer> node5 = new TreeNode<>(11);
-    TreeNode<Integer> node6 = new TreeNode<>(3);
-    TreeNode<Integer> node7 = new TreeNode<>(-2);
-    TreeNode<Integer> node8 = new TreeNode<>(1);
+    TreeNode root = new TreeNode(10);
+    TreeNode node1 = new TreeNode(5);
+    TreeNode node2 = new TreeNode(-3);
+    TreeNode node3 = new TreeNode(3);
+    TreeNode node4 = new TreeNode(2);
+    TreeNode node5 = new TreeNode(11);
+    TreeNode node6 = new TreeNode(3);
+    TreeNode node7 = new TreeNode(-2);
+    TreeNode node8 = new TreeNode(1);
 
     // private int expected = 3;
 

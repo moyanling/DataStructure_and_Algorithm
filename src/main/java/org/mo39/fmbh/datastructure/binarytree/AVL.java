@@ -2,9 +2,9 @@ package org.mo39.fmbh.datastructure.binarytree;
 
 import java.util.Comparator;
 
-public class AVL<T> extends BST<T> {
+public class AVL extends BST {
 
-  protected AVL(Comparator<T> comparator) {
+  protected AVL(Comparator<Integer> comparator) {
     super(comparator);
   }
 
@@ -13,8 +13,8 @@ public class AVL<T> extends BST<T> {
    *
    * @return a new BST.
    */
-  public static <T> AVL<T> init(Comparator<T> comparator) {
-    return new AVL<T>(comparator);
+  public static AVL init(Comparator<Integer> comparator) {
+    return new AVL(comparator);
   }
 
   /**
@@ -22,17 +22,17 @@ public class AVL<T> extends BST<T> {
    *
    * @return a new BST.
    */
-  public static <T extends Comparable<T>> AVL<T> init() {
-    return new AVL<T>((o1, o2) -> o1.compareTo(o2));
+  public static AVL init() {
+    return new AVL((o1, o2) -> o1.compareTo(o2));
   }
 
   @Override
-  public void insert(T data) {
+  public void insert(int data) {
     // TODO
   }
 
   @Override
-  public boolean delete(T data) {
+  public boolean delete(int data) {
     // TODO
     return false;
   }

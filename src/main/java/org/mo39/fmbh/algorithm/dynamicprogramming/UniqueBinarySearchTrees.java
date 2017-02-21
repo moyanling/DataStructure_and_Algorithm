@@ -50,11 +50,9 @@ public enum UniqueBinarySearchTrees {
    */
   BOTTOM_UP_METHOD {
 
-    private int[] memo;
-
     @Override
     public int solve(int n) {
-      memo = new int[n + 1];
+      int[] memo = new int[n + 1];
       memo[0] = 1;
       for (int i = 1; i < n + 1; i++) {
         for (int j = 0; j < i / 2; j++) {
@@ -72,7 +70,7 @@ public enum UniqueBinarySearchTrees {
   public static class TestUniqueBinarySearchTrees {
 
     @Test
-    public void testBottomUpMethod() {
+    public void testSolutions() {
       Assert.assertEquals(42, RECURSIVE_SOLUTION.solve(5));
       Assert.assertEquals(42, BOTTOM_UP_METHOD.solve(5));
     }

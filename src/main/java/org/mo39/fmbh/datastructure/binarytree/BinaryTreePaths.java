@@ -40,17 +40,17 @@ public enum BinaryTreePaths {
   RECURSIVE_SOLUTION {
 
     @Override
-    public <T> List<List<T>> solve(TreeNode<T> root) {
-      List<List<T>> toRet = new ArrayList<>();
+    public List<List<Integer>> solve(TreeNode root) {
+      List<List<Integer>> toRet = new ArrayList<>();
       if (root.left == null && root.right == null) {
-        List<T> leave = new ArrayList<>();
+        List<Integer> leave = new ArrayList<>();
         leave.add(root.val);
         toRet.add(leave);
         return toRet;
       }
       if (root.left != null) toRet.addAll(solve(root.left));
       if (root.right != null) toRet.addAll(solve(root.right));
-      for (List<T> path : toRet) {
+      for (List<Integer> path : toRet) {
         path.add(0, root.val);
       }
       return toRet;
@@ -58,11 +58,11 @@ public enum BinaryTreePaths {
 
   };
 
-  public abstract <T> List<List<T>> solve(TreeNode<T> root);
+  public abstract List<List<Integer>> solve(TreeNode root);
 
   public static class TestBinaryTreePaths {
 
-    private TreeNode<Integer> root = new TestData().root;
+    private TreeNode root = new TestData().root;
     private List<List<Integer>> expected = Lists.newArrayList();
 
     @Before

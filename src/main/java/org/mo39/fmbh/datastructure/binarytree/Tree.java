@@ -8,13 +8,14 @@ import java.util.function.Consumer;
  * 
  * @author Jihan Chen
  *
- * @param <T>
+ * @param
  */
-public abstract class Tree<T> {
+public abstract class Tree {
 
   protected int size;
-  protected TreeNode<T> root;
-  protected Comparator<T> comparator;
+  protected TreeNode root;
+
+  protected Comparator<Integer> comparator;
 
   /**
    * Return the size of this Tree.
@@ -30,20 +31,20 @@ public abstract class Tree<T> {
    *
    * @return
    */
-  public TreeNode<T> getRoot() {
+  public TreeNode getRoot() {
     return root;
   }
 
-  public abstract TreeNode<T> search(T key);
+  public abstract TreeNode search(int key);
 
-  public abstract void insert(T data);
+  public abstract void insert(int data);
 
-  public abstract boolean delete(T key);
+  public abstract boolean delete(int key);
 
-  public abstract TreeNode<T> getMin();
+  public abstract TreeNode getMin();
 
-  public abstract TreeNode<T> getMax();
+  public abstract TreeNode getMax();
 
-  public abstract TreeNode<T> trace(T key, Consumer<TreeNode<T>> consumer);
+  public abstract TreeNode trace(int key, Consumer<TreeNode> consumer);
 
 }

@@ -27,16 +27,15 @@ public enum InorderSuccessorInBST {
 
   RECURSIVE_BRUTE_FORCE {
 
-    TreeNode<?> result;
+    TreeNode result;
 
-    @SuppressWarnings("unchecked")
     @Override
-    public <T> TreeNode<T> solve(TreeNode<T> root, TreeNode<T> p) {
+    public <T> TreeNode solve(TreeNode root, TreeNode p) {
       recur(root, p, new ArrayList<>());
-      return (TreeNode<T>) result;
+      return result;
     }
 
-    private <T> void recur(TreeNode<T> root, TreeNode<T> p, List<TreeNode<T>> list) {
+    private <T> void recur(TreeNode root, TreeNode p, List<TreeNode> list) {
       if (root == null) return;
       recur(root.left, p, list);
       list.add(root);
@@ -53,9 +52,9 @@ public enum InorderSuccessorInBST {
 
 
     @Override
-    public <T> TreeNode<T> solve(TreeNode<T> root, TreeNode<T> p) {
-      LinkedList<TreeNode<T>> result = new LinkedList<>();
-      Stack<TreeNode<T>> stack = new Stack<>();
+    public <T> TreeNode solve(TreeNode root, TreeNode p) {
+      LinkedList<TreeNode> result = new LinkedList<>();
+      Stack<TreeNode> stack = new Stack<>();
       do {
         while (root != null) {
           stack.push(root);
@@ -74,23 +73,23 @@ public enum InorderSuccessorInBST {
   SOLUTION {
 
     @Override
-    public <T> TreeNode<T> solve(TreeNode<T> root, TreeNode<T> p) {
+    public <T> TreeNode solve(TreeNode root, TreeNode p) {
       // TODO https://discuss.leetcode.com/topic/25076/share-my-java-recursive-solution
       return null;
     }
 
   };
 
-  public abstract <T> TreeNode<T> solve(TreeNode<T> root, TreeNode<T> p);
+  public abstract <T> TreeNode solve(TreeNode root, TreeNode p);
 
   public static class TestInorderSuccessorInBST {
 
-    private TreeNode<Integer> root = new TreeNode<>(0);
-    private TreeNode<Integer> p = new TreeNode<>(3);
+    private TreeNode root = new TreeNode(0);
+    private TreeNode p = new TreeNode(3);
 
     {
-      root.left = new TreeNode<>(1);
-      root.right = new TreeNode<>(2);
+      root.left = new TreeNode(1);
+      root.right = new TreeNode(2);
       root.left.right = p;
     }
 

@@ -44,13 +44,13 @@ public enum PathSumII {
   SOLUTION {
 
     @Override
-    public List<List<Integer>> solve(TreeNode<Integer> root, int sum) {
+    public List<List<Integer>> solve(TreeNode root, int sum) {
       List<List<Integer>> result = new ArrayList<>();
       recur(result, new LinkedList<>(), root, 0, sum);
       return result;
     }
 
-    void recur(List<List<Integer>> result, LinkedList<Integer> cur, TreeNode<Integer> root, int sum,
+    void recur(List<List<Integer>> result, LinkedList<Integer> cur, TreeNode root, int sum,
         int target) {
       if (root == null) return;
       if (root.left == null && root.right == null) {
@@ -71,6 +71,6 @@ public enum PathSumII {
 
   };
 
-  public abstract List<List<Integer>> solve(TreeNode<Integer> root, int sum);
+  public abstract List<List<Integer>> solve(TreeNode root, int sum);
 
 }

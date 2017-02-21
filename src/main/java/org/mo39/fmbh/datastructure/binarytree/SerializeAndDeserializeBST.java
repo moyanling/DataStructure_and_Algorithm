@@ -38,32 +38,32 @@ public enum SerializeAndDeserializeBST {
   SOLUTION {
 
     @Override
-    public String serialize(TreeNode<Integer> root) {
+    public String serialize(TreeNode root) {
       return null;
     }
 
     @Override
-    public TreeNode<Integer> deserialize(String data) {
+    public TreeNode deserialize(String data) {
       return null;
     }
 
   };
 
-  public abstract String serialize(TreeNode<Integer> root);
+  public abstract String serialize(TreeNode root);
 
-  public abstract TreeNode<Integer> deserialize(String data);
+  public abstract TreeNode deserialize(String data);
 
   public static class TestSerializeAndDeserializeBST {
 
-    private TreeNode<Integer> root = new TreeNode<>(5);
+    private TreeNode root = new TreeNode(5);
 
     @Before
     public void before() {
-      root.left = new TreeNode<>(3);
-      root.right = new TreeNode<>(6);
-      root.left.left = new TreeNode<>(2);
-      root.left.right = new TreeNode<>(4);
-      root.left.left.left = new TreeNode<>(1);
+      root.left = new TreeNode(3);
+      root.right = new TreeNode(6);
+      root.left.left = new TreeNode(2);
+      root.left.right = new TreeNode(4);
+      root.left.left.left = new TreeNode(1);
     }
 
     @Test

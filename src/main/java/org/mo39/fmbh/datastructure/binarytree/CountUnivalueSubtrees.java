@@ -38,7 +38,7 @@ public enum CountUnivalueSubtrees {
     int count;
 
     @Override
-    public int solve(TreeNode<Integer> root) {
+    public int solve(TreeNode root) {
       count = 0;
       if (root == null) return 0;
       recur(root);
@@ -46,7 +46,7 @@ public enum CountUnivalueSubtrees {
     }
 
 
-    private boolean recur(TreeNode<Integer> root) {
+    private boolean recur(TreeNode root) {
       boolean result = true;
       if (root.left != null) {
         result &= root.left.val == root.val;
@@ -62,19 +62,19 @@ public enum CountUnivalueSubtrees {
 
   };
 
-  public abstract int solve(TreeNode<Integer> root);
+  public abstract int solve(TreeNode root);
 
   public static class TestCountUnivalueSubtrees {
 
-    private TreeNode<Integer> root = new TreeNode<>(5);
+    private TreeNode root = new TreeNode(5);
     private int expected = 4;
 
     {
-      root.left = new TreeNode<>(1);
-      root.right = new TreeNode<>(5);
-      root.left.left = new TreeNode<>(5);
-      root.left.right = new TreeNode<>(5);
-      root.right.right = new TreeNode<>(5);
+      root.left = new TreeNode(1);
+      root.right = new TreeNode(5);
+      root.left.left = new TreeNode(5);
+      root.left.right = new TreeNode(5);
+      root.right.right = new TreeNode(5);
     }
 
     @Test
