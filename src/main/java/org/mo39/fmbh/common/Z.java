@@ -33,6 +33,10 @@ public class Z {
     print(Arrays.toString(arr));
   }
 
+  public static void print(double[] arr) {
+    print(Arrays.toString(arr));
+  }
+
   public static <T> void print(ListNode<T> head) {
     while (head != null) {
       printnb(head + " -> ");
@@ -59,6 +63,12 @@ public class Z {
   }
 
   public static void print(boolean[][] matrix) {
+    Z.print("[");
+    Arrays.stream(matrix).forEach(arr -> Z.print(" " + Arrays.toString(arr) + ","));
+    Z.print("]");
+  }
+
+  public static void print(double[][] matrix) {
     Z.print("[");
     Arrays.stream(matrix).forEach(arr -> Z.print(" " + Arrays.toString(arr) + ","));
     Z.print("]");
