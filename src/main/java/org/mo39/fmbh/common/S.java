@@ -32,8 +32,8 @@ public class S {
   };
 
   public static int randomPartition(int[] arr, int start, int end) {
-    int pivot = arr[ThreadLocalRandom.current().nextInt(start, end + 1)];
-    return partition(arr, start, end, pivot);
+    Z.swap(arr, end, ThreadLocalRandom.current().nextInt(start, end + 1));
+    return partition(arr, start, end, arr[end]);
   }
 
   public static int partition(int[] arr, int start, int end, int pivot) {

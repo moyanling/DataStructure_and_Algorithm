@@ -1,4 +1,4 @@
-package org.mo39.fmbh.datastructure.hashmap;
+package org.mo39.fmbh.datastructure.hash;
 
 import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.LEETCODE;
 

@@ -101,11 +101,53 @@ public class Z {
    * @param i
    * @param j
    */
-  public static void swap(int[] arr, int i, int j) {
+  public static void swap(char[] arr, int i, int j) {
     if (i == j) return;
-    int temp = arr[i];
+    char temp = arr[i];
     arr[i] = arr[j];
     arr[j] = temp;
+  }
+
+  /**
+   * Helper function that swaps two elements at position i and j in an array.
+   *
+   * @param arr
+   * @param i
+   * @param j
+   */
+  public static void swap(int[] arr, int i, int j) {
+    if (i == j) return;
+    arr[i] = arr[i] ^ arr[j]; // now a is 6 and b is 4
+    arr[j] = arr[i] ^ arr[j]; // now a is 6 but b is 2 (original value of a)
+    arr[i] = arr[i] ^ arr[j];
+  }
+
+  /**
+   * Helper function to reverse the array of a certain range. Inclusive start and exclusive end.
+   * 
+   * @param arr
+   * @param start
+   * @param end
+   */
+  public static void reverse(int[] arr, int start, int end) {
+    if (start == end) return;
+    for (int i = start; i < (start + end) / 2; i++) {
+      swap(arr, i, end - (i - start) - 1);
+    }
+  }
+
+  /**
+   * Helper function to reverse the array of a certain range. Inclusive start and exclusive end.
+   * 
+   * @param arr
+   * @param start
+   * @param end
+   */
+  public static void reverse(char[] arr, int start, int end) {
+    if (start == end) return;
+    for (int i = start; i < (start + end) / 2; i++) {
+      swap(arr, i, end - (i - start) - 1);
+    }
   }
 
   /**

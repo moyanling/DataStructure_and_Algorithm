@@ -18,7 +18,7 @@ public class Constants {
       //@formatter:off
         p ->
           Files.isRegularFile(p)
-          && p.toString().matches(".*(datastructure|algorithm).*")
+          && p.toString().matches(".*\\\\(datastructure|algorithm)\\\\.*")
           && p.getFileName().toString().contains(new String("java"))
           && !p.getFileName().toString().contains(new String("Problem"))
           && !p.getFileName().toString().contains(new String("package-info")
