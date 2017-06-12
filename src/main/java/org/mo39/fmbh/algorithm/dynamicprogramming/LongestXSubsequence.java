@@ -23,24 +23,24 @@ public enum LongestXSubsequence {
 
     @Override
     public <T> List<T> solve(T[] nums, BiPredicate<T, T> p) {
-      int[] count = new int[nums.length], pre = new int[nums.length];
+      int[] memo = new int[nums.length], pre = new int[nums.length];
       int max = 0, index = -1;
       for (int i = 0; i < nums.length; i++) {
-        count[i] = 1;
+        memo[i] = 1;
         pre[i] = -1;
         for (int j = i - 1; j >= 0; j--) {
-          if (p.test(nums[j], nums[i]) && 1 + count[j] > count[i]) {
-            count[i] = count[j] + 1;
+          if (p.test(nums[j], nums[i]) && 1 + memo[j] > memo[i]) {
+            memo[i] = memo[j] + 1;
             pre[i] = j;
           }
         }
-        if (count[i] > max) {
-          max = count[i];
+        if (memo[i] > max) {
+          max = memo[i];
           index = i;
         }
       }
       LinkedList<T> result = new LinkedList<>();
-      for (; index != -1; result.add(0, nums[index]), index = pre[index]) {
+      for (; index != -1; result.addFirst(nums[index]), index = pre[index]) {
       }
       return result;
     }
@@ -76,8 +76,8 @@ public enum LongestXSubsequence {
 
     {
       lds = new TestSuite<>();
-      lds.arr = new Integer[] {9, 54, 108, 90, 180, 1, 360, 4, 2, 720};
-      lds.expected = new ArrayList<>(Arrays.asList(9, 90, 180, 360, 720));
+      lds.arr = new Integer[] {2, 3, 4, 9, 8};
+      lds.expected = new ArrayList<>(Arrays.asList(2, 4, 8));
       lds.p = (i1, i2) -> i2 % i1 == 0;
     }
 
