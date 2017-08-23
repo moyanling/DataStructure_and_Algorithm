@@ -4,6 +4,7 @@ import static org.mo39.fmbh.common.Constants.IS_PROBLEM;
 import static org.mo39.fmbh.common.Constants.PACKAGE_PREFIX;
 import static org.mo39.fmbh.common.Constants.SRC_ROOT;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,12 +32,12 @@ public class Leetdoc {
   private static String getFullyQualifiedName(Path path) {
     String p = path.toString();
     String dir = p.substring(p.lastIndexOf(PACKAGE_PREFIX), p.length() - 5);
-    return dir.replace('\\', '.');
+    return dir.replace(File.separatorChar, '.');
   }
 
   private static String getClassName(Path path) {
     String p = path.toString();
-    return p.substring(p.lastIndexOf("\\") + 1, p.length() - 5);
+    return p.substring(p.lastIndexOf(File.separator) + 1, p.length() - 5);
   }
 
   private static String linkOf(String name) {
@@ -78,7 +79,8 @@ public class Leetdoc {
       return false;
     }
     ProblemSource ps = klass.getAnnotation(ProblemSource.class);
-    if (ps == null || ps.value().length != 1) return false;
+    if (ps == null || ps.value().length != 1)
+      return false;
     return Arrays.asList(ps.value()).contains(SourceValue.LEETCODE);
   });
 
@@ -86,14 +88,16 @@ public class Leetdoc {
     String name = getClassName(path);
     String link = linkOf(name);
     List<String> lines = readLines(path);
-    if (lines == null) return;
+    if (lines == null)
+      return;
     int index = -1;
     // First move down, find the line of class definition.
     while (!lines.get(++index).matches(".*(class|enum) " + name + ".* \\{")) {
     }
     // Already has a comment. Skipped.
     for (int i = 0; i < index; i++) {
-      if (lines.get(i).contains("/**")) return;
+      if (lines.get(i).contains("/**"))
+        return;
     }
     // Then move up, skip annotations.
     while (lines.get(--index).trim().length() > 0) {
@@ -162,7 +166,8 @@ public class Leetdoc {
     public static final int LENGTH_BOUND = 75;
 
     private static Function<String, String> mapper = str -> {
-      if (str.length() < LENGTH_BOUND) return " * " + str;
+      if (str.length() < LENGTH_BOUND)
+        return " * " + str;
       char[] arr = str.toCharArray();
       StringBuilder sb = new StringBuilder(" * ");
       int i = -1, len = 0;
@@ -170,7 +175,8 @@ public class Leetdoc {
         if (++len >= LENGTH_BOUND && Character.isSpaceChar(arr[i])) {
           len = 0;
           sb.append("\r\n * ");
-        } else sb.append(arr[i]);
+        } else
+          sb.append(arr[i]);
       }
       return sb.toString();
     };
