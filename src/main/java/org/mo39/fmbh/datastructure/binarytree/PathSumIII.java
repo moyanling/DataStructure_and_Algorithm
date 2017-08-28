@@ -2,9 +2,9 @@ package org.mo39.fmbh.datastructure.binarytree;
 
 import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.LEETCODE;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mo39.fmbh.common.annotation.ProblemSource;
@@ -47,28 +47,49 @@ import org.mo39.fmbh.common.annotation.ProblemSource;
 @ProblemSource(LEETCODE)
 public enum PathSumIII {
 
+  /**
+   * This one is so bad actually. Almost TLE.
+   */
   SOLUTION {
 
     private int count = 0;
 
     @Override
     public int solve(TreeNode root, int sum) {
-      recur(root, sum, new ArrayList<>());
+      recur(root, sum, new LinkedList<>());
       return count;
     }
 
-    private void recur(TreeNode root, int target, List<Integer> path) {
-      List<Integer> right = new ArrayList<>();
-      List<Integer> left = new ArrayList<>();
-      left.addAll(path);
-      if (left.size() != 0) left.add(root.val);
-      else left.add(root.val);
-      right.addAll(left);
-      if (root.left != null) recur(root.left, target, left);
-      if (root.right != null) recur(root.right, target, right);
-      if (root.left == null && root.right == null) {
+    void recur(TreeNode root, int target, LinkedList<Integer> path) {
+      if (root == null) return;
+      path.add(root.val);
+      count(path, target);
+      recur(root.left, target, path);
+      recur(root.right, target, path);
+      path.removeLast();
+    }
+
+    void count(LinkedList<Integer> path, int target) {
+      if (path.getLast() == target) count++;
+      if (path.size() < 2) return;
+      path.set(path.size() - 1, path.get(path.size() - 2) + path.getLast());
+      if (path.getLast() == target) count++;
+      for (int i = 0; i < path.size() - 1; i++) {
+        if (i < path.size() - 2 && path.getLast() - path.get(i) == target) count++;
       }
     }
+
+  },
+
+  SOLUTION_1 {
+
+    int count = 0;
+
+    @Override
+    public int solve(TreeNode root, int sum) {
+      return 0;
+    }
+
 
   };
 
@@ -76,33 +97,35 @@ public enum PathSumIII {
 
   public static class TestPathSumIII {
 
-    TreeNode root = new TreeNode(10);
-    TreeNode node1 = new TreeNode(5);
-    TreeNode node2 = new TreeNode(-3);
-    TreeNode node3 = new TreeNode(3);
-    TreeNode node4 = new TreeNode(2);
-    TreeNode node5 = new TreeNode(11);
-    TreeNode node6 = new TreeNode(3);
-    TreeNode node7 = new TreeNode(-2);
+    TreeNode root = new TreeNode(5);
+    TreeNode node1 = new TreeNode(4);
+    TreeNode node2 = new TreeNode(8);
+    TreeNode node3 = new TreeNode(11);
+    TreeNode node4 = new TreeNode(7);
+    TreeNode node5 = new TreeNode(2);
+    TreeNode node6 = new TreeNode(13);
+    TreeNode node7 = new TreeNode(5);
     TreeNode node8 = new TreeNode(1);
+    TreeNode node9 = new TreeNode(4);
 
-    // private int expected = 3;
+    private int expected = 3;
 
     @Before
     public void before() {
       root.left = node1;
       root.right = node2;
       node1.left = node3;
-      node1.right = node4;
-      node2.right = node5;
-      node3.left = node6;
-      node3.right = node7;
-      node4.right = node8;
+      node3.left = node4;
+      node3.right = node5;
+      node2.left = node6;
+      node2.right = node9;
+      node6.left = node7;
+      node6.right = node8;
     }
 
     @Test
     public void testSolutions() {
-      // Assert.assertEquals(expected, SOLUTION.solve(root, 8));
+      Assert.assertEquals(expected, SOLUTION.solve(root, 22));
     }
 
   }
