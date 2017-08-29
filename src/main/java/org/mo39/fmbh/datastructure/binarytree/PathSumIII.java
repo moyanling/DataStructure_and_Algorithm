@@ -2,7 +2,9 @@ package org.mo39.fmbh.datastructure.binarytree;
 
 import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.LEETCODE;
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -56,6 +58,7 @@ public enum PathSumIII {
 
     @Override
     public int solve(TreeNode root, int sum) {
+      count = 0;
       recur(root, sum, new LinkedList<>());
       return count;
     }
@@ -86,9 +89,26 @@ public enum PathSumIII {
     int count = 0;
 
     @Override
-    public int solve(TreeNode root, int sum) {
-      return 0;
+    public int solve(TreeNode root, int target) {
+      count = 0;
+      Map<Integer, Integer> path = new HashMap<>();
+      recur(root, 0, target, path);
+      return count;
     }
+
+    void recur(TreeNode root, int pre, int target, Map<Integer, Integer> path) {
+      if (root == null) return;
+      int newSum = pre + root.val;
+      if (path.containsKey(newSum - target)) count++;
+      if (newSum == target) count++;
+      if (root.val == target) count++;
+      path.put(newSum, path.getOrDefault(newSum, 0) + 1);
+      recur(root.left, newSum, target, path);
+      recur(root.right, newSum, target, path);
+      if (path.get(newSum) == 1) path.remove(newSum);
+      else path.put(newSum, path.get(newSum) - 1);
+    }
+
 
 
   };
@@ -126,6 +146,8 @@ public enum PathSumIII {
     @Test
     public void testSolutions() {
       Assert.assertEquals(expected, SOLUTION.solve(root, 22));
+      Assert.assertEquals(expected, SOLUTION_1.solve(root, 22));
+      Assert.assertEquals(0, SOLUTION_1.solve(new TreeNode(1), 0));
     }
 
   }
