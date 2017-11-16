@@ -2,7 +2,6 @@ package org.mo39.fmbh.algorithm.bitmanipulation;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.mo39.fmbh.common.Z;
 import org.mo39.fmbh.common.annotation.ProblemSource;
 
 import static org.mo39.fmbh.common.annotation.ProblemSource.SourceValue.LEETCODE;
