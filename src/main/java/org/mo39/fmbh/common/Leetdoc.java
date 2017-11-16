@@ -41,18 +41,28 @@ public class Leetdoc {
   }
 
   private static String linkOf(String name) {
-    char[] charArr = name.toCharArray();
-    List<Character> charList = new ArrayList<>();
-    for (int i = 0; i < charArr.length; i++) {
-      if (i != 0 && Character.isUpperCase(charArr[i])
-          && (charArr[i - 1] != 'I'
-              || i < charArr.length - 1 && Character.isLowerCase(charArr[i + 1]))// ) {
-          || !Character.isLetter(charArr[i])) {
-        charList.add('-');
+    String linkName;
+    switch (name) {
+      case "OneBitAndTwoBitCharacters": {
+        linkName = "1-bit-and-2-bit-characters/description";
+        break;
       }
-      charList.add(Character.toLowerCase(charArr[i]));
+      default: {
+        char[] charArr = name.toCharArray();
+        List<Character> charList = new ArrayList<>();
+        for (int i = 0; i < charArr.length; i++) {
+          if (i != 0 && Character.isUpperCase(charArr[i])
+                  && (charArr[i - 1] != 'I'
+                  || i < charArr.length - 1 && Character.isLowerCase(charArr[i + 1]))// ) {
+                  || !Character.isLetter(charArr[i])) {
+            charList.add('-');
+          }
+          charList.add(Character.toLowerCase(charArr[i]));
+        }
+        linkName = Joiner.on("").join(charList);
+      }
     }
-    return "https://leetcode.com/problems/" + Joiner.on("").join(charList) + "/";
+    return "https://leetcode.com/problems/" + linkName + "/";
   }
 
   private static String aliasOf(String name) {
