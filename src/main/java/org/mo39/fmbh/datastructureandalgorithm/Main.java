@@ -8,7 +8,7 @@ import org.mo39.fmbh.common.Z;
 public class Main {
 
   public static void main(String[] args) {
-    Z.print(Character.getNumericValue());
+    Z.print('1' + '0');
   }
 
 }
